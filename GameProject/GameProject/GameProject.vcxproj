@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="ColisionManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClearScene.cpp" />
@@ -145,7 +146,6 @@
     <ClCompile Include="ImageCollection.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelCollection.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
@@ -153,6 +153,7 @@
     <ClInclude Include="ColisionData.h" />
     <ClInclude Include="ColisionManager.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameClearScene.h" />
