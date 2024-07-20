@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<map>
 
 using namespace std;
@@ -7,7 +7,7 @@ class EffectManager
 {
 public:
     /// <summary>
-    /// ƒGƒtƒFƒNƒg‚Ìí—Ş
+    /// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç¨®é¡
     /// </summary>
     enum EffectTag
     {
@@ -16,49 +16,49 @@ public:
 
 
     /// <summary>
-    /// ©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ÉƒAƒNƒZƒX‚·‚éƒ|ƒCƒ“ƒ^‚ğ“n‚·
+    /// è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’æ¸¡ã™
     /// </summary>
     /// <returns></returns>
     static EffectManager* GetInstance() { return effectManager; }
 
     /// <summary>
-    /// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìì¬
+    /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ä½œæˆ
     /// </summary>
     static void CreateInstance();
 
     /// <summary>
-    /// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+    /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
     /// </summary>
     static void DeleteInstance();
 
     /// <summary>
-    /// w’è‚³‚ê‚½ƒGƒtƒFƒNƒg‚ğÄ¶‚·‚é
+    /// æŒ‡å®šã•ã‚ŒãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å†ç”Ÿã™ã‚‹
     /// </summary>
-    /// <param name="imageTag">ƒGƒtƒFƒNƒg‚Ìí—Ş</param>
+    /// <param name="imageTag">ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç¨®é¡</param>
     static const void PlayEffect(EffectTag effectTag);
 
 private:
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     EffectManager();
 
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~EffectManager();
 
     /// <summary>
-    /// •K—v‚ÈƒGƒtƒFƒNƒg‚ğƒ[ƒh‚·‚é
+    /// å¿…è¦ãªã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
     /// </summary>
     static void LoadEffect();
 
     /// <summary>
-    /// “Ç‚İ‚ñ‚¾ƒGƒtƒFƒNƒg‚Ìíœ
+    /// èª­ã¿è¾¼ã‚“ã ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å‰Šé™¤
     /// </summary>
     static void DeleteEffect();
 
-    //©g‚Ìƒ|ƒCƒ“ƒ^
+    //è‡ªèº«ã®ãƒã‚¤ãƒ³ã‚¿
     static EffectManager* effectManager;
 
-    //ƒƒ“ƒo•Ï”
-    map<EffectTag, int> effectHandle;           //ƒCƒ[ƒWƒnƒ“ƒhƒ‹‚ğ‚Ü‚Æ‚ß‚Ä‚¢‚éƒ}ƒbƒv”z—ñ
+    //ãƒ¡ãƒ³ãƒå¤‰æ•°
+    map<EffectTag, int> effectHandle;           //ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«ã‚’ã¾ã¨ã‚ã¦ã„ã‚‹ãƒãƒƒãƒ—é…åˆ—
 };
 
 

@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include<map>
 
 using namespace std;
 
 /// <summary>
-/// ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹‚ðƒ[ƒh‚µ‚Ä“n‚·—p‚ÌƒNƒ‰ƒX
+/// ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¦æ¸¡ã™ç”¨ã®ã‚¯ãƒ©ã‚¹
 /// </summary>
 class ModelCollection
 {
 public:
     /// <summary>
-    /// ƒ[ƒh‚µ‚½ƒ‚ƒfƒ‹‚Ìƒ^ƒO
+    /// ãƒ­ãƒ¼ãƒ‰ã—ãŸãƒ¢ãƒ‡ãƒ«ã®ã‚¿ã‚°
     /// </summary>
     enum ModelTag
     {
@@ -20,48 +20,48 @@ public:
     };
 
     /// <summary>
-    /// Ž©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ÉƒAƒNƒZƒX‚·‚éƒ|ƒCƒ“ƒ^‚ð“n‚·
+    /// è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’æ¸¡ã™
     /// </summary>
     /// <returns></returns>
     static ModelCollection* GetInstance() { return modelCollection; }
 
     /// <summary>
-    /// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìì¬
+    /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ä½œæˆ
     /// </summary>
     static void CreateInstance();
 
     /// <summary>
-    /// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+    /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
     /// </summary>
     static void DeleteInstance();
 
     /// <summary>
-    /// Žw’è‚³‚ê‚½ƒ^ƒO‚ÌƒCƒ[ƒWƒnƒ“ƒhƒ‹‚ð“n‚·
+    /// æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚°ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«ã‚’æ¸¡ã™
     /// </summary>
-    /// <param name="imageTag">ƒCƒ[ƒWƒ^ƒO</param>
-    /// <returns>ƒCƒ[ƒWƒnƒ“ƒhƒ‹</returns>
+    /// <param name="imageTag">ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚¿ã‚°</param>
+    /// <returns>ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«</returns>
     static const int GetModelHandle(ModelTag modelTag);
 
 private:
 
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ModelCollection();
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~ModelCollection();
 
     /// <summary>
-    /// •K—v‚Èƒ‚ƒfƒ‹‚ðƒ[ƒh‚·‚é
+    /// å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
     /// </summary>
     static void LoadModel();
 
     /// <summary>
-    /// “Ç‚Ýž‚ñ‚¾ƒ‚ƒfƒ‹‚Ìíœ
+    /// èª­ã¿è¾¼ã‚“ã ãƒ¢ãƒ‡ãƒ«ã®å‰Šé™¤
     /// </summary>
     static void DeleteModel();
 
-    static ModelCollection* modelCollection;     //Ž©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒ|ƒCƒ“ƒ^
+    static ModelCollection* modelCollection;     //è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 
-    map<ModelTag, int> modelHandle;              //ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ð‚Ü‚Æ‚ß‚Ä‚¢‚éƒ}ƒbƒv”z—ñ
+    map<ModelTag, int> modelHandle;              //ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‚’ã¾ã¨ã‚ã¦ã„ã‚‹ãƒžãƒƒãƒ—é…åˆ—
 
     
 };

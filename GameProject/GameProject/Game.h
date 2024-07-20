@@ -1,38 +1,38 @@
-#pragma once
+﻿#pragma once
 
-//�N���X�̃v���g�^�C�v�錾
+//クラスのプロトタイプ宣言
 class SceneBase;
 class FrameRateController;
 
 /// <summary>
-/// �Q�[���S�̂̃V�[���Ǘ��Ȃǂ��s���N���X
+/// ゲーム全体のシーン管理などを行うクラス
 /// </summary>
 class Game
 {
 public:
-    //�R���X�g���N�g
+    //コンストラクト
     Game();
-    //�f�X�g���N�^
+    //デストラクタ
     ~Game();
 
     /// <summary>
-    /// �Q�[�����[�v���܂킷����
+    /// ゲームループをまわす処理
     /// </summary>
     void Update();
 
     /// <summary>
-    /// �Q�[�����p�����邩�̔��f
+    /// ゲームを継続するかの判断
     /// </summary>
-    /// <returns>�p�����邩�̃t���O</returns>
+    /// <returns>継続するかのフラグ</returns>
     bool IsContinueGame();
 
 private:
     /// <summary>
-    /// ���݂̃V�[�����폜���Ď��̃V�[���̃|�C���^������
+    /// 現在のシーンを削除して次のシーンのポインタを入れる
     /// </summary>
     void ChangeScene();
 
-    SceneBase* nowScene;                            //���݂̃��[�v�ł̃V�[����ۑ�����|�C���^
-    SceneBase* nextScene;                           //���̃��[�v�ł̃V�[����ۑ�����|�C���^
-    FrameRateController* frameRateController;       //�t���[�����[�g�v�Z�p�N���X
+    SceneBase* nowScene;                            //現在のループでのシーンを保存するポインタ
+    SceneBase* nextScene;                           //次のループでのシーンを保存するポインタ
+    FrameRateController* frameRateController;       //フレームレート計算用クラス
 };

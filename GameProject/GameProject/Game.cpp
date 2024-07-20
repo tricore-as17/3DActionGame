@@ -1,11 +1,11 @@
-#include"DxLib.h"
+ï»¿#include"DxLib.h"
 #include"SceneBase.h"
 #include"FrameRateController.h"
 #include"Game.h"
 
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Game::Game()
 {
@@ -13,7 +13,7 @@ Game::Game()
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Game::~Game()
 {
@@ -21,7 +21,7 @@ Game::~Game()
 }
 
 /// <summary>
-/// ƒQ[ƒ€ƒ‹[ƒv‚ğ‚Ü‚í‚·ˆ—
+/// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’ã¾ã‚ã™å‡¦ç†
 /// </summary>
 void Game::Update()
 {
@@ -30,9 +30,9 @@ void Game::Update()
 
 
 /// <summary>
-/// ƒQ[ƒ€‚ğŒp‘±‚·‚é‚©‚Ì”»’f
+/// ã‚²ãƒ¼ãƒ ã‚’ç¶™ç¶šã™ã‚‹ã‹ã®åˆ¤æ–­
 /// </summary>
-/// <returns>Œp‘±‚·‚é‚©‚Ìƒtƒ‰ƒO</returns>
+/// <returns>ç¶™ç¶šã™ã‚‹ã‹ã®ãƒ•ãƒ©ã‚°</returns>
 bool Game::IsContinueGame()
 {
 

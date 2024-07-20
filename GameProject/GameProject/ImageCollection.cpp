@@ -1,8 +1,8 @@
-#include"ImageCollection.h"
+ï»¿#include"ImageCollection.h"
 
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ImageCollection::ImageCollection()
 {
@@ -10,7 +10,7 @@ ImageCollection::ImageCollection()
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ImageCollection::~ImageCollection()
 {
@@ -18,7 +18,7 @@ ImageCollection::~ImageCollection()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒX‚Ìì¬
+/// ã‚¤ãƒ³ã‚¹ã‚¿ã‚¹ã®ä½œæˆ
 /// </summary>
 void ImageCollection::CreateInstance()
 {
@@ -26,7 +26,7 @@ void ImageCollection::CreateInstance()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
 /// </summary>
 void ImageCollection::DeleteInstance()
 {
@@ -34,10 +34,10 @@ void ImageCollection::DeleteInstance()
 }
 
 /// <summary>
-/// w’è‚³‚ê‚½ƒ^ƒO‚ÌƒCƒ[ƒWƒnƒ“ƒhƒ‹‚ğ“n‚·
+/// æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚°ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«ã‚’æ¸¡ã™
 /// </summary>
-/// <param name="imageTag">ƒCƒ[ƒWƒ^ƒO</param>
-/// <returns>ƒCƒ[ƒWƒnƒ“ƒhƒ‹</returns>
+/// <param name="imageTag">ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚¿ã‚°</param>
+/// <returns>ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«</returns>
 const int ImageCollection::GetImageHandle(ImageTag imageTag)
 {
 
@@ -45,7 +45,7 @@ const int ImageCollection::GetImageHandle(ImageTag imageTag)
 
 
 /// <summary>
-/// •K—v‚È‰æ‘œ‚ğƒ[ƒh‚·‚é
+/// å¿…è¦ãªç”»åƒã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 /// </summary>
 void ImageCollection::LoadImage()
 {
@@ -53,7 +53,7 @@ void ImageCollection::LoadImage()
 }
 
 /// <summary>
-/// “Ç‚İ‚ñ‚¾‰æ‘œ‚Ìíœ
+/// èª­ã¿è¾¼ã‚“ã ç”»åƒã®å‰Šé™¤
 /// </summary>
 void ImageCollection::DeleteImage()
 {
