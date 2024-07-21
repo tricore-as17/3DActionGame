@@ -40,7 +40,7 @@ public:
     /// </summary>
     /// <param name="imageTag">イメージタグ</param>
     /// <returns>イメージハンドル</returns>
-    static const int GetModelHandle(ModelTag modelTag);
+    const int GetModelHandle(ModelTag modelTag);
 
 private:
 
