@@ -39,5 +39,6 @@ void ModelDataManager::DeleteInstance()
 /// <returns>イメージハンドル</returns>
 const int ModelDataManager::GetModelHandle(ModelTag modelTag)
 {
-
+    int modelHandle = 0;
+    return modelHandle;
 }

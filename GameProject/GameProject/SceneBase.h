@@ -1,15 +1,22 @@
 ﻿#pragma once
 #include"FadeInOut.h"
 #include"SoundManager.h"
+#include"InputManager.h"
 
 
 class SceneBase abstract
 {
 public:
     //コンストラクタ
-    SceneBase();
+    SceneBase()
+    {
+        inputManager = InputManager::GetInstance();
+    }
     //デストラクタ
-    virtual ~SceneBase();
+    virtual ~SceneBase()
+    {
+        inputManager = nullptr;
+    }
 
     /// <summary>
     /// 次のシーンベースを返す
@@ -27,9 +34,10 @@ public:
     /// </summary>
     virtual void Draw()abstract;
 
-private:
+protected:
     SceneBase* inputScene;       //次のループでのシーンを入れる変数
     FadeInOut* fadeInOut;        //フェードアウトとフェードイン用のクラス
     SoundManager* soundManager;  //サウンドを鳴らすためのクラス
+    InputManager* inputManager;  //入力の処理を行うクラス
 };
 
