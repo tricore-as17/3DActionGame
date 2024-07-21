@@ -1,4 +1,6 @@
-﻿#include"TitleScene.h"
+﻿#include"DxLib.h"
+#include"TitleScene.h"
+#include"GameScene.h"
 
 
 /// <summary>
@@ -6,7 +8,7 @@
 /// </summary>
 TitleScene::TitleScene()
 {
-
+    //処理なし
 }
 
 /// <summary>
@@ -14,7 +16,7 @@ TitleScene::TitleScene()
 /// </summary>
 TitleScene::~TitleScene()
 {
-
+    //処理なし
 }
 
 /// <summary>
@@ -22,7 +24,18 @@ TitleScene::~TitleScene()
 /// </summary>
 void TitleScene::Update()
 {
+    //スペースキーが押されたかのチェック
+    bool isKeyRelease = inputManager->IsReleaseKey(PAD_INPUT_10);
 
+    //スペースキーが押されていればゲームシーンに移行
+    if (isKeyRelease)
+    {
+        inputScene = new GameScene();
+    }
+    else
+    {
+        inputScene = this;
+    }
 }
 
 
@@ -31,5 +44,7 @@ void TitleScene::Update()
 /// </summary>
 void TitleScene::Draw()
 {
-
+#ifdef _DEBUG
+    DrawString(500, 500, "タイトルシーン", GetColor(255, 255, 255));
+#endif
 }

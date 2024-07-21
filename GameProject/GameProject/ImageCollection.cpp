@@ -6,7 +6,7 @@
 /// </summary>
 ImageCollection::ImageCollection()
 {
-
+    
 }
 
 /// <summary>
@@ -40,7 +40,8 @@ void ImageCollection::DeleteInstance()
 /// <returns>イメージハンドル</returns>
 const int ImageCollection::GetImageHandle(ImageTag imageTag)
 {
-
+    int image = 0;
+    return image;
 }
 
 

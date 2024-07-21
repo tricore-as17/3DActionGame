@@ -43,7 +43,9 @@ void ColisionManager::DeleteInstance()
 /// <returns>当たっているか</returns>
 bool ColisionManager::IsHitSphereAndCapsule(ColisionData sphere, ColisionData capsule)
 {
+    bool isHit = false;
 
+    return isHit;
 }
 
 /// <summary>

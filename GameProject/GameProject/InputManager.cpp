@@ -4,10 +4,7 @@
 
 //nullポインターを入れる
 InputManager* InputManager::inputManager = nullptr;
-//フラグの初期化
-bool InputManager::releaseKey = false;
-bool InputManager::onKey = false;
-bool InputManager::onPrevKey = false;
+
 
 
 /// <summary>
@@ -15,7 +12,16 @@ bool InputManager::onPrevKey = false;
 /// </summary>
 InputManager::InputManager()
 {
-    //処理なし
+    keyTag.insert(make_pair(SPACE, PAD_INPUT_10));
+    keyTag.insert(make_pair(LEFT, PAD_INPUT_LEFT));
+    keyTag.insert(make_pair(RIGHT,PAD_INPUT_RIGHT));
+
+    for (int i = 0; i < keyTag.size(); i++)
+    {
+        releaseKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
+        onKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
+        onPrevKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
+    }
 }
 
 /// <summary>
@@ -65,29 +71,28 @@ bool InputManager::IsReleaseKey(const int compareKey)
     auto input = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
 
-    releaseKey = false;
+    releaseKey.at((compareKey)) = false;
     // キー離した瞬間を取る.
-    if (onKey)
+    if (onKey.at((compareKey)))
     {
-        //
-        if (!(input & PAD_INPUT_10))
+        if (!(input & compareKey))
         {
-            onKey = false;
-            releaseKey = true;
+            onKey.at((compareKey)) = false;
+            releaseKey.at((compareKey)) = true;
         }
     }
-    else if (onPrevKey == false && (input & PAD_INPUT_10))	//キーが最初に押されたタイミング
+    else if (onPrevKey.at((compareKey)) == false && (input & compareKey))	//キーが最初に押されたタイミング
     {
-        releaseKey = false;
-        onKey = true;
+        releaseKey.at((compareKey)) = false;
+        onKey.at((compareKey)) = true;
     }
-    if ((input & PAD_INPUT_10))	//押し続けられている時の処理
+    if ((input & compareKey))	//押し続けられている時の処理
     {
-        onPrevKey = true;
+        onPrevKey.at((compareKey)) = true;
     }
     else
     {
-        onPrevKey = false;
+        onPrevKey.at((compareKey)) = false;
     }
-    return releaseKey;
+    return releaseKey.at((compareKey));
 }
