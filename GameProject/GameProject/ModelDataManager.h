@@ -49,15 +49,7 @@ private:
     //デストラクタ
     ~ModelDataManager();
 
-    /// <summary>
-    /// 必要なモデルをロードする
-    /// </summary>
-    static void LoadModel();
 
-    /// <summary>
-    /// 読み込んだモデルの削除
-    /// </summary>
-    static void DeleteModel();
 
     static ModelDataManager* modelDataManager;     //自身のインスタンスのポインタ
 
