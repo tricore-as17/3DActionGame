@@ -12,10 +12,12 @@ InputManager* InputManager::inputManager = nullptr;
 /// </summary>
 InputManager::InputManager()
 {
+    //キーの種類とその番号をマップとして保存
     keyTag.insert(make_pair(SPACE, PAD_INPUT_10));
     keyTag.insert(make_pair(LEFT, PAD_INPUT_LEFT));
     keyTag.insert(make_pair(RIGHT,PAD_INPUT_RIGHT));
 
+    //それぞれのキーの初期化
     for (int i = 0; i < keyTag.size(); i++)
     {
         releaseKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
