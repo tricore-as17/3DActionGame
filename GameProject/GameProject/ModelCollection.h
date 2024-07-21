@@ -49,16 +49,6 @@ private:
     //デストラクタ
     ~ModelCollection();
 
-    /// <summary>
-    /// 必要なモデルをロードする
-    /// </summary>
-    static void LoadModel();
-
-    /// <summary>
-    /// 読み込んだモデルの削除
-    /// </summary>
-    static void DeleteModel();
-
     static ModelCollection* modelCollection;     //自身のインスタンスのポインタ
 
     map<ModelTag, int> modelHandle;              //モデルハンドルをまとめているマップ配列
