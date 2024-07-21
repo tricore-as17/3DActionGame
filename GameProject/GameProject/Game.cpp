@@ -13,6 +13,8 @@ Game::Game()
 {
     //最初はタイトルシーンををインスタンス化
     nowScene = new TitleScene;
+    //フレームレート調整クラスのインスタンス化
+    frameRateController = new FrameRateController();
 }
 
 /// <summary>
@@ -34,14 +36,14 @@ void Game::Update()
     {
         ClearDrawScreen();
         //フレームレートを調整するための計算
-        frameRate->Update();
+        frameRateController->Update();
         nowScene->Update();
         //更新処理の後次のループでのシーンを代入する
         nextScene = nowScene->GetNextScene();
         nowScene->Draw();
         ScreenFlip();
         //フレームレートを設定した値に同期させる
-        frameRate->Sync();
+        frameRateController->Sync();
         //次のループのシーンと現在のシーンが違う場合は移行処理を行う
         if (nowScene != nextScene)
         {
