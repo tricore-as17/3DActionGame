@@ -144,6 +144,7 @@
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ImageDataManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelDataManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ImageDataManager.h" />
     <ClInclude Include="ModelDataManager.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TitleScene.h" />

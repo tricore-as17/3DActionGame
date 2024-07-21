@@ -17,7 +17,15 @@ public:
     /// <returns></returns>
     SceneBase* GetNextScene() { return inputScene; }
 
+    /// <summary>
+    /// 更新処理
+    /// </summary>
     virtual void Update()abstract;
+
+    /// <summary>
+    /// 描画
+    /// </summary>
+    virtual void Draw()abstract;
 
 private:
     SceneBase* inputScene;       //次のループでのシーンを入れる変数
