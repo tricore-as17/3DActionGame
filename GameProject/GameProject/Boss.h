@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+class ModelDataManager;
+
 
 /// <summary>
 /// ボスのクラス
@@ -23,7 +25,12 @@ public:
     void Draw();
 
 private:
+    //定数
+    static constexpr float DefaultScale = 0.002;     //モデルの初期サイズ
+
     //メンバ変数
+    int modelHandle;        //モデルハンドル
     VECTOR position;       //座標
+    ModelDataManager* modelDataManager; //モデルハンドルをもっているクラスのポインタ
 
 };
