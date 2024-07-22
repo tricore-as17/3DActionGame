@@ -36,7 +36,9 @@ Player::~Player()
 /// </summary>
 void Player::Update()
 {
-
+    //ToDo
+    //ステート管理でプレイヤーの移動を追加したら
+    //AdjustGroundToWardVelocityも追加する
 }
 
 /// <summary>
@@ -46,6 +48,38 @@ void Player::Draw()
 {
     //プレイヤーの描画
     MV1DrawModel(modelHandle);
+}
+
+
+/// <summary>
+/// 地面に向けたベクトルの調整
+/// </summary>
+/// <param name="velocity">プレイヤーのベロシティ</param>
+/// <returns>調整したベロシティ</returns>
+VECTOR Player::AdjustGroundToWardVelocity(VECTOR velocity)
+{
+
+    VECTOR adjustVelocity = velocity;
+    //地面にめり込まなくなるまで戻す
+    while (true)
+    {
+        //未来のY座標を出す
+        float futureYPosition = position.y + adjustVelocity.y;
+        //座標が0より下回っていたら修正する
+        if (futureYPosition < 0)
+        {
+            adjustVelocity.y += AdjustVelocityY;
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    //調整した値を返す
+    return adjustVelocity;
+    
 }
 
 
