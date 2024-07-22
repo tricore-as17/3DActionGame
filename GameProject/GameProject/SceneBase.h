@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"FadeInOut.h"
 #include"SoundManager.h"
 
@@ -6,13 +6,13 @@
 class SceneBase abstract
 {
 public:
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     SceneBase();
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     virtual ~SceneBase();
 
     /// <summary>
-    /// Ÿ‚ÌƒV[ƒ“ƒx[ƒX‚ğ•Ô‚·
+    /// æ¬¡ã®ã‚·ãƒ¼ãƒ³ãƒ™ãƒ¼ã‚¹ã‚’è¿”ã™
     /// </summary>
     /// <returns></returns>
     SceneBase* GetNextScene() { return inputScene; }
@@ -20,8 +20,8 @@ public:
     virtual void Update()abstract;
 
 private:
-    SceneBase* inputScene;       //Ÿ‚Ìƒ‹[ƒv‚Å‚ÌƒV[ƒ“‚ğ“ü‚ê‚é•Ï”
-    FadeInOut* fadeInOut;        //ƒtƒF[ƒhƒAƒEƒg‚ÆƒtƒF[ƒhƒCƒ“—p‚ÌƒNƒ‰ƒX
-    SoundManager* soundManager;  //ƒTƒEƒ“ƒh‚ğ–Â‚ç‚·‚½‚ß‚ÌƒNƒ‰ƒX
+    SceneBase* inputScene;       //æ¬¡ã®ãƒ«ãƒ¼ãƒ—ã§ã®ã‚·ãƒ¼ãƒ³ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
+    FadeInOut* fadeInOut;        //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã¨ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ç”¨ã®ã‚¯ãƒ©ã‚¹
+    SoundManager* soundManager;  //ã‚µã‚¦ãƒ³ãƒ‰ã‚’é³´ã‚‰ã™ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 };
 

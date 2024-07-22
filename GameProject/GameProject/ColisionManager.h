@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<map>
 #include<functional>
 using namespace std;
@@ -6,63 +6,63 @@ using namespace std;
 struct ColisionData;
 
 /// <summary>
-/// “–‚½‚è”»’è‚ğŒ©‚éƒNƒ‰ƒX
+/// å½“ãŸã‚Šåˆ¤å®šã‚’è¦‹ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class ColisionManager
 {
 public:
     /// <summary>
-    /// “–‚½‚è”»’è‚ğŒ©‚éƒIƒuƒWƒFƒNƒg‚Ìí—Ş
+    /// å½“ãŸã‚Šåˆ¤å®šã‚’è¦‹ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç¨®é¡
     /// </summary>
     enum HitObjectTag
     {
 
     };
 
-    //ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚éƒQƒbƒ^[
+    //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹ã‚²ãƒƒã‚¿ãƒ¼
     static ColisionManager* GetInstance() { return colisionManager; }
-    //ƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚·‚é
+    //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã™ã‚‹
     static void CreateInstance();
 
     /// <summary>
-    /// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+    /// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
     /// </summary>
     static void DeleteInstance();
 
     /// <summary>
-    /// ‹…‘Ì‚ÆƒJƒvƒZƒ‹‚Æ‚Ì“–‚½‚è”»’è
+    /// çƒä½“ã¨ã‚«ãƒ—ã‚»ãƒ«ã¨ã®å½“ãŸã‚Šåˆ¤å®š
     /// </summary>
-    /// <param name="sphere">‹…‘Ì‚Ì“–‚½‚è”»’è‚É•K—v‚Èî•ñ</param>
-    /// <param name="capsule">ƒJƒvƒZƒ‹‚Ì“–‚½‚è”»’è‚É•K—v‚Èî•ñ</param>
-    /// <returns>“–‚½‚Á‚Ä‚¢‚é‚©</returns>
+    /// <param name="sphere">çƒä½“ã®å½“ãŸã‚Šåˆ¤å®šã«å¿…è¦ãªæƒ…å ±</param>
+    /// <param name="capsule">ã‚«ãƒ—ã‚»ãƒ«ã®å½“ãŸã‚Šåˆ¤å®šã«å¿…è¦ãªæƒ…å ±</param>
+    /// <returns>å½“ãŸã£ã¦ã„ã‚‹ã‹</returns>
     static bool IsHitSphereAndCapsule(ColisionData sphere, ColisionData capsule);
 
     /// <summary>
-    /// “–‚½‚Á‚½‚ ‚Æ‚Ìˆ—‚ğ‚Á‚Ä‚­‚é
+    /// å½“ãŸã£ãŸã‚ã¨ã®å‡¦ç†ã‚’æŒã£ã¦ãã‚‹
     /// </summary>
-    /// <param name="colisionData">“–‚½‚è”»’è‚É•K—v‚Èî•ñ</param>
-    /// <param name="hitObjectTag">ƒIƒuƒWƒFƒNƒg‚Ìí—Ş</param>
-    /// <param name="onHit">“–‚½‚Á‚½Œã‚És‚¤ŠÖ”‚Ìƒ|ƒCƒ“ƒ^</param>
+    /// <param name="colisionData">å½“ãŸã‚Šåˆ¤å®šã«å¿…è¦ãªæƒ…å ±</param>
+    /// <param name="hitObjectTag">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç¨®é¡</param>
+    /// <param name="onHit">å½“ãŸã£ãŸå¾Œã«è¡Œã†é–¢æ•°ã®ãƒã‚¤ãƒ³ã‚¿</param>
     static void Resister(ColisionData colisionData, HitObjectTag hitObjectTag
         , function<void(ColisionData, HitObjectTag)> onHit);
 
     /// <summary>
-    /// XVˆ—
+    /// æ›´æ–°å‡¦ç†
     /// </summary>
     void Update();
 
 private:
 
-    //©g‚Ìƒ|ƒCƒ“ƒ^
+    //è‡ªèº«ã®ãƒã‚¤ãƒ³ã‚¿
     static ColisionManager* colisionManager;
 
-    //“–‚½‚è”»’èî•ñ‚ğ‚à‚Á‚½ƒŠƒXƒg
+    //å½“ãŸã‚Šåˆ¤å®šæƒ…å ±ã‚’ã‚‚ã£ãŸãƒªã‚¹ãƒˆ
     map<HitObjectTag, ColisionData> hitObjectList;
 
-    //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ColisionManager();
 
-    //ƒfƒXƒgƒ‰ƒNƒ^
+    //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     ~ColisionManager();
 
 };

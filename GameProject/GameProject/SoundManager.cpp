@@ -1,8 +1,8 @@
-#include"SoundManager.h"
+ï»¿#include"SoundManager.h"
 
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SoundManager::SoundManager()
 {
@@ -10,7 +10,7 @@ SoundManager::SoundManager()
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SoundManager::~SoundManager()
 {
@@ -18,7 +18,7 @@ SoundManager::~SoundManager()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚·‚é
+/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã™ã‚‹
 /// </summary>
 void SoundManager::CreateInstance()
 {
@@ -26,7 +26,7 @@ void SoundManager::CreateInstance()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
 /// </summary>
 void SoundManager::DeleteInstance()
 {
@@ -34,27 +34,27 @@ void SoundManager::DeleteInstance()
 }
 
 /// <summary>
-/// ƒTƒEƒ“ƒh‚Ì–¼‘O‚ğ‚Á‚Ä‚«‚ÄÄ¶‚·‚é
+/// ã‚µã‚¦ãƒ³ãƒ‰ã®åå‰ã‚’æŒã£ã¦ãã¦å†ç”Ÿã™ã‚‹
 /// </summary>
-/// <param name="soundEffectTag">Ä¶‚·‚é‰¹‚Ì–¼‘O</param>
+/// <param name="soundEffectTag">å†ç”Ÿã™ã‚‹éŸ³ã®åå‰</param>
 void SoundManager::PlaySoundEffect(SoundEffectTag soundEffectTag)
 {
 
 }
 
 /// <summary>
-/// BGM‚Ì–¼‘O‚ğ‚Á‚Ä‚«‚ÄÄ¶‚·‚é
+/// BGMã®åå‰ã‚’æŒã£ã¦ãã¦å†ç”Ÿã™ã‚‹
 /// </summary>
-/// <param name="bgmTag">Ä¶‚·‚éBGM‚Ì–¼‘O</param>
+/// <param name="bgmTag">å†ç”Ÿã™ã‚‹BGMã®åå‰</param>
 void SoundManager::PlayBGM(BGMTag bgmTag)
 {
 
 }
 
 /// <summary>
-/// w’è‚ÌBGM‚ğ~‚ß‚éˆ—
+/// æŒ‡å®šã®BGMã‚’æ­¢ã‚ã‚‹å‡¦ç†
 /// </summary>
-/// <param name="bgmTag">~‚ß‚éBGM‚Ì–¼‘O</param>
+/// <param name="bgmTag">æ­¢ã‚ã‚‹BGMã®åå‰</param>
 void SoundManager::StopBGM(BGMTag bgmTag)
 {
 

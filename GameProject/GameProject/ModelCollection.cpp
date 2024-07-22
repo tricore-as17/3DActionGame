@@ -1,7 +1,7 @@
-#include"ModelCollection.h"
+ï»¿#include"ModelCollection.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ModelCollection::ModelCollection()
 {
@@ -9,7 +9,7 @@ ModelCollection::ModelCollection()
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ModelCollection::~ModelCollection()
 {
@@ -17,7 +17,7 @@ ModelCollection::~ModelCollection()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìì¬
+/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ä½œæˆ
 /// </summary>
 void ModelCollection::CreateInstance()
 {
@@ -25,7 +25,7 @@ void ModelCollection::CreateInstance()
 }
 
 /// <summary>
-/// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
 /// </summary>
 void ModelCollection::DeleteInstance()
 {
@@ -33,10 +33,10 @@ void ModelCollection::DeleteInstance()
 }
 
 /// <summary>
-/// Žw’è‚³‚ê‚½ƒ^ƒO‚ÌƒCƒ[ƒWƒnƒ“ƒhƒ‹‚ð“n‚·
+/// æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚°ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«ã‚’æ¸¡ã™
 /// </summary>
-/// <param name="imageTag">ƒCƒ[ƒWƒ^ƒO</param>
-/// <returns>ƒCƒ[ƒWƒnƒ“ƒhƒ‹</returns>
+/// <param name="imageTag">ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚¿ã‚°</param>
+/// <returns>ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«</returns>
 const int ModelCollection::GetModelHandle(ModelTag modelTag)
 {
 
