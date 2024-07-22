@@ -1,9 +1,9 @@
-﻿#include"ModelCollection.h"
+﻿#include"ModelDataManager.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-ModelCollection::ModelCollection()
+ModelDataManager::ModelDataManager()
 {
 
 }
@@ -11,7 +11,7 @@ ModelCollection::ModelCollection()
 /// <summary>
 /// デストラクタ
 /// </summary>
-ModelCollection::~ModelCollection()
+ModelDataManager::~ModelDataManager()
 {
 
 }
@@ -19,7 +19,7 @@ ModelCollection::~ModelCollection()
 /// <summary>
 /// インスタンスの作成
 /// </summary>
-void ModelCollection::CreateInstance()
+void ModelDataManager::CreateInstance()
 {
 
 }
@@ -27,7 +27,7 @@ void ModelCollection::CreateInstance()
 /// <summary>
 /// インスタンスの削除
 /// </summary>
-void ModelCollection::DeleteInstance()
+void ModelDataManager::DeleteInstance()
 {
 
 }
@@ -37,8 +37,7 @@ void ModelCollection::DeleteInstance()
 /// </summary>
 /// <param name="imageTag">イメージタグ</param>
 /// <returns>イメージハンドル</returns>
-const int ModelCollection::GetModelHandle(ModelTag modelTag)
+const int ModelDataManager::GetModelHandle(ModelTag modelTag)
 {
-    int modelHandle = 0;
-    return modelHandle;
+
 }

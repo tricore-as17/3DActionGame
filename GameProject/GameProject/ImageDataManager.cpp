@@ -1,18 +1,18 @@
-﻿#include"ImageCollection.h"
+﻿#include"ImageDataManager.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-ImageCollection::ImageCollection()
+ImageDataManager::ImageDataManager()
 {
-    
+
 }
 
 /// <summary>
 /// デストラクタ
 /// </summary>
-ImageCollection::~ImageCollection()
+ImageDataManager::~ImageDataManager()
 {
 
 }
@@ -20,7 +20,7 @@ ImageCollection::~ImageCollection()
 /// <summary>
 /// インスタスの作成
 /// </summary>
-void ImageCollection::CreateInstance()
+void ImageDataManager::CreateInstance()
 {
 
 }
@@ -28,7 +28,7 @@ void ImageCollection::CreateInstance()
 /// <summary>
 /// インスタンスの削除
 /// </summary>
-void ImageCollection::DeleteInstance()
+void ImageDataManager::DeleteInstance()
 {
 
 }
@@ -38,17 +38,16 @@ void ImageCollection::DeleteInstance()
 /// </summary>
 /// <param name="imageTag">イメージタグ</param>
 /// <returns>イメージハンドル</returns>
-const int ImageCollection::GetImageHandle(ImageTag imageTag)
+const int ImageDataManager::GetImageHandle(ImageTag imageTag)
 {
-    int image = 0;
-    return image;
+
 }
 
 
 /// <summary>
 /// 必要な画像をロードする
 /// </summary>
-void ImageCollection::LoadImage()
+void ImageDataManager::LoadImage()
 {
 
 }
@@ -56,7 +55,7 @@ void ImageCollection::LoadImage()
 /// <summary>
 /// 読み込んだ画像の削除
 /// </summary>
-void ImageCollection::DeleteImage()
+void ImageDataManager::DeleteImage()
 {
 
 }
