@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class ImageCollection
+class ImageDataManager
 {
 public:
 
@@ -19,7 +19,7 @@ public:
     /// 自身のインスタンスにアクセスするポインタを渡す
     /// </summary>
     /// <returns></returns>
-    static ImageCollection* GetInstance() { return imageCollection; }
+    static ImageDataManager* GetInstance() { return imageDataManager; }
 
     /// <summary>
     /// インスタンスの作成
@@ -42,9 +42,9 @@ public:
 private:
 
     //コンストラクタ
-    ImageCollection();
+    ImageDataManager();
     //デストラクタ
-    ~ImageCollection();
+    ~ImageDataManager();
 
     /// <summary>
     /// 必要な画像をロードする
@@ -57,7 +57,7 @@ private:
     static void DeleteImage();
 
     //自身のポインタ
-    static ImageCollection* imageCollection;
+    static ImageDataManager* imageDataManager;
 
     //メンバ変数
     map<ImageTag, int> imageHandle;           //イメージハンドルをまとめているマップ配列
