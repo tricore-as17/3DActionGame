@@ -3,27 +3,23 @@
 
 using namespace std;
 
-/// <summary>
-/// モデルのハンドルをロードして渡す用のクラス
-/// </summary>
-class ModelCollection
+class ImageDataManager
 {
 public:
+
     /// <summary>
-    /// ロードしたモデルのタグ
+    /// ロードした画像のタグ
     /// </summary>
-    enum ModelTag
+    enum ImageTag
     {
-        Player = 0,
-        Boss   = 1,
-        Stage  = 2
+
     };
 
     /// <summary>
     /// 自身のインスタンスにアクセスするポインタを渡す
     /// </summary>
     /// <returns></returns>
-    static ModelCollection* GetInstance() { return modelCollection; }
+    static ImageDataManager* GetInstance() { return imageDataManager; }
 
     /// <summary>
     /// インスタンスの作成
@@ -40,18 +36,32 @@ public:
     /// </summary>
     /// <param name="imageTag">イメージタグ</param>
     /// <returns>イメージハンドル</returns>
-    const int GetModelHandle(ModelTag modelTag);
+    static const int GetImageHandle(ImageTag imageTag);
+
 
 private:
 
     //コンストラクタ
-    ModelCollection();
+    ImageDataManager();
     //デストラクタ
-    ~ModelCollection();
+    ~ImageDataManager();
 
-    static ModelCollection* modelCollection;     //自身のインスタンスのポインタ
+    /// <summary>
+    /// 必要な画像をロードする
+    /// </summary>
+    static void LoadImage();
 
-    map<ModelTag, int> modelHandle;              //モデルハンドルをまとめているマップ配列
+    /// <summary>
+    /// 読み込んだ画像の削除
+    /// </summary>
+    static void DeleteImage();
 
-    
+    //自身のポインタ
+    static ImageDataManager* imageDataManager;
+
+    //メンバ変数
+    map<ImageTag, int> imageHandle;           //イメージハンドルをまとめているマップ配列
+
 };
+
+

@@ -1,13 +1,13 @@
 ﻿#include"DxLib.h"
-#include"ModelCollection.h"
+#include"ModelDataManager.h"
 
 //自身の「ポインタをNULLにしておく
-ModelCollection* ModelCollection::modelCollection = nullptr;
+ModelDataManager* ModelDataManager::modelDataManager = nullptr;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-ModelCollection::ModelCollection()
+ModelDataManager::ModelDataManager()
 {
     //モデルのロード
     modelHandle.insert(make_pair(Player, MV1LoadModel("Model/playerPico.mv1")));
@@ -19,7 +19,7 @@ ModelCollection::ModelCollection()
 /// <summary>
 /// デストラクタ
 /// </summary>
-ModelCollection::~ModelCollection()
+ModelDataManager::~ModelDataManager()
 {
     //モデルのアンロード
     for (int i = 0; i < modelHandle.size(); i++)
@@ -31,23 +31,23 @@ ModelCollection::~ModelCollection()
 /// <summary>
 /// インスタンスの作成
 /// </summary>
-void ModelCollection::CreateInstance()
+void ModelDataManager::CreateInstance()
 {
     //インスタンスが作られていなければ作成
-    if (modelCollection == nullptr)
+    if (modelDataManager == nullptr)
     {
-        modelCollection = new ModelCollection();
+        modelDataManager = new ModelDataManager();
     }
 }
 
 /// <summary>
 /// インスタンスの削除
 /// </summary>
-void ModelCollection::DeleteInstance()
+void ModelDataManager::DeleteInstance()
 {
-    if (modelCollection != nullptr)
+    if (modelDataManager != nullptr)
     {
-        delete modelCollection;
+        delete modelDataManager;
     }
 }
 
@@ -56,7 +56,7 @@ void ModelCollection::DeleteInstance()
 /// </summary>
 /// <param name="imageTag">イメージタグ</param>
 /// <returns>イメージハンドル</returns>
-const int ModelCollection::GetModelHandle(ModelTag modelTag)
+const int ModelDataManager::GetModelHandle(ModelTag modelTag)
 {
     return modelHandle.at(modelTag);
 }
