@@ -4,6 +4,7 @@
 class Stage;
 class Camera;
 class Player;
+class Boss;
 
 
 /// <summary>
@@ -28,8 +29,9 @@ public:
     void Draw() override;
 
 private:
-    Stage* stage;   //ステージ
+    Stage*  stage;  //ステージ
     Camera* camera; //カメラ
     Player* player; //プレイヤー
+    Boss*   boss;   //ボス
 };
 

@@ -26,7 +26,7 @@ public:
 
 private:
     //定数
-    static constexpr float DefaultScale = 0.002;     //モデルの初期サイズ
+    static const VECTOR InitialPosition;             //初期座標
 
     //メンバ変数
     int modelHandle;        //モデルハンドル
