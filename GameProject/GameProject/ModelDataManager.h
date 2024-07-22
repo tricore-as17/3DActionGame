@@ -6,7 +6,7 @@ using namespace std;
 /// <summary>
 /// モデルのハンドルをロードして渡す用のクラス
 /// </summary>
-class ModelCollection
+class ModelDataManager
 {
 public:
     /// <summary>
@@ -23,7 +23,7 @@ public:
     /// 自身のインスタンスにアクセスするポインタを渡す
     /// </summary>
     /// <returns></returns>
-    static ModelCollection* GetInstance() { return modelCollection; }
+    static ModelDataManager* GetInstance() { return modelDataManager; }
 
     /// <summary>
     /// インスタンスの作成
@@ -45,11 +45,11 @@ public:
 private:
 
     //コンストラクタ
-    ModelCollection();
+    ModelDataManager();
     //デストラクタ
-    ~ModelCollection();
+    ~ModelDataManager();
 
-    static ModelCollection* modelCollection;     //自身のインスタンスのポインタ
+    static ModelDataManager* modelDataManager;     //自身のインスタンスのポインタ
 
     map<ModelTag, int> modelHandle;              //モデルハンドルをまとめているマップ配列
 
