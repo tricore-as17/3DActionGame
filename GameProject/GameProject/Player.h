@@ -16,13 +16,6 @@ public:
     void Update();
 
     /// <summary>
-    /// 移動に関する処理
-    /// </summary>
-    void Move();
-
-
-
-    /// <summary>
     /// 描画
     /// </summary>
     void Draw();
@@ -30,6 +23,9 @@ public:
 
 
 private:
+    //定数
+    static constexpr float DefaultScale = 0.015;   //通常の大きさ
+
     int modelHandle;   //モデルハンドル
     VECTOR position;   //座標
     VECTOR direction;   //方向
