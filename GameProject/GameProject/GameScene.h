@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include"SceneBase.h"
 
+class Stage;
+
 
 /// <summary>
 /// ゲーム中のシーン
@@ -24,6 +26,6 @@ public:
     void Draw() override;
 
 private:
-
+    Stage* stage;   //ステージ
 };
 

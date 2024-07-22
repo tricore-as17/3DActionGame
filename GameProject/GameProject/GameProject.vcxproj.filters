@@ -37,6 +37,15 @@
     <Filter Include="ソース ファイル\InputManager">
       <UniqueIdentifier>{19eb6d46-e2a0-4f78-b676-808f055bfe23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{f7124487-c666-49b8-8099-ac382505e8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage">
+      <UniqueIdentifier>{a49c8c2c-4b81-4037-9bcf-de4e6d09e2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{e6fe1894-8f8a-41f6-9e86-e1d60d3c3b57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -80,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>ソース ファイル\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>ソース ファイル\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

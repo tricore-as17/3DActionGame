@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include"GameOverScene.h"
 #include"GameClearScene.h"
+#include"Stage.h"
 
 
 /// <summary>
@@ -9,7 +10,8 @@
 /// </summary>
 GameScene::GameScene()
 {
-    //処理なし
+    //メモリの確保
+    stage = new Stage();
 }
 
 /// <summary>
@@ -17,7 +19,8 @@ GameScene::GameScene()
 /// </summary>
 GameScene::~GameScene()
 {
-    //処理なし
+    //メモリの解放
+    delete stage;
 }
 
 /// <summary>
@@ -55,7 +58,6 @@ void GameScene::Update()
 /// </summary>
 void GameScene::Draw()
 {
-#ifdef _DEBUG
-    DrawString(500, 500, "ゲームシーン", GetColor(255, 255, 255));
-#endif
+    //各クラスの描画を行う
+    stage->Draw();
 }
