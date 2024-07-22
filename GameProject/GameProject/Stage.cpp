@@ -14,6 +14,7 @@ Stage::Stage()
     modelCollection = ModelCollection::GetInstance();
     modelHandle = modelCollection->GetModelHandle(ModelCollection::Stage);
 
+    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
     //ステージの座標の初期化
     MV1SetPosition(modelHandle, InitialPosition);
 }

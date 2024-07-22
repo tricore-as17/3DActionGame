@@ -15,6 +15,12 @@ Player::Player()
     modelCollection = ModelCollection::GetInstance();
     //モデルハンドルをもらう
     modelHandle = modelCollection->GetModelHandle(ModelCollection::Player);
+
+    //座標の設定
+    MV1SetPosition(modelHandle, VGet(0, 0, 0));
+
+    //文字コードの変更
+    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
 }
 
 /// <summary>
@@ -31,6 +37,15 @@ Player::~Player()
 void Player::Update()
 {
 
+}
+
+/// <summary>
+/// 描画
+/// </summary>
+void Player::Draw()
+{
+    //プレイヤーの描画
+    MV1DrawModel(modelHandle);
 }
 
 

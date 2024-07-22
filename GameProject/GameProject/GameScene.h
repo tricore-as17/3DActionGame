@@ -2,6 +2,8 @@
 #include"SceneBase.h"
 
 class Stage;
+class Camera;
+class Player;
 
 
 /// <summary>
@@ -27,5 +29,7 @@ public:
 
 private:
     Stage* stage;   //ステージ
+    Camera* camera; //カメラ
+    Player* player; //プレイヤー
 };
 
