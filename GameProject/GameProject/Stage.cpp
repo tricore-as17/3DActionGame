@@ -1,6 +1,6 @@
 ﻿#include"DxLib.h"
 #include"Stage.h"
-#include"ModelCollection.h"
+#include"ModelDataManager.h"
 
 //定数の初期化
 const VECTOR Stage::InitialPosition = VGet(0, 0, 0);
@@ -9,10 +9,10 @@ const VECTOR Stage::InitialPosition = VGet(0, 0, 0);
 /// コンストラクタ
 /// </summary>
 Stage::Stage()
-    :modelCollection(nullptr)
+    :modelDataManager(nullptr)
 {
-    modelCollection = ModelCollection::GetInstance();
-    modelHandle = modelCollection->GetModelHandle(ModelCollection::Stage);
+    modelDataManager = ModelDataManager::GetInstance();
+    modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Stage);
 
     MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
     //ステージの座標の初期化
@@ -24,7 +24,7 @@ Stage::Stage()
 /// </summary>
 Stage::~Stage()
 {
-    modelCollection = nullptr;
+    modelDataManager = nullptr;
 }
 
 /// <summary>

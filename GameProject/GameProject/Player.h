@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class ModelCollection;
+class ModelDataManager;
 
 class Player
 {
@@ -31,7 +31,7 @@ private:
     VECTOR position;   //座標
     VECTOR direction;   //方向
 
-    ModelCollection* modelCollection;
+    ModelDataManager* modelDataManager;
 
     /// <summary>
     /// 地面に向けたベクトルの調整

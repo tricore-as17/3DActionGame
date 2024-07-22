@@ -1,20 +1,20 @@
 ﻿#include"DxLib.h"
 #include"Player.h"
-#include"ModelCollection.h"
+#include"ModelDataManager.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 Player::Player()
-    :modelCollection(nullptr)
+    :modelDataManager(nullptr)
     ,position(VGet(0,0,0))
     ,direction(VGet(0,0,0))
 {
     //インスタンスを持ってくる
-    modelCollection = ModelCollection::GetInstance();
+    modelDataManager = ModelDataManager::GetInstance();
     //モデルハンドルをもらう
-    modelHandle = modelCollection->GetModelHandle(ModelCollection::Player);
+    modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Player);
 
     //座標の設定
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
@@ -28,7 +28,7 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
-    modelCollection = nullptr;
+    modelDataManager = nullptr;
 }
 
 /// <summary>
