@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class ModelCollection;
+class ModelDataManager;
 
 class Stage
 {
@@ -17,11 +17,10 @@ public:
 
 private:
     //定数
-    static const VECTOR InitialPosition;  //初期座標
-    static constexpr float DefaultScale = 0.002;
+    static const VECTOR InitialPosition;          //初期座標
 
-    ModelCollection* modelCollection;   //モデルハンドルを格納しているクラスのポインタ
-    int modelHandle;       //モデルハンドル
+    ModelDataManager* modelDataManager;   //モデルハンドルを格納しているクラスのポインタ
+    int modelHandle;                    //モデルハンドル
 
 };
 
