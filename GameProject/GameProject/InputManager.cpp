@@ -12,10 +12,12 @@ InputManager* InputManager::inputManager = nullptr;
 /// </summary>
 InputManager::InputManager()
 {
+    //それぞれのキー名前とDxライブラリ上での識別番号をセットにする
     keyTag.insert(make_pair(SPACE, PAD_INPUT_10));
     keyTag.insert(make_pair(LEFT, PAD_INPUT_LEFT));
     keyTag.insert(make_pair(RIGHT,PAD_INPUT_RIGHT));
 
+    //それぞれのキーの状態をfalseに
     for (int i = 0; i < keyTag.size(); i++)
     {
         releaseKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
@@ -73,9 +75,9 @@ bool InputManager::IsReleaseKey(const int compareKey)
 
     releaseKey.at((compareKey)) = false;
     // キー離した瞬間を取る.
-
     if (isPushedKey.at((compareKey)))
     {
+        //指定のキーが押されていない場合はフラグを切り替える
         if (!(input & compareKey))
         {
             isPushedKey.at((compareKey)) = false;
