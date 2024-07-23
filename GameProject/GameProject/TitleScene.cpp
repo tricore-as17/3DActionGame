@@ -25,10 +25,10 @@ TitleScene::~TitleScene()
 void TitleScene::Update()
 {
     //スペースキーが離されたかのチェック
-    bool keyRelease = inputManager->IsReleaseKey(PAD_INPUT_10);
+    bool isReleasedKey = inputManager->IsReleaseKey(PAD_INPUT_10);
 
     //スペースキーが離されたらゲームシーンに移行
-    if (keyRelease)
+    if (isReleasedKey)
     {
         nextScene = new GameScene();
     }

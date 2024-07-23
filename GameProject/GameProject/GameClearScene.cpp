@@ -26,10 +26,10 @@ void GameClearScene::Update()
     //デバッグ時だけキー入力でシーン遷移するように
 #ifdef _DEBUG
     //スペースキーが離されたかをチェック
-    bool releaseKey = inputManager->IsReleaseKey(PAD_INPUT_LEFT);
+    bool isReleasedKey = inputManager->IsReleaseKey(PAD_INPUT_10);
 
-    //左矢印キーが押されていればゲームクリアシーンに以降
-    if (releaseKey)
+    //スペースキーが離されていればタイトルシーンに以降
+    if (isReleasedKey)
     {
         nextScene = new TitleScene();
     }
