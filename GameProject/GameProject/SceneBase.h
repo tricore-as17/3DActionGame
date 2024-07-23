@@ -22,7 +22,7 @@ public:
     /// 次のシーンベースを返す
     /// </summary>
     /// <returns></returns>
-    SceneBase* GetNextScene() { return inputScene; }
+    SceneBase* GetNextScene() { return nextScene; }
 
     /// <summary>
     /// 更新処理

@@ -13,16 +13,27 @@ InputManager* InputManager::inputManager = nullptr;
 InputManager::InputManager()
 {
     //それぞれのキー名前とDxライブラリ上での識別番号をセットにする
-    keyTag.insert(make_pair(SPACE, PAD_INPUT_10));
-    keyTag.insert(make_pair(LEFT, PAD_INPUT_LEFT));
-    keyTag.insert(make_pair(RIGHT,PAD_INPUT_RIGHT));
+    keyTag.insert(make_pair(Space,      PAD_INPUT_10));
+    keyTag.insert(make_pair(Left,       PAD_INPUT_LEFT));
+    keyTag.insert(make_pair(Right,      PAD_INPUT_RIGHT));
+    keyTag.insert(make_pair(Up,         PAD_INPUT_UP));
+    keyTag.insert(make_pair(Down,       PAD_INPUT_DOWN));
+    keyTag.insert(make_pair(X,          PAD_INPUT_1));
+    keyTag.insert(make_pair(Y,          PAD_INPUT_2));
+    keyTag.insert(make_pair(A,          PAD_INPUT_3));
+    keyTag.insert(make_pair(B,          PAD_INPUT_4));
+    keyTag.insert(make_pair(LB,         PAD_INPUT_5));
+    keyTag.insert(make_pair(RB,         PAD_INPUT_6));
+    keyTag.insert(make_pair(LT,         PAD_INPUT_7));
+    keyTag.insert(make_pair(RT,         PAD_INPUT_8));
+    keyTag.insert(make_pair(LeftStick,  PAD_INPUT_9));
+
 
     //それぞれのキーの状態をfalseに
     for (int i = 0; i < keyTag.size(); i++)
     {
-        releaseKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
-        isPushedKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
-        onPrevKey.insert(make_pair(keyTag.at((KeyKinds)(i)), false));
+        keyPushState.insert(make_pair(keyTag.at((KeyKinds)(i)), NotPush));
+
     }
 }
 
@@ -63,39 +74,38 @@ void InputManager::DeleteInstance()
 }
 
 /// <summary>
-/// キーを離した瞬間をとる
+/// キーの入力状態を取得
 /// </summary>
 /// <param name="compareKey">チェックしたい入力キー</param>
 /// <returns>キーを離したか</returns>
-bool InputManager::IsReleaseKey(const int compareKey)
+InputManager::KeyPushState InputManager::GetKeyPushState(const int compareKey)
 {
     //キー入力
     auto input = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
-
-    releaseKey.at((compareKey)) = false;
+    //キーが離されている状態
+    if (keyPushState.at(compareKey) == JustRelease)
+    {
+        //続けて押されていないのでNotPushに変える
+        if (!(input & compareKey))
+        {
+            keyPushState.at(compareKey) = NotPush;
+        }
+    }
     // キー離した瞬間を取る.
-    if (isPushedKey.at((compareKey)))
+    if (keyPushState.at(compareKey) == Push)
     {
         //指定のキーが押されていない場合はフラグを切り替える
         if (!(input & compareKey))
         {
-            isPushedKey.at((compareKey)) = false;
-            releaseKey.at((compareKey)) = true;
+            keyPushState.at(compareKey) = JustRelease;
         }
     }
-    else if (onPrevKey.at((compareKey)) == false && (input & compareKey))	//キーが最初に押されたタイミング
+    //キーが最初に押されたタイミングをとる
+    else if (keyPushState.at(compareKey) !=  Push && (input & compareKey))
     {
-        releaseKey.at((compareKey)) = false;
-        isPushedKey.at((compareKey)) = true;
+        keyPushState.at(compareKey) = Push;
     }
-    if ((input & compareKey))	//押し続けられている時の処理
-    {
-        onPrevKey.at((compareKey)) = true;
-    }
-    else
-    {
-        onPrevKey.at((compareKey)) = false;
-    }
-    return releaseKey.at((compareKey));
+
+    return keyPushState.at(compareKey);
 }
