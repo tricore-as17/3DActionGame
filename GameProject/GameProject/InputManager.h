@@ -28,7 +28,7 @@ private:
     static InputManager* inputManager;
 
     static bool releaseKey;        //キーが離されたか
-    static bool onKey;             //キーが押されたか
+    static bool isPushedKey;         //キーが押されたか
     static bool onPrevKey;         //キーが押され続けているか
 };
 
