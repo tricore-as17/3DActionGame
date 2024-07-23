@@ -11,8 +11,8 @@ class Game
 {
 public:
 
-    static constexpr int SCREEN_WIDTH = 1920;   //スクリーンの幅
-    static constexpr int SCREEN_HEIGHT = 1080;  //スクリーンの高さ
+    static constexpr int ScreenWidth = 1920;   //スクリーンの幅
+    static constexpr int ScreenHeight = 1080;  //スクリーンの高さ
     //コンストラクト
     Game();
     //デストラクタ
