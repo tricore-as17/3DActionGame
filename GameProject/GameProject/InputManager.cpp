@@ -6,7 +6,7 @@
 InputManager* InputManager::inputManager = nullptr;
 //フラグの初期化
 bool InputManager::releaseKey = false;
-bool InputManager::onKey = false;
+bool InputManager::isPushedKey = false;
 bool InputManager::onPrevKey = false;
 
 
@@ -67,19 +67,19 @@ bool InputManager::IsReleaseKey(const int compareKey)
 
     releaseKey = false;
     // キー離した瞬間を取る.
-    if (onKey)
+    if (isPushedKey)
     {
-        //
+        //キーが押されていないかを確認してフラグを切り替える
         if (!(input & PAD_INPUT_10))
         {
-            onKey = false;
+            isPushedKey = false;
             releaseKey = true;
         }
     }
     else if (onPrevKey == false && (input & PAD_INPUT_10))	//キーが最初に押されたタイミング
     {
         releaseKey = false;
-        onKey = true;
+        isPushedKey = true;
     }
     if ((input & PAD_INPUT_10))	//押し続けられている時の処理
     {
