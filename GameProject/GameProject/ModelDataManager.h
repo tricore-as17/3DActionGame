@@ -49,21 +49,8 @@ private:
     //デストラクタ
     ~ModelDataManager();
 
-<<<<<<< HEAD:GameProject/GameProject/ModelDataManager.h
-    /// <summary>
-    /// 必要なモデルをロードする
-    /// </summary>
-    static void LoadModel();
-
-    /// <summary>
-    /// 読み込んだモデルの削除
-    /// </summary>
-    static void DeleteModel();
 
     static ModelDataManager* modelDataManager;     //自身のインスタンスのポインタ
-=======
-    static ModelCollection* modelCollection;     //自身のインスタンスのポインタ
->>>>>>> 5e37c53 (不要な関数の削除):GameProject/GameProject/ModelCollection.h
 
     map<ModelTag, int> modelHandle;              //モデルハンドルをまとめているマップ配列
 
