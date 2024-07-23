@@ -43,7 +43,12 @@ void ColisionManager::DeleteInstance()
 /// <returns>当たっているか</returns>
 bool ColisionManager::IsHitSphereAndCapsule(ColisionData sphere, ColisionData capsule)
 {
+    //ToDo
+    //値を返さないとエラーが起きるためとりあえすfalseを返しています。
+    //当たり判定実装時に処理を追加します。
+    bool isHit = false;
 
+    return isHit;
 }
 
 /// <summary>

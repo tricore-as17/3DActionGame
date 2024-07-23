@@ -6,7 +6,7 @@
 /// </summary>
 ImageDataManager::ImageDataManager()
 {
-
+    
 }
 
 /// <summary>
@@ -40,7 +40,11 @@ void ImageDataManager::DeleteInstance()
 /// <returns>イメージハンドル</returns>
 const int ImageDataManager::GetImageHandle(ImageTag imageTag)
 {
-
+    //ToDo
+    //現在使用する画像が無いためエラーが起きないように
+    //返り値を返しています
+    int image = 0;
+    return image;
 }
 
 
