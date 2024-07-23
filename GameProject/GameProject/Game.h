@@ -10,6 +10,9 @@ class FrameRateController;
 class Game
 {
 public:
+
+    static constexpr int SCREEN_WIDTH = 1920;   //スクリーンの幅
+    static constexpr int SCREEN_HEIGHT = 1080;  //スクリーンの高さ
     //コンストラクト
     Game();
     //デストラクタ
