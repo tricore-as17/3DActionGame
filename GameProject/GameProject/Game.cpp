@@ -42,13 +42,13 @@ void Game::Update()
         nextScene = nowScene->GetNextScene();
         nowScene->Draw();
         ScreenFlip();
-        //フレームレートを設定した値に同期させる
-        frameRateController->Sync();
         //次のループのシーンと現在のシーンが違う場合は移行処理を行う
         if (nowScene != nextScene)
         {
             ChangeScene();
         }
+        //フレームレートを設定した値に同期させる
+        frameRateController->Sync();
 
 
     }
