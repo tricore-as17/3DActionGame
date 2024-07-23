@@ -24,17 +24,17 @@ TitleScene::~TitleScene()
 /// </summary>
 void TitleScene::Update()
 {
-    //スペースキーが押されたかのチェック
-    bool isKeyRelease = inputManager->IsReleaseKey(PAD_INPUT_10);
+    //スペースキーが離されたかのチェック
+    bool keyRelease = inputManager->IsReleaseKey(PAD_INPUT_10);
 
-    //スペースキーが押されていればゲームシーンに移行
-    if (isKeyRelease)
+    //スペースキーが離されたらゲームシーンに移行
+    if (keyRelease)
     {
-        inputScene = new GameScene();
+        nextScene = new GameScene();
     }
     else
     {
-        inputScene = this;
+        nextScene = this;
     }
 }
 

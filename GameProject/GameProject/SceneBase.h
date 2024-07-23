@@ -35,7 +35,7 @@ public:
     virtual void Draw()abstract;
 
 protected:
-    SceneBase* inputScene;       //次のループでのシーンを入れる変数
+    SceneBase* nextScene;        //次のループでのシーンを入れる変数
     FadeInOut* fadeInOut;        //フェードアウトとフェードイン用のクラス
     SoundManager* soundManager;  //サウンドを鳴らすためのクラス
     InputManager* inputManager;  //入力の処理を行うクラス
