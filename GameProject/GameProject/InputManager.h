@@ -42,7 +42,7 @@ private:
     map<KeyKinds, int> keyTag;        //キーの種類からDxライブラリで使う番号に変換用
 
     map<int,bool>  releaseKey;        //キーが離されたか
-    map<int, bool> isPushedKey;             //キーが押されたか
+    map<int, bool> isPushedKey;       //キーが押されたか
     map<int, bool> onPrevKey;         //キーが押され続けているか
 };
 

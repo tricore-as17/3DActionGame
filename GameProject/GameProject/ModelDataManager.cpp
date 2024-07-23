@@ -39,6 +39,9 @@ void ModelDataManager::DeleteInstance()
 /// <returns>イメージハンドル</returns>
 const int ModelDataManager::GetModelHandle(ModelTag modelTag)
 {
+    //ToDo
+    //プレイヤーなどを追加した際にそのモデルハンドルを返すため
+    //今はエラーが起きないように0を返しています。
     int modelHandle = 0;
     return modelHandle;
 }
