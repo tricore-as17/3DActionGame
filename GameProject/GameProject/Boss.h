@@ -29,8 +29,8 @@ private:
     static const VECTOR InitialPosition;             //初期座標
 
     //メンバ変数
-    int modelHandle;        //モデルハンドル
-    VECTOR position;       //座標
+    int modelHandle;                    //モデルハンドル
+    VECTOR position;                    //座標
     ModelDataManager* modelDataManager; //モデルハンドルをもっているクラスのポインタ
 
 };

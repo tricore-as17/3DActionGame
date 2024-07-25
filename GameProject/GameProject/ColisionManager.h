@@ -35,7 +35,7 @@ public:
     /// <param name="sphere">球体の当たり判定に必要な情報</param>
     /// <param name="capsule">カプセルの当たり判定に必要な情報</param>
     /// <returns>当たっているか</returns>
-    static bool IsHitSphereAndCapsule(ColisionData sphere, ColisionData capsule);
+    bool IsHitSphereAndCapsule(ColisionData sphere, ColisionData capsule);
 
     /// <summary>
     /// 当たったあとの処理を持ってくる
@@ -47,11 +47,21 @@ public:
         , function<void(ColisionData, HitObjectTag)> onHit);
 
     /// <summary>
+    /// 地面に向けたベクトルの調整
+    /// </summary>
+    /// <param name="velocity">プレイヤーのベロシティ</param>
+    /// <param name="beforePosition">反映させる前の座標</param>
+    /// <returns>調整したベロシティ</returns>
+    static VECTOR AdjustGroundToWardVelocity(VECTOR velocity, VECTOR beforePosition);
+
+    /// <summary>
     /// 更新処理
     /// </summary>
     void Update();
 
 private:
+    //関数内で使用する定数
+    static constexpr float AdjustVelocityY = 0.01f;//y方向のvelocityを調整する際の大きさ
 
     //自身のポインタ
     static ColisionManager* colisionManager;

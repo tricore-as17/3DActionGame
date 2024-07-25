@@ -7,15 +7,10 @@ class Utility
 {
 public:
 
-    /// <summary>
-    /// 地面に向けたベクトルの調整
-    /// </summary>
-    /// <param name="velocity">プレイヤーのベロシティ</param>
-    /// <param name="beforePosition">反映させる前の座標</param>
-    /// <returns>調整したベロシティ</returns>
-    static VECTOR AdjustGroundToWardVelocity(VECTOR velocity,VECTOR beforePosition);
+    //ToDo
+    //地面にめり込まないように調節する関数をもともとUtilityに持たせようと思い
+    //クラスを作成しましたが、ColisionManagerが持つ方が正しいと思い移動させました
+    //その際に処理が無くなりましたが,今後使うと思うので残しています。
 
-private:
-    //関数内で使用する定数
-    static constexpr float AdjustVelocityY = 0.01f;//y方向のvelocityを調整する際の大きさ
+
 };
