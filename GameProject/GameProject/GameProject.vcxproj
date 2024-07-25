@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColisionManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
@@ -147,10 +148,13 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelDataManager.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ColisionData.h" />
     <ClInclude Include="ColisionManager.h" />
     <ClInclude Include="EffectManager.h" />
@@ -163,8 +167,10 @@
     <ClInclude Include="ImageDataManager.h" />
     <ClInclude Include="ModelDataManager.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
