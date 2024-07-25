@@ -65,7 +65,6 @@ private:
     float angle;           //モデルの向いている角度
     VECTOR modelDirection; //モデルの向くべき方向
     //メンバクラス
-    ModelDataManager* modelDataManager;
     StateBase* nowState;                            //現在のステートを保存するポインタ
     StateBase* nextState;                           //次のループでのステートを保存するポインタ
 

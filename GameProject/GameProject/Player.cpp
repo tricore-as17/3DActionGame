@@ -9,14 +9,13 @@
 /// コンストラクタ
 /// </summary>
 Player::Player()
-    :modelDataManager(nullptr)
-    , position(VGet(0, 0, 0))
+    : position(VGet(0, 0, 0))
     , angle(0.0f)
     , nowState(NULL)
     , modelDirection(VGet(0, 0, 0))
 {
     //インスタンスを持ってくる
-    modelDataManager = ModelDataManager::GetInstance();
+    ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
     //モデルハンドルをもらう
     modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Player);
 
@@ -39,7 +38,6 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
-    modelDataManager = nullptr;
     //メモリの解放
     delete nowState;
 }

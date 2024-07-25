@@ -19,7 +19,6 @@ private:
     //定数
     static const VECTOR InitialPosition;          //初期座標
 
-    ModelDataManager* modelDataManager;   //モデルハンドルを格納しているクラスのポインタ
     int modelHandle;                    //モデルハンドル
 
 };
