@@ -15,6 +15,14 @@ public:
     /// <returns>調整したベロシティ</returns>
     static VECTOR AdjustGroundToWardVelocity(VECTOR velocity,VECTOR beforePosition);
 
+    /// <summary>
+    /// ビット同士の足し算
+    /// </summary>
+    /// <param name="bitAddend">足される側のビット</param>
+    /// <param name="bitAdder">足す側のビット</param>
+    /// <returns>ビットの足し算の結果</returns>
+    static int AddBit(int bitAddend, int bitAdder);
+
 private:
     //関数内で使用する定数
     static constexpr float AdjustVelocityY = 0.01f;//y方向のvelocityを調整する際の大きさ
