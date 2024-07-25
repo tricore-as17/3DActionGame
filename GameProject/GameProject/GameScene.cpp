@@ -27,6 +27,7 @@ GameScene::~GameScene()
     //メモリの解放
     delete stage;
     delete camera;
+    delete player;
 }
 
 /// <summary>

@@ -31,8 +31,6 @@ private:
     VECTOR position;   //座標
     VECTOR direction;  //方向
 
-    ModelDataManager* modelDataManager;
-
     /// <summary>
     /// 地面に向けたベクトルの調整
     /// </summary>

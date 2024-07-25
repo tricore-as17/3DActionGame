@@ -1,7 +1,7 @@
 ﻿#include"DxLib.h"
 #include"Game.h"
 #include"InputManager.h"
-#include"ModelCollection.h"
+#include"ModelDataManager.h"
 
 //----------------------------//
 // WinMain関数.
@@ -31,7 +31,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     //シングルトンクラスのインスタンス確保
     InputManager::CreateInstance();
-    ModelCollection::CreateInstance();
+    ModelDataManager::CreateInstance();
 
 
     Game* game = new Game();
