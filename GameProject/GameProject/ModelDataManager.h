@@ -40,7 +40,7 @@ public:
     /// </summary>
     /// <param name="imageTag">イメージタグ</param>
     /// <returns>イメージハンドル</returns>
-    static const int GetModelHandle(ModelTag modelTag);
+    const int GetModelHandle(ModelTag modelTag);
 
 private:
 
@@ -49,15 +49,6 @@ private:
     //デストラクタ
     ~ModelDataManager();
 
-    /// <summary>
-    /// 必要なモデルをロードする
-    /// </summary>
-    static void LoadModel();
-
-    /// <summary>
-    /// 読み込んだモデルの削除
-    /// </summary>
-    static void DeleteModel();
 
     static ModelDataManager* modelDataManager;     //自身のインスタンスのポインタ
 
