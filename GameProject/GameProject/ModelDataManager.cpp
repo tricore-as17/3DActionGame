@@ -1,6 +1,8 @@
 ﻿#include"ModelDataManager.h"
 #include"DxLib.h"
 
+ModelDataManager* ModelDataManager::modelDataManager = nullptr;
+
 
 /// <summary>
 /// コンストラクタ

@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColisionManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -152,8 +153,10 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColisionData.h" />
     <ClInclude Include="ColisionManager.h" />
@@ -172,6 +175,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

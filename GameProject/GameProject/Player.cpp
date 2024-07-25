@@ -18,8 +18,6 @@ Player::Player()
     //座標の設定
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
 
-    //文字コードの変更
-    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
 }
 
 /// <summary>
@@ -37,7 +35,7 @@ void Player::Update()
 {
     //ToDo
     //ステート管理でプレイヤーの移動を追加したら
-    //AdjustGroundToWardVelocityも追加する
+    //y座標が0より低くならないように調節する関数をColisionManagerから呼んで使用する
 }
 
 /// <summary>
@@ -50,36 +48,7 @@ void Player::Draw()
 }
 
 
-/// <summary>
-/// 地面に向けたベクトルの調整
-/// </summary>
-/// <param name="velocity">プレイヤーのベロシティ</param>
-/// <returns>調整したベロシティ</returns>
-VECTOR Player::AdjustGroundToWardVelocity(VECTOR velocity)
-{
 
-    VECTOR adjustVelocity = velocity;
-    //地面にめり込まなくなるまで戻す
-    while (true)
-    {
-        //未来のY座標を出す
-        float futureYPosition = position.y + adjustVelocity.y;
-        //座標が0より下回っていたら修正する
-        if (futureYPosition < 0)
-        {
-            adjustVelocity.y += AdjustVelocityY;
-        }
-        else
-        {
-            break;
-        }
-
-    }
-
-    //調整した値を返す
-    return adjustVelocity;
-    
-}
 
 
 

@@ -24,17 +24,9 @@ public:
 
 private:
     //定数
-    static constexpr float DefaultScale = 0.015;   //通常の大きさ
-    static constexpr float AdjustVelocityY = 0.01f;//y方向のvelocityを調整する際の大きさ
-
     int modelHandle;   //モデルハンドル
     VECTOR position;   //座標
     VECTOR direction;  //方向
 
-    /// <summary>
-    /// 地面に向けたベクトルの調整
-    /// </summary>
-    /// <param name="velocity">プレイヤーのベロシティ</param>
-    /// <returns>調整したベロシティ</returns>
-    VECTOR AdjustGroundToWardVelocity(VECTOR velocity);
+
 };

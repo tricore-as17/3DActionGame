@@ -5,6 +5,7 @@
 #include"Camera.h"
 #include"Stage.h"
 #include"Player.h"
+#include"Boss.h"
 
 
 
@@ -17,6 +18,7 @@ GameScene::GameScene()
     stage  = new Stage();
     camera = new Camera();
     player = new Player();
+    boss   = new Boss();
 }
 
 /// <summary>
@@ -28,6 +30,7 @@ GameScene::~GameScene()
     delete stage;
     delete camera;
     delete player;
+    delete boss;
 }
 
 /// <summary>
@@ -68,4 +71,5 @@ void GameScene::Draw()
     //各クラスの描画を行う
     stage->Draw();
     player->Draw();
+    boss->Draw();
 }
