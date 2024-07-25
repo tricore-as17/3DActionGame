@@ -12,25 +12,25 @@ public:
     //アニメーションの種類
     enum AnimationState
     {
-        Turn180        = 0,
-        BackWalk       = 1,
-        Block          = 2,
-        BlockingImpact = 3,
-        Clash          = 4,
-        Death          = 5,
-        Impact         = 6,
-        Idle           = 7,
-        Jump           = 8,
-        LeftTurn       = 9,
-        LeftWalk       = 10,
-        RightTurn      = 11,
-        RightWalk      = 12,
-        Rolling        = 13,
-        Run            = 14,
-        Slash          = 15,
-        StartBlocking  = 16,
-        Walk           = 17,
-        Spell          = 18
+        Turn180        = 0,    //180度回転
+        BackWalk       = 1,    //後ろ歩き
+        Block          = 2,    //ガード
+        BlockingImpact = 3,    //ガード中にダメージを受ける
+        Clash          = 4,    //強攻撃
+        Death          = 5,    //死亡
+        Impact         = 6,    //ダメージヒット
+        Idle           = 7,    //静止
+        Jump           = 8,    //ジャンプ
+        LeftTurn       = 9,    //左回転
+        LeftWalk       = 10,   //左歩き
+        RightTurn      = 11,   //右回転
+        RightWalk      = 12,   //右歩き
+        Rolling        = 13,   //回避
+        Run            = 14,   //走り
+        Slash          = 15,   //通常攻撃
+        StartBlocking  = 16,   //防御開始
+        Walk           = 17,   //歩き
+        Spell          = 18    //魔法攻撃
     };
     //コンストラクタ
     Player();
@@ -70,7 +70,7 @@ private:
     StateBase* nextState;                           //次のループでのステートを保存するポインタ
 
 
-    //関数
+    //メンバ関数
 
     /// <summary>
     /// ステートの移行処理
