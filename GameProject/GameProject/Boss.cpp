@@ -9,11 +9,10 @@ const VECTOR Boss::InitialPosition = VGet(0, 0, 6);
 /// コンストラクタ
 /// </summary>
 Boss::Boss()
-    :modelDataManager(nullptr)
-    ,position(InitialPosition)
+    :position(InitialPosition)
 {
     //モデルマネージャーにアクセスるポインタの代入
-    modelDataManager = ModelDataManager::GetInstance();
+    ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
 
     //モデルハンドルをもってくる
     modelHandle = MV1DuplicateModel(modelDataManager->GetModelHandle(ModelDataManager::Boss));
@@ -31,7 +30,6 @@ Boss::~Boss()
     //モデルの削除
     MV1DeleteModel(modelHandle);
 
-    modelDataManager = nullptr;
 }
 
 /// <summary>

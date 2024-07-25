@@ -31,6 +31,4 @@ private:
     //メンバ変数
     int modelHandle;                    //モデルハンドル
     VECTOR position;                    //座標
-    ModelDataManager* modelDataManager; //モデルハンドルをもっているクラスのポインタ
-
 };
