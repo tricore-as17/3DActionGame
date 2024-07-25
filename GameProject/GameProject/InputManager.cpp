@@ -1,5 +1,4 @@
-﻿#include<stdexcept>
-#include"DxLib.h"
+﻿#include"DxLib.h"
 #include"InputManager.h"
 #include"Utility.h"
 
@@ -122,39 +121,4 @@ InputManager::KeyPushState InputManager::GetKeyPushState(const int compareKey)
     return keyPushState.at(compareKey);
 }
 
-/// <summary>
-/// 押されているキーを取得
-/// </summary>
-/// <returns>キーの種類</returns>
-InputManager::KeyKinds InputManager::GetPushKeyKinds()
-{
-    //キーの値を取得
-    auto input = GetJoypadInputState(DX_INPUT_PAD1);
 
-    //仮で代入しておく
-    KeyKinds keyKinds = Left;
-    //入力されていない場合
-    if (input == 0)
-    {
-        keyKinds = Other;
-    }
-    else
-    {
-        //事前に設定したキー以外が押されていないかを例外処理でチェック
-        try
-        {
-            reverseKeyTag.at(input);
-        }
-        catch (const std::out_of_range&)
-        {
-            keyKinds = Other;
-        }
-    }
-    //例外処理が行われていない場合
-    if (keyKinds == Left)
-    {
-        keyKinds = reverseKeyTag.at(input);
-    }
-
-    return keyKinds;
-}

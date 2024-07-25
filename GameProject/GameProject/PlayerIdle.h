@@ -31,6 +31,6 @@ private:
 
     //メンバ変数
     InputManager* inputManager;    //インプットマネージャーにアクセスするためのポインタ
-    InputManager::KeyKinds keyInput;         //キーの入力状態
+    int keyInput;                  //キーの入力状態
 
 };

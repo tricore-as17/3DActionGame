@@ -2,6 +2,10 @@
 #include"Player.h"
 #include"PlayerIdle.h"
 #include"PlayerMove.h"
+#include"PlayerAttack.h"
+#include"PlayerDefense.h"
+#include"PlayerRolling.h"
+#include"PlayerShotMagic.h"
 
 
 /// <summary>
@@ -32,7 +36,7 @@ PlayerIdle::~PlayerIdle()
 void PlayerIdle::Update(VECTOR& modelDirection)
 {
     //入力された値をもってくる
-    keyInput = inputManager->GetPushKeyKinds();
+    keyInput = GetJoypadInputState(DX_INPUT_PAD1);
 
     //ステートの切り替え処理を呼ぶ
     ChangeState();
@@ -53,35 +57,44 @@ void PlayerIdle::Update(VECTOR& modelDirection)
 /// </summary>
 void PlayerIdle::ChangeState()
 {
+    //キーの名前を判断するタグの用意
+    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
-    if (keyInput <= InputManager::MoveKeyMaxIndex)
+    if (keyInput & InputManager::MoveKeyIndex)
     {
         nextState = new PlayerMove(modelhandle,animationIndex);
     }
-    //RBのキーが押されていれば攻撃ステートに変更
-    else if (keyInput == InputManager::RB)
+    //RBのキーかRTキーが押されていれば攻撃ステートに変更
+    else if (keyInput & keyTag.at(InputManager::RB) || keyInput & keyTag.at(InputManager::RT))
     {
+        //押されたボタンによって強攻撃のアニメーションにするか
+        //通常攻撃のアニメーションにするか変更する
+        Player::AnimationState animationState;
+        if (keyInput & keyTag.at(InputManager::RB))
+        {
+            animationState = Player::Slash;
+        }
+        else
+        {
+            animationState = Player::Clash;
+        }
+        nextState = new PlayerAttack(modelhandle, animationIndex,animationState);
     }
-    //RTのキーが押されていればデフェンスステートに移行する
-    else if (keyInput == InputManager::LT)
+    //LTのキーが押されていればデフェンスステートに移行する
+    else if (keyInput & keyTag.at(InputManager::LT))
     {
-
-    }
-    //Aのキーが押されていればジャンプステートに移行
-    else if (keyInput == InputManager::A)
-    {
-
+        nextState = new PlayerDefense(modelhandle, animationIndex);
     }
     //Bキーが押されていれば回避状態のステート
-    else if (keyInput == InputManager::B)
+    else if (keyInput & keyTag.at(InputManager::B))
     {
-
+        nextState = new PlayerRolling(modelhandle, animationIndex);
     }
     //LBキーで射撃ステートに移行
-    else if (keyInput == InputManager::LB)
+    else if (keyInput & keyTag.at(InputManager::LB))
     {
-
+        nextState = new PlayerShotMagic(modelhandle, animationIndex);
     }
     //ステート移行が無ければ自身のポインタを渡す
     else

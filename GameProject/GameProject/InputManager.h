@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include<map>
+#include<vector>
 
 using namespace std;
 
@@ -10,13 +11,13 @@ public:
     enum KeyKinds
     {
         Left       = 0,  //右
-        LeftUp     = 1,  //左上
-        LeftDown   = 2,  //左下
-        Right      = 3,  //左
-        RightUp    = 4,  //右上
-        RightDown  = 5,  //右下
-        Up         = 6,  //上
-        Down       = 7,  //下
+        Right      = 1,  //左
+        Up         = 2,  //上
+        Down       = 3,  //下
+        LeftDown   = 4,  //左下
+        LeftUp     = 5,  //左上
+        RightUp    = 6,  //右上
+        RightDown  = 7,  //右下
         Space      = 8,  //スペース
         LB         = 9,  //左上の手前のボタン
         LT         = 10,  //左上の奥側のボタン
@@ -40,10 +41,16 @@ public:
     };
 
     //定数
-    static constexpr int MoveKeyMaxIndex = 7;   //移動キーのどれかがおされているかの指標
+    static constexpr int MoveKeyIndex = 0x0000000f;   //移動キーのどれかがおされているかの指標
 
     //インスタンスを取得するゲッター
     static InputManager* GetInstance() { return inputManager; }
+
+    /// <summary>
+    /// Dxライブラリのキーの認識番号と名前がセットになったマップを返す
+    /// </summary>
+    /// <returns> Dxライブラリのキーの認識番号と名前がセットになったマップ</returns>
+    const map<KeyKinds, int> GetKeyTag()const { return keyTag; }
 
     //インスタンスを作成する
     static void CreateInstance();
@@ -58,11 +65,7 @@ public:
     /// <returns>キーを離したか</returns>
      KeyPushState GetKeyPushState(const int compareKey);
 
-     /// <summary>
-     /// 押されているキーを取得
-     /// </summary>
-     /// <returns>キーの種類</returns>
-     KeyKinds GetPushKeyKinds();
+
 private:
     //コンストラクタ
     InputManager();
