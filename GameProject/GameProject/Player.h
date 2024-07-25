@@ -28,6 +28,5 @@ private:
     VECTOR position;   //座標
     VECTOR direction;  //方向
 
-    ModelDataManager* modelDataManager;
 
 };

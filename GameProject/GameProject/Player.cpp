@@ -7,12 +7,11 @@
 /// コンストラクタ
 /// </summary>
 Player::Player()
-    :modelDataManager(nullptr)
-    ,position(VGet(0,0,0))
+    :position(VGet(0,0,0))
     ,direction(VGet(0,0,0))
 {
     //インスタンスを持ってくる
-    modelDataManager = ModelDataManager::GetInstance();
+    ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
     //モデルハンドルをもらう
     modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Player);
 
@@ -26,7 +25,7 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
-    modelDataManager = nullptr;
+    //処理なし
 }
 
 /// <summary>

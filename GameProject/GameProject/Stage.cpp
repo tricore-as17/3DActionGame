@@ -9,9 +9,8 @@ const VECTOR Stage::InitialPosition = VGet(0, 0, 0);
 /// コンストラクタ
 /// </summary>
 Stage::Stage()
-    :modelDataManager(nullptr)
 {
-    modelDataManager = ModelDataManager::GetInstance();
+    ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
     modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Stage);
 
     //ステージの座標の初期化
@@ -23,7 +22,7 @@ Stage::Stage()
 /// </summary>
 Stage::~Stage()
 {
-    modelDataManager = nullptr;
+    //処理なし
 }
 
 /// <summary>
