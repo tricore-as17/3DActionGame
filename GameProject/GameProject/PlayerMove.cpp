@@ -37,14 +37,16 @@ PlayerMove::~PlayerMove()
 void PlayerMove::Update(VECTOR& modelDirection)
 {
     velocity = VGet(0, 0, 0);
-    //入力された値をもってくる
-    keyInput = GetJoypadInputState(DX_INPUT_PAD1);
 
     //正規化した移動方向を決める
     VECTOR direction = DecisionDirection();
 
+    //キーの名前を判断するタグの用意
+    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
+
+
     //移動キーのどれかのビットがたっていれば方向をモデルに反映させる
-    if (keyInput & InputManager::MoveKeyIndex)
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Move)) == InputManager::Push)
     {
         modelDirection = direction;
     }
@@ -74,12 +76,13 @@ void PlayerMove::ChangeState()
     map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //RBのキーが押されていれば攻撃ステートに変更
-    if (keyInput & keyTag.at(InputManager::RB) || keyInput & keyTag.at(InputManager::RT))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::RB)) == InputManager::Push ||
+        inputManager->GetKeyPushState(keyTag.at(InputManager::RT)) == InputManager::Push)
     {
         //押されたボタンによって強攻撃のアニメーションにするか
         //通常攻撃のアニメーションにするか変更する
         Player::AnimationState animationState;
-        if (keyInput & keyTag.at(InputManager::RB))
+        if (inputManager->GetKeyPushState(keyTag.at(InputManager::RB)) == InputManager::Push)
         {
             animationState = Player::Slash;
         }
@@ -90,22 +93,22 @@ void PlayerMove::ChangeState()
         nextState = new PlayerAttack(modelhandle, animationIndex, animationState);
     }
     //LTのキーが押されていればデフェンスステートに移行する
-    else if (keyInput & keyTag.at(InputManager::LT))
+    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::LT)) == InputManager::Push)
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
     }
     //Bキーが押されていれば回避状態のステート
-    else if (keyInput & keyTag.at(InputManager::B))
+    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::B)) == InputManager::Push)
     {
         nextState = new PlayerRolling(modelhandle, animationIndex);
     }
     //LBキーで射撃ステートに移行
-    else if (keyInput & keyTag.at(InputManager::LB))
+    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::LB)) == InputManager::Push)
     {
         nextState = new PlayerShotMagic(modelhandle, animationIndex);
     }
     //ステート移行が無ければ自身のポインタを渡す
-    else if(keyInput & InputManager::MoveKeyIndex)
+    else if(inputManager->GetKeyPushState(keyTag.at(InputManager::Move)) == InputManager::Push)
     {
         nextState = this;
     }
@@ -128,19 +131,19 @@ VECTOR PlayerMove::DecisionDirection()
     map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //キーに合わせて移動を行う
-    if (keyInput & keyTag.at(InputManager::Left))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Left)) == InputManager::Push)
     {
         direction = VAdd(direction, VGet(-1, 0, 0));
     }
-    if (keyInput & keyTag.at(InputManager::Right))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Right)) == InputManager::Push)
     {
         direction = VAdd(direction, VGet(1, 0, 0));
     }
-    if (keyInput & keyTag.at(InputManager::Up))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Up)) == InputManager::Push)
     {
         direction = VAdd(direction, VGet(0, 0, 1));
     }
-    if (keyInput & keyTag.at(InputManager::Down))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Down)) == InputManager::Push)
     {
         direction = VAdd(direction, VGet(0, 0, -1));
     }

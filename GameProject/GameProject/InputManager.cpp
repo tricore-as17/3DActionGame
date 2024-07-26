@@ -14,13 +14,10 @@ InputManager* InputManager::inputManager = nullptr;
 InputManager::InputManager()
 {
     //それぞれのキー名前とDxライブラリ上での識別番号をセットにする
+    keyTag.insert(make_pair(Move,       MoveKeyIndex));
     keyTag.insert(make_pair(Space,      PAD_INPUT_10));
     keyTag.insert(make_pair(Left,       PAD_INPUT_LEFT));
-    keyTag.insert(make_pair(LeftUp,     Utility::AddBit(PAD_INPUT_LEFT,PAD_INPUT_UP)));
-    keyTag.insert(make_pair(LeftDown,   Utility::AddBit(PAD_INPUT_LEFT, PAD_INPUT_DOWN)));
     keyTag.insert(make_pair(Right,      PAD_INPUT_RIGHT));
-    keyTag.insert(make_pair(RightUp,    Utility::AddBit(PAD_INPUT_RIGHT, PAD_INPUT_UP)));
-    keyTag.insert(make_pair(RightDown,  Utility::AddBit(PAD_INPUT_RIGHT, PAD_INPUT_DOWN)));
     keyTag.insert(make_pair(Up,         PAD_INPUT_UP));
     keyTag.insert(make_pair(Down,       PAD_INPUT_DOWN));
     keyTag.insert(make_pair(X,          PAD_INPUT_1));
@@ -95,7 +92,7 @@ InputManager::KeyPushState InputManager::GetKeyPushState(const int compareKey)
     auto input = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
     //キーが離されている状態
-    if (keyPushState.at(compareKey) == JustRelease)
+     if (keyPushState.at(compareKey) == JustRelease)
     {
         //続けて押されていないのでNotPushに変える
         if (!(input & compareKey))

@@ -32,8 +32,6 @@ PlayerDefense::~PlayerDefense()
 /// <param name="position">プレイヤーモデルの向き</param>
 void PlayerDefense::Update(VECTOR& modelDirection)
 {
-    //入力された値をもってくる
-    keyInput = GetJoypadInputState(DX_INPUT_PAD1);
 
     //ステートの切り替え処理を呼ぶ
     ChangeState();
@@ -57,7 +55,7 @@ void PlayerDefense::ChangeState()
     map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //LTのキーが押されていればデフェンスステートに移行する
-    if (keyInput & keyTag.at(InputManager::LT))
+    if (inputManager->GetKeyPushState(keyTag.at(InputManager::LT)) == InputManager::Push)
     {
         nextState = this;
     }
