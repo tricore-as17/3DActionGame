@@ -6,12 +6,14 @@
 #include"PlayerDefense.h"
 #include"PlayerRolling.h"
 #include"PlayerShotMagic.h"
+#include"PlayerJump.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 PlayerMove::PlayerMove(int modelHandle,int beforeAnimationIndex)
     :StateBase(modelHandle,Player::Walk,beforeAnimationIndex)
+    , isGround(true)
 {
     //インプットマネージャーのアドレスを取得
     inputManager = InputManager::GetInstance();
@@ -34,7 +36,7 @@ PlayerMove::~PlayerMove()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerMove::Update(VECTOR& modelDirection)
+void PlayerMove::Update(VECTOR& modelDirection, VECTOR& position)
 {
     velocity = VGet(0, 0, 0);
     //入力された値をもってくる
@@ -48,13 +50,21 @@ void PlayerMove::Update(VECTOR& modelDirection)
     {
         modelDirection = direction;
     }
+
+    //地面に接地していたら
+    if ((int)(position.y) == 0)
+    {
+        isGround = true;
+    }
+
+    // 移動量を出す
+    velocity = VScale(direction, MoveSpeed);
+
+
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
 
-
-    // 移動量を出す
-    velocity = VScale(direction, MoveSpeed);
 
 
     //アニメーションの再生時間のセット
@@ -96,6 +106,11 @@ void PlayerMove::ChangeState()
     else if (keyInput & keyTag.at(InputManager::LT))
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
+    }
+    else if (keyInput & keyTag.at(InputManager::A) && isGround)
+    {
+        nextState = new PlayerJump(modelhandle,animationIndex,velocity);
+        isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (keyInput & keyTag.at(InputManager::B))

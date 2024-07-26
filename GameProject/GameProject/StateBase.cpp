@@ -82,3 +82,11 @@ void StateBase::StopAnimation()
     currentPlayAnimationState = Stop;
 }
 
+
+/// <summary>
+/// アニメーションを開始させる処理
+/// </summary>
+void StateBase::StartAnimation()
+{
+    currentPlayAnimationState = FirstRoop;
+}

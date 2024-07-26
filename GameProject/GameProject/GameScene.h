@@ -13,6 +13,7 @@ class Boss;
 class GameScene:public SceneBase
 {
 public:
+    
     //コンストラクタ
     GameScene();
     //デストラクタ

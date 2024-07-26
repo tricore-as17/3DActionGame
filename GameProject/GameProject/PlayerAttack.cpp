@@ -28,7 +28,7 @@ PlayerAttack::~PlayerAttack()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerAttack::Update(VECTOR& modelDirection)
+void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position)
 {
 
 

@@ -6,6 +6,7 @@
 #include"PlayerDefense.h"
 #include"PlayerRolling.h"
 #include"PlayerShotMagic.h"
+#include"PlayerJump.h"
 
 
 /// <summary>
@@ -13,6 +14,7 @@
 /// </summary>
 PlayerIdle::PlayerIdle(int& modelHandle,const int beforeAnimationIndex)
     :StateBase(modelHandle,Player::Idle,beforeAnimationIndex)
+    , isGround(true)
 {
     //インプットマネージャーのアドレスを取得
     inputManager = InputManager::GetInstance();
@@ -33,7 +35,7 @@ PlayerIdle::~PlayerIdle()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerIdle::Update(VECTOR& modelDirection)
+void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
 {
     //入力された値をもってくる
     keyInput = GetJoypadInputState(DX_INPUT_PAD1);
@@ -85,6 +87,12 @@ void PlayerIdle::ChangeState()
     else if (keyInput & keyTag.at(InputManager::LT))
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
+    }
+    //Aキーが押されて接地していれば
+    else if (keyInput & keyTag.at(InputManager::A) && isGround)
+    {
+        nextState = new PlayerJump(modelhandle, animationIndex, velocity);
+        isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (keyInput & keyTag.at(InputManager::B))

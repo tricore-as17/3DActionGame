@@ -26,7 +26,7 @@ PlayerShotMagic::~PlayerShotMagic()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerShotMagic::Update(VECTOR& modelDirection)
+void PlayerShotMagic::Update(VECTOR& modelDirection,VECTOR& position)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();

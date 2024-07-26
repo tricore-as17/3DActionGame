@@ -3,7 +3,7 @@
 
 
 /// <summary>
-/// プレイヤーの攻撃に関するステート
+/// プレイヤーの回避に関するステート
 /// </summary>
 class PlayerRolling :public StateBase
 {
@@ -17,7 +17,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="modelDirection">プレイヤーモデルの向き</param>
-    void Update(VECTOR& modelDirection)override;
+    void Update(VECTOR& modelDirection, VECTOR& position)override;
 
     /// <summary>
     /// ステートの切り替え処理をまとめたもの

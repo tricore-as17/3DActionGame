@@ -30,7 +30,7 @@ PlayerDefense::~PlayerDefense()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerDefense::Update(VECTOR& modelDirection)
+void PlayerDefense::Update(VECTOR& modelDirection, VECTOR& position)
 {
     //入力された値をもってくる
     keyInput = GetJoypadInputState(DX_INPUT_PAD1);

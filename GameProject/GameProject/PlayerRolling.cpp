@@ -6,8 +6,8 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="InitalModelHandle">モデルハンドル</param>
-PlayerRolling::PlayerRolling(int InitalModelHandle, int beforeAnimationIndex)
-    :StateBase(InitalModelHandle, Player::Rolling,beforeAnimationIndex)
+PlayerRolling::PlayerRolling(int initalModelHandle, int beforeAnimationIndex)
+    :StateBase(initalModelHandle, Player::Rolling,beforeAnimationIndex)
 {
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
@@ -26,7 +26,7 @@ PlayerRolling::~PlayerRolling()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerRolling::Update(VECTOR& modelDirection)
+void PlayerRolling::Update(VECTOR& modelDirection, VECTOR& position)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();

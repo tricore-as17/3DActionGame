@@ -17,7 +17,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="position">プレイヤーモデルの向き</param>
-    void Update(VECTOR& modelDirection)override;
+    void Update(VECTOR& modelDirection, VECTOR& position)override;
 
 
 private:
@@ -31,6 +31,7 @@ private:
 
     //メンバ変数
     InputManager* inputManager;    //インプットマネージャーにアクセスするためのポインタ
-    int keyInput;                  //キーの入力状態
+    int           keyInput;        //キーの入力状態
+    bool          isGround;        //接地しているか
 
 };
