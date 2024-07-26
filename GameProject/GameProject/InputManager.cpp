@@ -136,7 +136,7 @@ InputManager::KeyKinds InputManager::GetPushKeyKinds()
     //入力されていない場合
     if (input == 0)
     {
-        keyKinds = Other;
+        keyKinds = None;
     }
     else
     {
@@ -147,7 +147,7 @@ InputManager::KeyKinds InputManager::GetPushKeyKinds()
         }
         catch (const std::out_of_range&)
         {
-            keyKinds = Other;
+            keyKinds = None;
         }
     }
     //例外処理が行われていない場合

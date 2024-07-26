@@ -40,7 +40,7 @@ void PlayerMove::Update(VECTOR& modelDirection)
     //正規化した移動方向を決める
     VECTOR direction = DecisionDirection();
     //キーが入力されていればモデルの向きを変える
-    if (keyInput != InputManager::Other)
+    if (keyInput != InputManager::None)
     {
         modelDirection = direction;
     }
@@ -67,7 +67,7 @@ void PlayerMove::Update(VECTOR& modelDirection)
 void PlayerMove::ChangeState()
 {
     //ボタンが押されていない場合静止ステートに移行
-    if (keyInput == InputManager::Other)
+    if (keyInput == InputManager::None)
     {
         nextState = new PlayerIdle(modelhandle,animationIndex);
     }
