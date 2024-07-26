@@ -32,6 +32,10 @@ public:
         Walk           = 17,   //歩き
         Spell          = 18    //魔法攻撃
     };
+
+    //getter,setter
+    const VECTOR GetPosition()const { return position; }
+
     //コンストラクタ
     Player();
     //デストラクタ

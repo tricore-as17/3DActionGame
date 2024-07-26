@@ -17,7 +17,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     /////////////////////////////////
     // ウインドウモードに(コメントアウトしたらフルスクリーン).
-    ChangeWindowMode(TRUE);
+    //ChangeWindowMode(TRUE);
     ////////////////////////////
 
 
