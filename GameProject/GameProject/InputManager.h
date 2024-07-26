@@ -60,7 +60,7 @@ public:
     /// </summary>
     /// <param name="compareKey">チェックしたい入力キー</param>
     /// <returns>キーを離したか</returns>
-     KeyPushState GetKeyPushState(const int compareKey);
+     KeyPushState GetKeyPushState(const KeyKinds keyKinds);
 
 
 private:

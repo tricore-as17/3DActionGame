@@ -38,7 +38,7 @@ void PlayerAttack::Update(VECTOR& modelDirection)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation();
+    DetachAnimation(this);
 
 }
 

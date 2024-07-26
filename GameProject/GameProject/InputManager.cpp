@@ -84,38 +84,40 @@ void InputManager::DeleteInstance()
 /// <summary>
 /// キーの入力状態を取得
 /// </summary>
-/// <param name="compareKey">チェックしたい入力キー</param>
+/// <param name="keyTag.at(keyKinds)">チェックしたい入力キー</param>
 /// <returns>キーを離したか</returns>
-InputManager::KeyPushState InputManager::GetKeyPushState(const int compareKey)
+InputManager::KeyPushState InputManager::GetKeyPushState(const KeyKinds keyKinds)
 {
     //キー入力
     auto input = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
+  
+
     //キーが離されている状態
-     if (keyPushState.at(compareKey) == JustRelease)
+     if (keyPushState.at(keyTag.at(keyKinds)) == JustRelease)
     {
         //続けて押されていないのでNotPushに変える
-        if (!(input & compareKey))
+        if (!(input & keyTag.at(keyKinds)))
         {
-            keyPushState.at(compareKey) = NotPush;
+            keyPushState.at(keyTag.at(keyKinds)) = NotPush;
         }
     }
     // キー離した瞬間を取る.
-    if (keyPushState.at(compareKey) == Push)
+    if (keyPushState.at(keyTag.at(keyKinds)) == Push)
     {
         //指定のキーが押されていない場合はフラグを切り替える
-        if (!(input & compareKey))
+        if (!(input & keyTag.at(keyKinds)))
         {
-            keyPushState.at(compareKey) = JustRelease;
+            keyPushState.at(keyTag.at(keyKinds)) = JustRelease;
         }
     }
     //キーが最初に押されたタイミングをとる
-    else if (keyPushState.at(compareKey) !=  Push && (input & compareKey))
+    else if (keyPushState.at(keyTag.at(keyKinds)) !=  Push && (input & keyTag.at(keyKinds)))
     {
-        keyPushState.at(compareKey) = Push;
+        keyPushState.at(keyTag.at(keyKinds)) = Push;
     }
 
-    return keyPushState.at(compareKey);
+    return keyPushState.at(keyTag.at(keyKinds));
 }
 
 

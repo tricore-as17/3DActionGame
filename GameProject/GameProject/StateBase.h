@@ -74,7 +74,7 @@ protected:
     /// <summary>
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
-    void DetachAnimation();
+    void DetachAnimation(StateBase* nowState);
 
 
 

@@ -46,16 +46,14 @@ void PlayerDefense::Update(VECTOR& modelDirection)
     }
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation();
+    DetachAnimation(this);
 }
 
 void PlayerDefense::ChangeState()
 {
-    //キーの名前を判断するタグの用意
-    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //LTのキーが押されていればデフェンスステートに移行する
-    if (inputManager->GetKeyPushState(keyTag.at(InputManager::LT)) == InputManager::Push)
+    if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = this;
     }

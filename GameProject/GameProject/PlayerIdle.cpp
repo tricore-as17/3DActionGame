@@ -42,7 +42,7 @@ void PlayerIdle::Update(VECTOR& modelDirection)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation();
+    DetachAnimation(this);
 
 }
 
@@ -55,18 +55,18 @@ void PlayerIdle::ChangeState()
     map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
-    if (inputManager->GetKeyPushState(keyTag.at(InputManager::Move)) == InputManager::Push)
+    if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
     {
         nextState = new PlayerMove(modelhandle,animationIndex);
     }
     //RBのキーかRTキーが押されていれば攻撃ステートに変更
-    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::RB)) == InputManager::Push ||
-             inputManager->GetKeyPushState(keyTag.at(InputManager::RT)) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push ||
+             inputManager->GetKeyPushState(InputManager::RT) == InputManager::Push)
     {
         //押されたボタンによって強攻撃のアニメーションにするか
         //通常攻撃のアニメーションにするか変更する
         Player::AnimationState animationState;
-        if (inputManager->GetKeyPushState(keyTag.at(InputManager::RB)) == InputManager::Push)
+        if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push)
         {
             animationState = Player::Slash;
         }
@@ -77,17 +77,17 @@ void PlayerIdle::ChangeState()
         nextState = new PlayerAttack(modelhandle, animationIndex,animationState);
     }
     //LTのキーが押されていればデフェンスステートに移行する
-    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::LT)) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
     }
     //Bキーが押されていれば回避状態のステート
-    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::B)) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)
     {
         nextState = new PlayerRolling(modelhandle, animationIndex);
     }
     //LBキーで射撃ステートに移行
-    else if (inputManager->GetKeyPushState(keyTag.at(InputManager::LB)) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::LB) == InputManager::Push)
     {
         nextState = new PlayerShotMagic(modelhandle, animationIndex);
     }
