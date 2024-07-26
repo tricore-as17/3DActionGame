@@ -1,5 +1,7 @@
-﻿#include"DxLib.h"
+﻿#include<stdexcept>
+#include"DxLib.h"
 #include"InputManager.h"
+#include"Utility.h"
 
 
 //nullポインターを入れる
@@ -15,7 +17,11 @@ InputManager::InputManager()
     //それぞれのキー名前とDxライブラリ上での識別番号をセットにする
     keyTag.insert(make_pair(Space,      PAD_INPUT_10));
     keyTag.insert(make_pair(Left,       PAD_INPUT_LEFT));
+    keyTag.insert(make_pair(LeftUp,     Utility::AddBit(PAD_INPUT_LEFT,PAD_INPUT_UP)));
+    keyTag.insert(make_pair(LeftDown,   Utility::AddBit(PAD_INPUT_LEFT, PAD_INPUT_DOWN)));
     keyTag.insert(make_pair(Right,      PAD_INPUT_RIGHT));
+    keyTag.insert(make_pair(RightUp,    Utility::AddBit(PAD_INPUT_RIGHT, PAD_INPUT_UP)));
+    keyTag.insert(make_pair(RightDown,  Utility::AddBit(PAD_INPUT_RIGHT, PAD_INPUT_DOWN)));
     keyTag.insert(make_pair(Up,         PAD_INPUT_UP));
     keyTag.insert(make_pair(Down,       PAD_INPUT_DOWN));
     keyTag.insert(make_pair(X,          PAD_INPUT_1));
@@ -27,6 +33,12 @@ InputManager::InputManager()
     keyTag.insert(make_pair(LT,         PAD_INPUT_7));
     keyTag.insert(make_pair(RT,         PAD_INPUT_8));
     keyTag.insert(make_pair(LeftStick,  PAD_INPUT_9));
+
+    //キータグを反転させたものを代入する
+    for (int i = 0; i < keyTag.size(); i++)
+    {
+        reverseKeyTag.insert(make_pair(keyTag.at((KeyKinds)(i)), (KeyKinds)(i)));
+    }
 
 
     //それぞれのキーの状態をfalseに
@@ -108,4 +120,41 @@ InputManager::KeyPushState InputManager::GetKeyPushState(const int compareKey)
     }
 
     return keyPushState.at(compareKey);
+}
+
+/// <summary>
+/// 押されているキーを取得
+/// </summary>
+/// <returns>キーの種類</returns>
+InputManager::KeyKinds InputManager::GetPushKeyKinds()
+{
+    //キーの値を取得
+    auto input = GetJoypadInputState(DX_INPUT_PAD1);
+
+    //仮で代入しておく
+    KeyKinds keyKinds = Left;
+    //入力されていない場合
+    if (input == 0)
+    {
+        keyKinds = None;
+    }
+    else
+    {
+        //事前に設定したキー以外が押されていないかを例外処理でチェック
+        try
+        {
+            reverseKeyTag.at(input);
+        }
+        catch (const std::out_of_range&)
+        {
+            keyKinds = None;
+        }
+    }
+    //例外処理が行われていない場合
+    if (keyKinds == Left)
+    {
+        keyKinds = reverseKeyTag.at(input);
+    }
+
+    return keyKinds;
 }

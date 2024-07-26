@@ -9,20 +9,25 @@ public:
     //キーの種類
     enum KeyKinds
     {
-        Space      = 0,  //スペース
-        Left       = 1,  //右矢印
-        Right      = 2,  //左矢印
-        Up         = 3,  //上矢印
-        Down       = 4,  //下矢印
-        LB         = 5,  //左上の手前のボタン
-        LT         = 6,  //左上の奥側のボタン
-        RB         = 7,  //右上の手前のボタン
-        RT         = 8,  //右奥側のボタン
-        X          = 9,
-        Y          = 10,
-        A          = 11,
-        B          = 12,
-        LeftStick  = 13,  //左スティック押し込み
+        Left       = 0,  //右
+        LeftUp     = 1,  //左上
+        LeftDown   = 2,  //左下
+        Right      = 3,  //左
+        RightUp    = 4,  //右上
+        RightDown  = 5,  //右下
+        Up         = 6,  //上
+        Down       = 7,  //下
+        Space      = 8,  //スペース
+        LB         = 9,  //左上の手前のボタン
+        LT         = 10,  //左上の奥側のボタン
+        RB         = 11,  //右上の手前のボタン
+        RT         = 12,  //右奥側のボタン
+        X          = 13,
+        Y          = 14,
+        A          = 15,
+        B          = 16,
+        LeftStick  = 17,  //左スティック押し込み
+        None      = 18,   //使用しないキーもしくは押されていない
 
     };
 
@@ -33,6 +38,9 @@ public:
         JustRelease = 1,  //離された瞬間
         Push        = 2,  //押されている
     };
+
+    //定数
+    static constexpr int MoveKeyMaxIndex = 7;   //移動キーのどれかがおされているかの指標
 
     //インスタンスを取得するゲッター
     static InputManager* GetInstance() { return inputManager; }
@@ -49,6 +57,12 @@ public:
     /// <param name="compareKey">チェックしたい入力キー</param>
     /// <returns>キーを離したか</returns>
      KeyPushState GetKeyPushState(const int compareKey);
+
+     /// <summary>
+     /// 押されているキーを取得
+     /// </summary>
+     /// <returns>キーの種類</returns>
+     KeyKinds GetPushKeyKinds();
 private:
     //コンストラクタ
     InputManager();
@@ -59,7 +73,8 @@ private:
     static InputManager* inputManager;
 
 
-    map<KeyKinds, int> keyTag;        //キーの種類からDxライブラリで使う番号に変換用
+    map<KeyKinds, int> keyTag;                //キーの種類からDxライブラリで使う番号に変換用
+    map<int, KeyKinds> reverseKeyTag;         //キータグの要素とキーを入れ替えたもの
 
     map<int,KeyPushState>  keyPushState;     //キーが離されたか
 };

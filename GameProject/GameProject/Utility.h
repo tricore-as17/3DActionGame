@@ -7,10 +7,14 @@ class Utility
 {
 public:
 
-    //ToDo
-    //地面にめり込まないように調節する関数をもともとUtilityに持たせようと思い
-    //クラスを作成しましたが、ColisionManagerが持つ方が正しいと思い移動させました
-    //その際に処理が無くなりましたが,今後使うと思うので残しています。
+    /// <summary>
+    /// ビット同士の足し算
+    /// </summary>
+    /// <param name="bitAddend">足される側のビット</param>
+    /// <param name="bitAdder">足す側のビット</param>
+    /// <returns>ビットの足し算の結果</returns>
+    static int AddBit(int bitAddend, int bitAdder);
 
+private:
 
 };
