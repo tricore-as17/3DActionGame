@@ -45,10 +45,7 @@ void PlayerIdle::Update(VECTOR& modelDirection)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    if (nextState != this && beforeAnimationIndex != -1)
-    {
-        MV1DetachAnim(modelhandle, beforeAnimationIndex);
-    }
+    DetachAnimation();
 
 }
 
