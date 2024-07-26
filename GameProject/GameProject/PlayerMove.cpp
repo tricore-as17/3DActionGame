@@ -42,7 +42,6 @@ void PlayerMove::Update(VECTOR& modelDirection)
 
     //正規化した移動方向を決める
     VECTOR direction = DecisionDirection();
-    //移動キーが入力されていればモデルの向きを変える
 
     //移動キーのどれかのビットがたっていれば方向をモデルに反映させる
     if (keyInput & InputManager::MoveKeyIndex)
@@ -74,9 +73,9 @@ void PlayerMove::Update(VECTOR& modelDirection)
 /// </summary>
 void PlayerMove::ChangeState()
 {
-
     //キーの名前を判断するタグの用意
     map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
+
     //RBのキーが押されていれば攻撃ステートに変更
     if (keyInput & keyTag.at(InputManager::RB) || keyInput & keyTag.at(InputManager::RT))
     {
