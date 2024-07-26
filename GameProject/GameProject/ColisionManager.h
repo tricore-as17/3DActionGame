@@ -16,7 +16,9 @@ public:
     /// </summary>
     enum HitObjectTag
     {
-
+        Player       = 0,    //プレイヤー
+        Enemy        = 1,    //エネミー
+        PlayerAttack = 2,    //プレイヤーの攻撃
     };
 
     //インスタンスを取得するゲッター
@@ -74,6 +76,8 @@ private:
 
     //デストラクタ
     ~ColisionManager();
+
+    void 
 
 };
 

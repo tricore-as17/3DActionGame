@@ -23,7 +23,14 @@ ColisionManager::~ColisionManager()
 /// </summary>
 void ColisionManager::CreateInstance()
 {
+    //既にインスタンスが確保されているかのチェック
+    if (colisionManager != nullptr)
+    {
+        return;
+    }
 
+    //シングルトンの作成
+    colisionManager = new ColisionManager();
 }
 
 /// <summary>
@@ -31,7 +38,12 @@ void ColisionManager::CreateInstance()
 /// </summary>
 void ColisionManager::DeleteInstance()
 {
-
+    if (colisionManager)
+    {
+        delete colisionManager;
+    }
+    //シングルトンの作成
+    colisionManager = nullptr;
 }
 
 
@@ -102,5 +114,17 @@ VECTOR ColisionManager::AdjustGroundToWardVelocity(VECTOR velocity, VECTOR befor
 /// </summary>
 void ColisionManager::Update()
 {
+
+    //オブジェクトの数二つ分をまわす
+    for (int i = 0; i < hitObjectList.size(); i++)
+    {
+        for (int j = 0; j < hitObjectList.size(); j++)
+        {
+            if (i != j)
+            {
+
+            }
+        }
+    }
 
 }
