@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include<map>
+#include<vector>
 
 using namespace std;
 
@@ -9,25 +10,22 @@ public:
     //キーの種類
     enum KeyKinds
     {
-        Left       = 0,  //右
-        LeftUp     = 1,  //左上
-        LeftDown   = 2,  //左下
-        Right      = 3,  //左
-        RightUp    = 4,  //右上
-        RightDown  = 5,  //右下
-        Up         = 6,  //上
-        Down       = 7,  //下
-        Space      = 8,  //スペース
-        LB         = 9,  //左上の手前のボタン
-        LT         = 10,  //左上の奥側のボタン
-        RB         = 11,  //右上の手前のボタン
-        RT         = 12,  //右奥側のボタン
-        X          = 13,
-        Y          = 14,
-        A          = 15,
-        B          = 16,
-        LeftStick  = 17,  //左スティック押し込み
-        None      = 18,   //使用しないキーもしくは押されていない
+        Move       = 0,  //移動キーのどれか
+        Left       = 1,  //右
+        Right      = 2,  //左
+        Up         = 3,  //上
+        Down       = 4,  //下
+        Space      = 5,  //スペース
+        LB         = 6,  //左上の手前のボタン
+        LT         = 7,  //左上の奥側のボタン
+        RB         = 8,  //右上の手前のボタン
+        RT         = 9,  //右奥側のボタン
+        X          = 10,
+        Y          = 11,
+        A          = 12,
+        B          = 13,
+        LeftStick  = 14,  //左スティック押し込み
+        None       = 15,  //使用しないキーもしくは押されていない
 
     };
 
@@ -40,10 +38,16 @@ public:
     };
 
     //定数
-    static constexpr int MoveKeyMaxIndex = 7;   //移動キーのどれかがおされているかの指標
+    static constexpr int MoveKeyIndex = 0x0000000f;   //移動キーのどれかがおされているかの指標
 
     //インスタンスを取得するゲッター
     static InputManager* GetInstance() { return inputManager; }
+
+    /// <summary>
+    /// Dxライブラリのキーの認識番号と名前がセットになったマップを返す
+    /// </summary>
+    /// <returns> Dxライブラリのキーの認識番号と名前がセットになったマップ</returns>
+    const map<KeyKinds, int> GetKeyTag()const { return keyTag; }
 
     //インスタンスを作成する
     static void CreateInstance();
@@ -56,13 +60,9 @@ public:
     /// </summary>
     /// <param name="compareKey">チェックしたい入力キー</param>
     /// <returns>キーを離したか</returns>
-     KeyPushState GetKeyPushState(const int compareKey);
+     KeyPushState GetKeyPushState(const KeyKinds keyKinds);
 
-     /// <summary>
-     /// 押されているキーを取得
-     /// </summary>
-     /// <returns>キーの種類</returns>
-     KeyKinds GetPushKeyKinds();
+
 private:
     //コンストラクタ
     InputManager();

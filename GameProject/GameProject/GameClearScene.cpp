@@ -25,11 +25,9 @@ void GameClearScene::Update()
 {
     //デバッグ時だけキー入力でシーン遷移するように
 #ifdef _DEBUG
-    //スペースキーが離された瞬間かをチェック
-    InputManager::KeyPushState keyPushState = inputManager->GetKeyPushState(PAD_INPUT_10);
 
-    //スペースキーが離された瞬間ならタイトルシーンに以降
-    if (keyPushState == InputManager::JustRelease)
+    //Xキーが離された瞬間ならタイトルシーンに以降
+    if (inputManager->GetKeyPushState(InputManager::X) == InputManager::JustRelease)
     {
         nextScene = new TitleScene();
     }

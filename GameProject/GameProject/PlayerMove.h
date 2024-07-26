@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include<vector>
 #include"StateBase.h"
 #include"InputManager.h"
 
@@ -31,9 +32,7 @@ private:
     /// <summary>
     /// 移動方向の選択
     /// </summary>
-    /// <returns>調整された移動方向</returns>
     VECTOR DecisionDirection();
     //メンバ変数
     InputManager* inputManager;              //インプットマネージャーにアクセスするためのポインタ
-    InputManager::KeyKinds keyInput;         //キーの入力状態
 };

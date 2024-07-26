@@ -24,12 +24,11 @@ TitleScene::~TitleScene()
 /// </summary>
 void TitleScene::Update()
 {
-    //スペースキーが離された瞬間かをチェック
-    InputManager::KeyPushState keyPushState = inputManager->GetKeyPushState(PAD_INPUT_10);
 
 
-    //スペースキーが離されたらゲームシーンに移行
-    if (keyPushState == InputManager::JustRelease)
+
+    //Xが離されたらゲームシーンに移行
+    if (inputManager->GetKeyPushState(InputManager::X) == InputManager::JustRelease)
     {
         nextScene = new GameScene();
     }

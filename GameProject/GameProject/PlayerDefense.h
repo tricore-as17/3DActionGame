@@ -3,15 +3,15 @@
 #include"InputManager.h"
 
 /// <summary>
-/// プレイヤーの待機状態ステート
+/// プレイヤーのガードに関するステート
 /// </summary>
-class PlayerIdle :public StateBase
+class PlayerDefense:public StateBase
 {
 public:
     //コンストラクタ
-    PlayerIdle(int& modelHandle, const int beforeAnimationIndex);
+    PlayerDefense(int modelHandle, int beforeAnimationIndex);
     //デストラクタ
-    ~PlayerIdle();
+    ~PlayerDefense();
 
     /// <summary>
     /// 更新処理
@@ -19,17 +19,12 @@ public:
     /// <param name="position">プレイヤーモデルの向き</param>
     void Update(VECTOR& modelDirection)override;
 
-
-private:
-    static constexpr float InitialAnimationSpeed = 1.0f;    
-    
     /// <summary>
     /// ステートの切り替え処理をまとめたもの
     /// </summary>
     void ChangeState()override;
-
+private:
 
     //メンバ変数
-    InputManager* inputManager;    //インプットマネージャーにアクセスするためのポインタ
-
+    InputManager* inputManager;              //インプットマネージャーにアクセスするためのポインタ
 };

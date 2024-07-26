@@ -150,8 +150,12 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelDataManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAttack.cpp" />
+    <ClCompile Include="PlayerDefense.cpp" />
     <ClCompile Include="PlayerIdle.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="PlayerRolling.cpp" />
+    <ClCompile Include="PlayerShotMagic.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StateBase.cpp" />
@@ -174,8 +178,12 @@
     <ClInclude Include="ModelDataManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAttack.h" />
+    <ClInclude Include="PlayerDefense.h" />
     <ClInclude Include="PlayerIdle.h" />
     <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="PlayerRolling.h" />
+    <ClInclude Include="PlayerShotMagic.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage.h" />

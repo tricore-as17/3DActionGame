@@ -13,7 +13,7 @@ StateBase::StateBase(int& modelHandle,Player::AnimationState animationState,cons
     :velocity(VGet(0,0,0))
     ,animationBlendRate(0.0f)
     ,beforeAnimationIndex(-1)
-    ,isEndBlend(false)
+    ,currentPlayAnimationState(BlendStart)
 {
     //もってきたモデルハンドルを代入
     this->modelhandle = modelHandle;
@@ -43,14 +43,14 @@ StateBase::~StateBase()
 void StateBase::UpdateAnimation()
 {
     //前回のアニメーションがある場合
-    if (beforeAnimationIndex != -1 && !isEndBlend)
+    if (beforeAnimationIndex != -1 && currentPlayAnimationState == BlendStart)
     {
         //前回とのアニメーションをブレンドして表示
-        animationBlendRate += 0.05f;
+        animationBlendRate += 0.1f;
         //ブレンドが終わったら
         if (animationBlendRate >= 1.0f)
         {
-            isEndBlend = true;
+            currentPlayAnimationState = BlendEnd;
             //前のアニメーションをでタッチ
             MV1DetachAnim(modelhandle, beforeAnimationIndex);
             beforeAnimationIndex = -1;
@@ -58,7 +58,7 @@ void StateBase::UpdateAnimation()
         MV1SetAttachAnimBlendRate(modelhandle, beforeAnimationIndex, 1.0f - animationBlendRate);
         MV1SetAttachAnimBlendRate(modelhandle, animationIndex, animationBlendRate);
     }
-    else
+    else if(currentPlayAnimationState != Stop)
     {
         //再生時間を進める
         animationNowTime += animationSpeed;
@@ -68,13 +68,28 @@ void StateBase::UpdateAnimation()
         if (animationNowTime >= animationLimitTime)
         {
             animationNowTime = 0.0f;
+            currentPlayAnimationState = FirstRoopEnd;
         }
     }
 
+}
 
+/// <summary>
+/// アニメーションを止める処理
+/// </summary>
+void StateBase::StopAnimation()
+{
+    currentPlayAnimationState = Stop;
+}
 
-
-
-
+/// <summary>
+/// シーンが切り替わってた際にアニメーションをデタッチする
+/// </summary>
+void StateBase::DetachAnimation(StateBase* nowState)
+{
+    if (nextState != nowState && beforeAnimationIndex != -1)
+    {
+        MV1DetachAnim(modelhandle, beforeAnimationIndex);
+    }
 }
 

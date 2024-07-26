@@ -2,6 +2,10 @@
 #include"Player.h"
 #include"PlayerIdle.h"
 #include"PlayerMove.h"
+#include"PlayerAttack.h"
+#include"PlayerDefense.h"
+#include"PlayerRolling.h"
+#include"PlayerShotMagic.h"
 
 
 /// <summary>
@@ -31,9 +35,6 @@ PlayerIdle::~PlayerIdle()
 /// <param name="position">プレイヤーモデルの向き</param>
 void PlayerIdle::Update(VECTOR& modelDirection)
 {
-    //入力された値をもってくる
-    keyInput = inputManager->GetPushKeyKinds();
-
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
@@ -41,10 +42,7 @@ void PlayerIdle::Update(VECTOR& modelDirection)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    if (nextState != this && beforeAnimationIndex != -1)
-    {
-        MV1DetachAnim(modelhandle, beforeAnimationIndex);
-    }
+    DetachAnimation(this);
 
 }
 
@@ -53,35 +51,45 @@ void PlayerIdle::Update(VECTOR& modelDirection)
 /// </summary>
 void PlayerIdle::ChangeState()
 {
+    //キーの名前を判断するタグの用意
+    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
-    if (keyInput <= InputManager::MoveKeyMaxIndex)
+    if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
     {
         nextState = new PlayerMove(modelhandle,animationIndex);
     }
-    //RBのキーが押されていれば攻撃ステートに変更
-    else if (keyInput == InputManager::RB)
+    //RBのキーかRTキーが押されていれば攻撃ステートに変更
+    else if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push ||
+             inputManager->GetKeyPushState(InputManager::RT) == InputManager::Push)
     {
+        //押されたボタンによって強攻撃のアニメーションにするか
+        //通常攻撃のアニメーションにするか変更する
+        Player::AnimationState animationState;
+        if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push)
+        {
+            animationState = Player::Slash;
+        }
+        else
+        {
+            animationState = Player::Clash;
+        }
+        nextState = new PlayerAttack(modelhandle, animationIndex,animationState);
     }
-    //RTのキーが押されていればデフェンスステートに移行する
-    else if (keyInput == InputManager::LT)
+    //LTのキーが押されていればデフェンスステートに移行する
+    else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
-
-    }
-    //Aのキーが押されていればジャンプステートに移行
-    else if (keyInput == InputManager::A)
-    {
-
+        nextState = new PlayerDefense(modelhandle, animationIndex);
     }
     //Bキーが押されていれば回避状態のステート
-    else if (keyInput == InputManager::B)
+    else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)
     {
-
+        nextState = new PlayerRolling(modelhandle, animationIndex);
     }
     //LBキーで射撃ステートに移行
-    else if (keyInput == InputManager::LB)
+    else if (inputManager->GetKeyPushState(InputManager::LB) == InputManager::Push)
     {
-
+        nextState = new PlayerShotMagic(modelhandle, animationIndex);
     }
     //ステート移行が無ければ自身のポインタを渡す
     else
