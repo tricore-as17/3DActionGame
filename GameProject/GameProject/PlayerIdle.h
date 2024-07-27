@@ -31,7 +31,8 @@ private:
 
     //メンバ変数
     InputManager* inputManager;    //インプットマネージャーにアクセスするためのポインタ
-    int           keyInput;        //キーの入力状態
+
     bool          isGround;        //接地しているか
+
 
 };

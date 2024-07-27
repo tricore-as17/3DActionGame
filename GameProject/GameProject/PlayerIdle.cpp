@@ -37,9 +37,6 @@ PlayerIdle::~PlayerIdle()
 /// <param name="position">プレイヤーモデルの向き</param>
 void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
 {
-    //入力された値をもってくる
-    keyInput = GetJoypadInputState(DX_INPUT_PAD1);
-
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
@@ -47,10 +44,7 @@ void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    if (nextState != this && beforeAnimationIndex != -1)
-    {
-        MV1DetachAnim(modelhandle, beforeAnimationIndex);
-    }
+    DetachAnimation(this);
 
 }
 
@@ -59,21 +53,20 @@ void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
 /// </summary>
 void PlayerIdle::ChangeState()
 {
-    //キーの名前を判断するタグの用意
-    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
-    if (keyInput & InputManager::MoveKeyIndex)
+    if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
     {
         nextState = new PlayerMove(modelhandle,animationIndex);
     }
     //RBのキーかRTキーが押されていれば攻撃ステートに変更
-    else if (keyInput & keyTag.at(InputManager::RB) || keyInput & keyTag.at(InputManager::RT))
+    else if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push ||
+             inputManager->GetKeyPushState(InputManager::RT) == InputManager::Push)
     {
         //押されたボタンによって強攻撃のアニメーションにするか
         //通常攻撃のアニメーションにするか変更する
         Player::AnimationState animationState;
-        if (keyInput & keyTag.at(InputManager::RB))
+        if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push)
         {
             animationState = Player::Slash;
         }
@@ -84,23 +77,23 @@ void PlayerIdle::ChangeState()
         nextState = new PlayerAttack(modelhandle, animationIndex,animationState);
     }
     //LTのキーが押されていればデフェンスステートに移行する
-    else if (keyInput & keyTag.at(InputManager::LT))
+    else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
     }
     //Aキーが押されて接地していれば
-    else if (keyInput & keyTag.at(InputManager::A) && isGround)
+    else if (inputManager->GetKeyPushState(InputManager::A) == InputManager::Push && isGround)
     {
         nextState = new PlayerJump(modelhandle, animationIndex, velocity);
         isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
-    else if (keyInput & keyTag.at(InputManager::B))
+    else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)
     {
         nextState = new PlayerRolling(modelhandle, animationIndex);
     }
     //LBキーで射撃ステートに移行
-    else if (keyInput & keyTag.at(InputManager::LB))
+    else if (inputManager->GetKeyPushState(InputManager::LB) == InputManager::Push)
     {
         nextState = new PlayerShotMagic(modelhandle, animationIndex);
     }

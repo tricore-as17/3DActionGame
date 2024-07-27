@@ -83,6 +83,7 @@ void StateBase::StopAnimation()
 }
 
 
+
 /// <summary>
 /// アニメーションを開始させる処理
 /// </summary>
@@ -90,3 +91,15 @@ void StateBase::StartAnimation()
 {
     currentPlayAnimationState = FirstRoop;
 }
+
+/// <summary>
+/// シーンが切り替わってた際にアニメーションをデタッチする
+/// </summary>
+void StateBase::DetachAnimation(StateBase* nowState)
+{
+    if (nextState != nowState && beforeAnimationIndex != -1)
+    {
+        MV1DetachAnim(modelhandle, beforeAnimationIndex);
+    }
+}
+

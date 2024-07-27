@@ -10,25 +10,22 @@ public:
     //キーの種類
     enum KeyKinds
     {
-        Left       = 0,  //右
-        Right      = 1,  //左
-        Up         = 2,  //上
-        Down       = 3,  //下
-        LeftDown   = 4,  //左下
-        LeftUp     = 5,  //左上
-        RightUp    = 6,  //右上
-        RightDown  = 7,  //右下
-        Space      = 8,  //スペース
-        LB         = 9,  //左上の手前のボタン
-        LT         = 10,  //左上の奥側のボタン
-        RB         = 11,  //右上の手前のボタン
-        RT         = 12,  //右奥側のボタン
-        X          = 13,
-        Y          = 14,
-        A          = 15,
-        B          = 16,
-        LeftStick  = 17,  //左スティック押し込み
-        None      = 18,   //使用しないキーもしくは押されていない
+        Move       = 0,  //移動キーのどれか
+        Left       = 1,  //右
+        Right      = 2,  //左
+        Up         = 3,  //上
+        Down       = 4,  //下
+        Space      = 5,  //スペース
+        LB         = 6,  //左上の手前のボタン
+        LT         = 7,  //左上の奥側のボタン
+        RB         = 8,  //右上の手前のボタン
+        RT         = 9,  //右奥側のボタン
+        X          = 10,
+        Y          = 11,
+        A          = 12,
+        B          = 13,
+        LeftStick  = 14,  //左スティック押し込み
+        None       = 15,  //使用しないキーもしくは押されていない
 
     };
 
@@ -63,7 +60,7 @@ public:
     /// </summary>
     /// <param name="compareKey">チェックしたい入力キー</param>
     /// <returns>キーを離したか</returns>
-     KeyPushState GetKeyPushState(const int compareKey);
+     KeyPushState GetKeyPushState(const KeyKinds keyKinds);
 
 
 private:

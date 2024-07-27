@@ -45,18 +45,14 @@ void GameScene::Update()
 
     //デバッグ時だけキー入力でシーン遷移するように
 #ifdef _DEBUG
-    //左矢印キーが一度押された後離されたかのチェック
-    InputManager::KeyPushState leftKeyPushState = inputManager->GetKeyPushState(PAD_INPUT_9);
-    //右矢印キーが一度押された後離されたかのチェック
-    InputManager::KeyPushState rightKeyPushState = inputManager->GetKeyPushState(PAD_INPUT_10);
 
-    //左矢印キーが離されていればゲームクリアシーンに移行
-    if (leftKeyPushState == InputManager::JustRelease)
+    //Xキーが離されていればゲームクリアシーンに移行
+    if (inputManager->GetKeyPushState(InputManager::X) == InputManager::JustRelease)
     {
         nextScene = new GameClearScene();
     }
-    //右矢印キーが離されていればゲームオーバーシーンに以降
-    else if (rightKeyPushState == InputManager::JustRelease)
+    //Yキーが離されていればゲームオーバーシーンに以降
+    else if (inputManager->GetKeyPushState(InputManager::Y) == InputManager::JustRelease)
     {
         nextScene = new GameOverScene();
     }
