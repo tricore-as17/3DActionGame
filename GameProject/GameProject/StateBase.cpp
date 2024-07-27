@@ -82,3 +82,14 @@ void StateBase::StopAnimation()
     currentPlayAnimationState = Stop;
 }
 
+/// <summary>
+/// シーンが切り替わってた際にアニメーションをデタッチする
+/// </summary>
+void StateBase::DetachAnimation(StateBase* nowState)
+{
+    if (nextState != nowState && beforeAnimationIndex != -1)
+    {
+        MV1DetachAnim(modelhandle, beforeAnimationIndex);
+    }
+}
+
