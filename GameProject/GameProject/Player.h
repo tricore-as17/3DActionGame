@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"DxLib.h"
+#include"CollisionData.h"
 
 //クラスのプロトタイプ宣言
 class ModelDataManager;
@@ -61,16 +62,22 @@ public:
 
 private:
     //定数
-    static constexpr float AngleSpeed = 0.15f;      //モデルの向きを変えるスピード
-
+    static const VECTOR ModelOffsetPosition;         //モデルの位置を調整するための値
+    static constexpr float AngleSpeed = 0.15f;                //モデルの向きを変えるスピード
+    static constexpr float CollisionCapsuleLineLength = 24.0f;//当たり判定に必要なカプセルの線分の長さ
+    static constexpr float CollisionRadius            = 4.0f; //当たり判定に必要なカプセルの半径の大きさ
+    static constexpr float HalfLength                 = 0.5f; //中央座標を出す際の長さを半分にするための定数
     //メンバ変数
-    int modelHandle;       //モデルハンドル
-    VECTOR position;       //座標
-    float angle;           //モデルの向いている角度
-    VECTOR modelDirection; //モデルの向くべき方向
+    int modelHandle;               //モデルハンドル
+    VECTOR position;               //座標
+    CollisionData collisionData;   //当たり判定に必要な情報をまとめたもの
+    int registerTag;               //レジスタの識別番号
+    float angle;                   //モデルの向いている角度
+    VECTOR modelDirection;         //モデルの向くべき方向
     //メンバクラス
     StateBase* nowState;                            //現在のステートを保存するポインタ
     StateBase* nextState;                           //次のループでのステートを保存するポインタ
+    CollisionManager* collisionManager;             //当たり判定の管理クラスのポインタ
 
 
     //メンバ関数
@@ -79,6 +86,22 @@ private:
     /// ステートの移行処理
     /// </summary>
     void ChangeState();
+
+    /// <summary>
+    /// 座標などを当たり判定に必要なデータに変換
+    /// </summary>
+    void ConvertCollisionData();
+
+    /// <summary>
+    /// オブジェクトに当たった際の処理を書いたもの
+    /// </summary>
+    /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
+    void OnHit(CollisionData collitionData);
+
+    /// <summary>
+    /// コリジョンマネージャーにレジスタを渡す
+    /// </summary>
+    void SendRegister();
     
 
 };

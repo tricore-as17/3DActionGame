@@ -137,7 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ColisionManager.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
@@ -166,8 +166,8 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ColisionData.h" />
-    <ClInclude Include="ColisionManager.h" />
+    <ClInclude Include="CollisionData.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FrameRateController.h" />
