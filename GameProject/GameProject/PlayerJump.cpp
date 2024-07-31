@@ -85,10 +85,7 @@ void PlayerJump::Update(VECTOR& modelDirection,VECTOR& position)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    if (nextState != this && beforeAnimationIndex != -1)
-    {
-        MV1DetachAnim(modelhandle, beforeAnimationIndex);
-    }
+    DetachAnimation(this);
 
     //一度目の処理が終わったらジャンプ中にステートを切り替える
     if (jumpState == Ground)
