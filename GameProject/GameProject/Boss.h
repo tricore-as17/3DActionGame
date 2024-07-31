@@ -11,6 +11,8 @@ class CollisionManager;
 class Boss
 {
 public:
+
+
     //コンストラクタ
     Boss();
     //デストラクタ

@@ -179,7 +179,7 @@ void Player::ConvertCollisionData()
     //カプセルの下側の座標
     collisionData.bottomPosition = position;
     //カプセルの上側の座標
-    collisionData.upPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineLength, 0.0f));
+    collisionData.upPosition = VAdd(position, VGet(20.0f, CollisionCapsuleLineLength, 0.0f));
     //カプセルの球部分の半径
     collisionData.radius = CollisionRadius;
     //オブジェクトの種類
