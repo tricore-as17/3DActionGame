@@ -38,8 +38,10 @@ GameScene::~GameScene()
 /// </summary>
 void GameScene::Update()
 {
-
+    //各クラスのアップデートを呼ぶ
     player->Update();
+    camera->Update(player->GetPosition());
+
 
     //デバッグ時だけキー入力でシーン遷移するように
 #ifdef _DEBUG
