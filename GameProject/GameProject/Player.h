@@ -70,8 +70,7 @@ private:
     //メンバ変数
     int modelHandle;               //モデルハンドル
     VECTOR position;               //座標
-    CollisionData collisionData;   //当たり判定に必要な情報をまとめたもの
-    int registerTag;               //レジスタの識別番号
+    CollisionData collisionData;  //当たり判定に必要な情報をまとめたもの
     float angle;                   //モデルの向いている角度
     VECTOR modelDirection;         //モデルの向くべき方向
     //メンバクラス
@@ -90,7 +89,7 @@ private:
     /// <summary>
     /// 座標などを当たり判定に必要なデータに変換
     /// </summary>
-    void ConvertCollisionData();
+    void UpdateCollisionData();
 
     /// <summary>
     /// オブジェクトに当たった際の処理を書いたもの
@@ -98,10 +97,7 @@ private:
     /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
     void OnHit(CollisionData collitionData);
 
-    /// <summary>
-    /// コリジョンマネージャーにレジスタを渡す
-    /// </summary>
-    void SendRegister();
+
     
 
 };

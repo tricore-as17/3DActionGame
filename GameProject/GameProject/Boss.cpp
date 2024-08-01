@@ -25,9 +25,12 @@ Boss::Boss()
     collisionManager = collisionManager->GetInstance();
 
     //当たり判定用の変数の初期化
-    ConvertCollisionData();
+    UpdateCollisionData();
     //識別番号はCollisionManagerが代入するので入っていないことを
-    registerTag = CollisionManager::NotRegisterTag;
+    collisionData.collidableObjectTag = CollisionManager::NotRegisterTag;
+
+    //当たり判定データのポインタを渡す
+    collisionManager->RegisterCollisionData(&collisionData);
 
     //座標の設定
     MV1SetPosition(modelHandle, InitialPosition);
@@ -48,8 +51,8 @@ Boss::~Boss()
 /// </summary>
 void Boss::Update()
 {
-    //当たり判定情報を渡す
-    SendRegister();
+    //当たり判定に必要なデータの更新
+    UpdateCollisionData();
 
     //モデルを描画する座標の調整
     MV1SetPosition(modelHandle, VAdd(position, ModelOffsetPosition));
@@ -69,7 +72,7 @@ void Boss::Draw()
 /// <summary>
 /// プレイヤーの情報から当たり判定に必要な情報を出して代入
 /// </summary>
-void Boss::ConvertCollisionData()
+void Boss::UpdateCollisionData()
 {
     //中央座標の代入
     collisionData.centerPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineLength * HalfLength, 0.0f));
@@ -89,7 +92,7 @@ void Boss::ConvertCollisionData()
 /// オブジェクトに当たった際の処理を書いたもの
 /// </summary>
 /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
-void Boss::OnHit(CollisionData collisionData)
+void Boss::OnHit(const CollisionData collisionData)
 {
     switch (collisionData.hitObjectTag)
     {
@@ -100,13 +103,4 @@ void Boss::OnHit(CollisionData collisionData)
 }
 
 
-/// <summary>
-/// 当たり判定データの更新したものを送る
-/// </summary>
-void Boss::SendRegister()
-{
-    //現在のプレイヤー情報から当たり判定に必要な値に代入
-    ConvertCollisionData();
-    //コリジョンマネージャーに渡す
-    collisionManager->SetResister(collisionData, registerTag);
-}
+

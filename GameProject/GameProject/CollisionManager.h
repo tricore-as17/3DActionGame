@@ -33,47 +33,13 @@ public:
     /// <summary>
     /// インスタンスの削除
     /// </summary>
-    static void DeleteInstance();
+    void DeleteInstance();
 
     /// <summary>
-    /// 球体とカプセルとの当たり判定
+    /// 当たり判定データの読み込み
     /// </summary>
-    /// <param name="sphere">球体の当たり判定に必要な情報</param>
-    /// <param name="capsule">カプセルの当たり判定に必要な情報</param>
-    /// <returns>当たっているか</returns>
-    bool IsHitSphereAndCapsule(CollisionData sphere, CollisionData capsule);
-
-    /// <summary>
-    /// カプセル同士の最近接転換の最小距離を計算
-    /// </summary>
-    /// <param name="collider">カプセル１</param>
-    /// <param name="target">カプセル２</param>
-    /// <returns>最小距離</returns>
-    float CapsuleSegmentDistance(const CollisionData& collider, const CollisionData& target);
-
-
-    /// <summary>
-    /// カプセル同士の当たり判定
-    /// </summary>
-    /// <param name="collider">衝突を検知する側の情報</param>
-    /// <param name="target">目標の情報</param>
-    /// <returns>当たったか</returns>
-    bool IsHitCapsuleAndCapsule(const CollisionData collider, const CollisionData target);
-
-    /// <summary>
-    /// 当たったあとの処理を持ってくる
-    /// </summary>
-    /// <param name="colisionData">当たり判定に必要な情報</param>
-    /// <param name="hitObjectTag">オブジェクトの種類</param>
-    /// <param name="onHit">当たった後に行う関数のポインタ</param>
-    /// <param name="registerTag">レジスタの識別番号(破棄する時に使う)</param>
-    void SetResister(CollisionData colisionData, int& registerTag);
-
-    /// <summary>
-    /// 渡されたタグのレジスタを削除する
-    /// </summary>
-    /// <param name="registerTag"></param>
-    void DeleteResister(int& registerTag);
+    /// <param name="data"></param>
+    void RegisterCollisionData(CollisionData* data);
 
     /// <summary>
     /// 地面に向けたベクトルの調整
@@ -83,6 +49,11 @@ public:
     /// <returns>調整したベロシティ</returns>
     static VECTOR AdjustGroundToWardVelocity(VECTOR velocity, VECTOR beforePosition);
 
+    /// <summary>
+    /// 渡されたタグのレジスタを削除する
+    /// </summary>
+    /// <param name="collidableObjectTag"></param>
+    void DeleteHitObject(int& collidableObjectTag);
 
     /// <summary>
     /// 更新処理
@@ -90,14 +61,18 @@ public:
     void Update();
 
 private:
-    //関数内で使用する定数
+    ///////  定数  ///////
+
     static constexpr float AdjustVelocityY = 0.01f;//y方向のvelocityを調整する際の大きさ
+
+    ///////  メンバ変数  //////
 
     //自身のポインタ
     static CollisionManager* collisionManager;
-
     //当たり判定情報をもったリスト
-    map<int, CollisionData> hitObjectList;
+    map<int, CollisionData*> hitObjectList;
+
+    ///////  メンバ関数  ///////
 
     //コンストラクタ
     CollisionManager();
@@ -110,7 +85,7 @@ private:
     /// </summary>
     /// <param name="collider">衝突を検出するオブジェクト</param>
     /// <param name="target">衝突の対象になるオブジェクト</param>
-    void ResponseColisionIfDetected(pair<const int, CollisionData> collider, pair<const int, CollisionData> target);
+    void ResponseColisionIfDetected(pair<const int, CollisionData*> collider, pair<const int, CollisionData*> target);
 
 
     /// <summary>
@@ -121,6 +96,21 @@ private:
     /// <returns>計算した距離</returns>
     float CalculationDistance(const VECTOR vector1,const VECTOR vector2);
 
+    /// <summary>
+    /// 球体とカプセルとの当たり判定
+    /// </summary>
+    /// <param name="sphere">球体の当たり判定に必要な情報</param>
+    /// <param name="capsule">カプセルの当たり判定に必要な情報</param>
+    /// <returns>当たっているか</returns>
+    bool IsHitSphereAndCapsule(CollisionData sphere, CollisionData capsule);
+
+    /// <summary>
+    /// カプセル同士の当たり判定
+    /// </summary>
+    /// <param name="collider">衝突を検知する側の情報</param>
+    /// <param name="target">目標の情報</param>
+    /// <returns>当たったか</returns>
+    bool IsHitCapsuleAndCapsule(const CollisionData collider, const CollisionData target);
 
 };
 

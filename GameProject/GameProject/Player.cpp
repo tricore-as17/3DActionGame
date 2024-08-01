@@ -33,9 +33,12 @@ Player::Player()
     collisionManager = CollisionManager::GetInstance();
 
     //当たり判定用の変数の初期化
-    ConvertCollisionData();
+    UpdateCollisionData();
     //識別番号はCollisionManagerが代入するので入っていないことを
-    registerTag = CollisionManager::NotRegisterTag;
+    collisionData.collidableObjectTag = CollisionManager::NotRegisterTag;
+
+    //当たり判定データを渡す
+    collisionManager->RegisterCollisionData(&collisionData);
 
     //座標の設定
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
@@ -49,7 +52,7 @@ Player::Player()
 Player::~Player()
 {
     //自身の当たり判定情報を削除する
-    collisionManager->DeleteResister(registerTag);
+    collisionManager->DeleteHitObject(collisionData.collidableObjectTag);
     //メモリの解放
     delete nowState;
 }
@@ -65,11 +68,12 @@ void Player::Update()
     // 移動
     position = VAdd(position, nowState->GetVelocity());
 
-    //当たり判定情報を渡す
-    SendRegister();
 
     //モデルの向きを反映
     UpdateAngle();
+
+    //当たり判定に必要なデータを更新
+    UpdateCollisionData();
 
 
     MV1SetPosition(modelHandle, VAdd(position,ModelOffsetPosition));
@@ -172,7 +176,7 @@ void Player::UpdateAngle()
 /// <summary>
 /// プレイヤーの情報から当たり判定に必要な情報を出して代入
 /// </summary>
-void Player::ConvertCollisionData()
+void Player::UpdateCollisionData()
 {
     //中央座標の代入
     collisionData.centerPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineLength * HalfLength, 0.0f));
@@ -206,17 +210,7 @@ void Player::OnHit(CollisionData collisionData)
 
 }
 
-/// <summary>
-/// 当たり判定データの更新したものを送る
-/// </summary>
-void Player::SendRegister()
-{
-    //現在のプレイヤー情報から当たり判定に必要な値に代入
-    ConvertCollisionData();
-  
-    //コリジョンマネージャーに渡す
-    collisionManager->SetResister(collisionData,registerTag);
-}
+
 
 
 

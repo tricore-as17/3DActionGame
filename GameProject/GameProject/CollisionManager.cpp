@@ -110,38 +110,33 @@ bool CollisionManager::IsHitCapsuleAndCapsule(const CollisionData collider, cons
 }
 
 
+
+
 /// <summary>
-/// 当たったあとの処理を持ってくる
+/// 当たり判定データのポインタを渡す
 /// </summary>
-/// <param name="collisionData">当たり判定に必要な情報</param>
-/// <param name="registerTag">コリジョンデータの識別番号</param>
-void CollisionManager::SetResister(CollisionData collisionData,int& registerTag)
+/// <param name="data"></param>
+void CollisionManager::RegisterCollisionData(CollisionData* data)
 {
-    //既にオブジェクトが用意されているかを調べる
-    if (hitObjectList.find(registerTag) != hitObjectList.end())
-    {
-        hitObjectList.at(registerTag) = collisionData;
-    }
-    else
+    if (hitObjectList.find(data->collidableObjectTag) == hitObjectList.end())
     {
         //何番目に挿入するかを代入
-        registerTag = hitObjectList.size();
+        data->collidableObjectTag = hitObjectList.size();
         //コリジョンデータをマップに代入
-        hitObjectList.insert(make_pair(registerTag, collisionData));
-
+        hitObjectList.insert(make_pair(data->collidableObjectTag, data));
     }
 }
 
 /// <summary>
 /// 渡されたタグのレジスタを削除する
 /// </summary>
-/// <param name="registerTag">削除するレジスタのタグ</param>
-void CollisionManager::DeleteResister(int& registerTag)
+/// <param name="collidableObjectTag">削除するレジスタのタグ</param>
+void CollisionManager::DeleteHitObject(int& collidableObjectTag)
 {
     // キーが存在するかチェックしてから削除
-    if (hitObjectList.find(registerTag) != hitObjectList.end())
+    if (hitObjectList.find(collidableObjectTag) != hitObjectList.end())
     {
-        hitObjectList.erase(registerTag);
+        hitObjectList.erase(collidableObjectTag);
     }
 }
 
@@ -189,7 +184,7 @@ void CollisionManager::Update()
         for (const auto& target : hitObjectList)
         {
             //同じObject同士は処理させない
-            if (collider.second.hitObjectTag != target.second.hitObjectTag)
+            if (collider.second->hitObjectTag != target.second->hitObjectTag)
             {
                 //当たったかを判定した後関数を呼ぶ
                 ResponseColisionIfDetected(collider, target);
@@ -204,52 +199,52 @@ void CollisionManager::Update()
 /// </summary>
 /// <param name="collider">衝突を検出するオブジェクト</param>
 /// <param name="target">衝突の対象になるオブジェクト</param>
-void CollisionManager::ResponseColisionIfDetected(pair<const int,CollisionData> collider, pair<const int, CollisionData> target)
+void CollisionManager::ResponseColisionIfDetected(pair<const int,CollisionData*> collider, pair<const int, CollisionData*> target)
 {
-    switch (collider.second.hitObjectTag)
+    switch (collider.second->hitObjectTag)
     {
     case Player:
         //エネミーと衝突した場合
-        if (target.second.hitObjectTag == Boss)
+        if (target.second->hitObjectTag == Boss)
         {
             //カプセル同士の当たり判定をおこなう
-            if (IsHitCapsuleAndCapsule(collider.second, target.second))
+            if (IsHitCapsuleAndCapsule(*collider.second, *target.second))
             {
                 //エネミーと当たった際の関数処理を呼ぶ
-                collider.second.onHit(target.second);
+                collider.second->onHit(*target.second);
             }
         }
         break;
     case Boss:
         //エネミーと衝突した場合
-        if (target.second.hitObjectTag == Player)
+        if (target.second->hitObjectTag == Player)
         {
             //カプセル同士の当たり判定をおこなう
-            if (IsHitCapsuleAndCapsule(collider.second, target.second))
+            if (IsHitCapsuleAndCapsule(*collider.second, *target.second))
             {
                 //エネミーと当たった際の関数処理を呼ぶ
-                collider.second.onHit(target.second);
+                collider.second->onHit(*target.second);
             }
         }
-        else if (target.second.hitObjectTag == PlayerAttack)
+        else if (target.second->hitObjectTag == PlayerAttack)
         {
             //カプセル同士の当たり判定をおこなう
-            if (IsHitSphereAndCapsule(target.second, collider.second))
+            if (IsHitSphereAndCapsule(*target.second, *collider.second))
             {
                 //エネミーと当たった際の関数処理を呼ぶ
-                collider.second.onHit(target.second);
+                collider.second->onHit(*target.second);
             }
         }
         break;
     case PlayerAttack:
         //エネミーに攻撃がヒットした場合
-        if (target.second.hitObjectTag == Boss)
+        if (target.second->hitObjectTag == Boss)
         {
             //カプセルと球体の当たり判定を行う
-            if (IsHitSphereAndCapsule(collider.second, target.second))
+            if (IsHitSphereAndCapsule(*collider.second, *target.second))
             {
                 //エネミーと当たった際の関数処理を呼ぶ
-                collider.second.onHit(target.second);
+                collider.second->onHit(*target.second);
             }
         }
 

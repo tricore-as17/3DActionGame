@@ -37,7 +37,6 @@ private:
 
     //メンバ変数
     int modelHandle;                    //モデルハンドル
-    int registerTag;                    //レジスタの識別番号
     VECTOR position;                    //座標
     CollisionData collisionData;        //当たり判定に必要な情報
     CollisionManager* collisionManager; //当たり判定管理クラスにアクセスするポインタ
@@ -46,17 +45,13 @@ private:
     /// <summary>
     /// ボスの情報から当たり判定に必要な情報を出して代入
     /// </summary>
-    void ConvertCollisionData();
+    void UpdateCollisionData();
 
     /// <summary>
     /// オブジェクトに当たった際の処理を書いたもの
     /// </summary>
     /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
-    void OnHit(CollisionData collisionData);
+    void OnHit(const CollisionData collisionData);
 
-    /// <summary>
-    /// 当たり判定データの更新したものを送る
-    /// </summary>
-    void SendRegister();
 
 };
