@@ -1,13 +1,17 @@
 ﻿#include"BossIdle.h"
+#include"Boss.h"
+#include"StateBase.h"
 
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-//BossIdle::BossIdle()
-//    :StateBase(modelhandle,)
-//{
-//}
+///<summary>
+///コンストラクタ
+///</summary>
+BossIdle::BossIdle(int& InitializeModelHandle,const int beforeAnimationIndex)
+    :StateBase(InitializeModelHandle,Boss::Idle,beforeAnimationIndex)
+{
+
+
+}
 
 /// <summary>
 /// デストラクタ

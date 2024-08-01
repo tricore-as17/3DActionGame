@@ -7,8 +7,6 @@
 //初期座標の入力
 const VECTOR Boss::InitialPosition = VGet(0, 0, 6);
 
-const VECTOR Boss::ModelOffsetPosition = VGet(-5, 0, -15);
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -28,6 +26,9 @@ Boss::Boss()
     ConvertCollisionData();
     //識別番号はCollisionManagerが代入するので入っていないことを
     registerTag = CollisionManager::NotRegisterTag;
+
+    //スケールの初期化
+    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
 
     //座標の設定
     MV1SetPosition(modelHandle, InitialPosition);
@@ -52,7 +53,7 @@ void Boss::Update()
     SendRegister();
 
     //モデルを描画する座標の調整
-    MV1SetPosition(modelHandle, VAdd(position, ModelOffsetPosition));
+    MV1SetPosition(modelHandle, position);
 }
 
 void Boss::Draw()

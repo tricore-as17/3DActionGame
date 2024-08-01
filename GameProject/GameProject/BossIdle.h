@@ -8,7 +8,7 @@ class BossIdle:public StateBase
 {
 public:
     //コンストラクタ
-    BossIdle();
+    BossIdle(int& modelHandle, const int beforeAnimationIndex);
     //デストラクタ
     ~BossIdle();
 

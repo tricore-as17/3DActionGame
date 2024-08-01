@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"DxLib.h"
 #include"Player.h"
+#include"Boss.h"
 
 
 
@@ -11,7 +12,7 @@ class StateBase
 {
 public:
     //コンストラクタ
-    StateBase(int& modelHandle, Player::AnimationState animationState, const int beforeAnimationIndex);
+    StateBase(int& modelHandle,const int animationState, const int beforeAnimationIndex);
     //デストラクタ
     virtual ~StateBase();
 

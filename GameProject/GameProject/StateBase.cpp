@@ -9,7 +9,7 @@
 /// </summary>
 /// <param name="modelHandle">モデルハンドル</param>
 /// <param name="animationState">アニメーションの状態</param>
-StateBase::StateBase(int& modelHandle,Player::AnimationState animationState,const int beforeAnimationIndex)
+StateBase::StateBase(int& modelHandle,const int animationState,const int beforeAnimationIndex)
     :velocity(VGet(0,0,0))
     ,animationBlendRate(0.0f)
     ,beforeAnimationIndex(-1)
@@ -18,15 +18,13 @@ StateBase::StateBase(int& modelHandle,Player::AnimationState animationState,cons
     //もってきたモデルハンドルを代入
     this->modelhandle = modelHandle;
     //アニメーションをアタッチ
-    animationIndex = MV1AttachAnim(this->modelhandle, (int)(animationState), -1, FALSE);
+    animationIndex = MV1AttachAnim(this->modelhandle, animationState, -1, FALSE);
     //アニメーションの総再生時間を取得
     animationLimitTime = MV1GetAttachAnimTotalTime(this->modelhandle, animationIndex);
     //アニメーションの再生時間の初期化
     animationNowTime = 0.0f;
     //前回のアニメーションの添え字を代入
     this->beforeAnimationIndex = beforeAnimationIndex;
-
-
 }
 
 /// <summary>
