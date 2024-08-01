@@ -19,11 +19,8 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
 
-
     //コリジョンマネージャーのインスタンスをもってくる
     collisionManager = CollisionManager::GetInstance();
-
-
 
     //当たり判定用の変数の初期化
     ConvertCollisionData();

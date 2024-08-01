@@ -14,6 +14,16 @@ BossDefaultAttack::BossDefaultAttack(int& InitializeModelHandle, const int befor
 
     //インプットマネージャーをもってくる
     inputManager = InputManager::GetInstance();
+
+    //コリジョンマネージャーのインスタンスをもってくる
+    collisionManager = CollisionManager::GetInstance();
+
+    //当たり判定用の変数の初期化
+    UpdateCollisionData();
+
+    //識別番号はCollisionManagerが代入するので入っていないことを
+    //分かるように-1を代入
+    registerTag = CollisionManager::NotRegisterTag;
 }
 
 /// <summary>
@@ -21,7 +31,8 @@ BossDefaultAttack::BossDefaultAttack(int& InitializeModelHandle, const int befor
 /// </summary>
 BossDefaultAttack::~BossDefaultAttack()
 {
-    //処理なし
+    //当たり判定情報を削除する
+    collisionManager->DeleteResister(registerTag);
 }
 
 
@@ -59,3 +70,10 @@ void BossDefaultAttack::ChangeState()
     }
 }
 
+/// <summary>
+/// 当たった時の処理
+/// </summary>
+void BossDefaultAttack::OnHit(CollisionData collisionData)
+{
+    collisionManager->DeleteResister(registerTag)
+}
