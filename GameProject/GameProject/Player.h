@@ -62,7 +62,7 @@ public:
 
 private:
     //定数
-    static const VECTOR ModelOffsetPosition;         //モデルの位置を調整するための値
+    static const VECTOR ModelOffsetPosition;                  //モデルの位置を調整するための値
     static constexpr float AngleSpeed = 0.15f;                //モデルの向きを変えるスピード
     static constexpr float CollisionCapsuleLineLength = 24.0f;//当たり判定に必要なカプセルの線分の長さ
     static constexpr float CollisionRadius            = 4.0f; //当たり判定に必要なカプセルの半径の大きさ

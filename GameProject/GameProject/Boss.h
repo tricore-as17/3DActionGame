@@ -28,12 +28,12 @@ public:
 
 private:
     //定数
-    static const VECTOR InitialPosition;             //初期座標
-    static const VECTOR ModelOffsetPosition;         //モデルの位置を調整するための値
+    static const VECTOR InitialPosition;                         //初期座標
+    static const VECTOR ModelOffsetPosition;                     //モデルの位置を調整するための値
     static constexpr float CollisionCapsuleLineLength = 60.0f;   //当たり判定に必要なカプセルの線分の長さ
     static constexpr float CollisionRadius            = 23.0f;   //当たり判定に必要なカプセルの半径の大きさ
-    static constexpr float HalfLength                 = 0.5f;   //中央座標を出す際の長さを半分にするための定数
-    static constexpr int   NotRegisterTag             = -1;     //レジスタの識別番号が代入されていないことをしめす
+    static constexpr float HalfLength                 = 0.5f;    //中央座標を出す際の長さを半分にするための定数
+    static constexpr int   NotRegisterTag             = -1;      //レジスタの識別番号が代入されていないことをしめす
 
     //メンバ変数
     int modelHandle;                    //モデルハンドル
