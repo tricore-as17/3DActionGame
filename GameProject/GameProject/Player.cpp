@@ -48,7 +48,7 @@ Player::~Player()
 void Player::Update()
 {
     //ステート毎のアップデートを行う
-    nowState->Update(modelDirection);
+    nowState->Update(modelDirection,position);
 
     // 移動
     position = VAdd(position, nowState->GetVelocity());

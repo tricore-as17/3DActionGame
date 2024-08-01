@@ -153,6 +153,7 @@
     <ClCompile Include="PlayerAttack.cpp" />
     <ClCompile Include="PlayerDefense.cpp" />
     <ClCompile Include="PlayerIdle.cpp" />
+    <ClCompile Include="PlayerJump.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerRolling.cpp" />
     <ClCompile Include="PlayerShotMagic.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="PlayerAttack.h" />
     <ClInclude Include="PlayerDefense.h" />
     <ClInclude Include="PlayerIdle.h" />
+    <ClInclude Include="PlayerJump.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerRolling.h" />
     <ClInclude Include="PlayerShotMagic.h" />

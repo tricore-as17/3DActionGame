@@ -24,7 +24,7 @@ public:
     /// <summary>
     /// 更新処理
     /// </summary>
-    virtual void Update(VECTOR& modelDirection)abstract;
+    virtual void Update(VECTOR& modelDirection,VECTOR& position)abstract;
 
     /// <summary>
     /// 移動処理などが終わった後のベロシティを渡す
@@ -72,6 +72,10 @@ protected:
     void StopAnimation();
 
     /// <summary>
+    /// アニメーションを開始させる処理
+    /// </summary>
+    void StartAnimation();
+
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
     void DetachAnimation(StateBase* nowState);

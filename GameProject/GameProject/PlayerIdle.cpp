@@ -6,6 +6,7 @@
 #include"PlayerDefense.h"
 #include"PlayerRolling.h"
 #include"PlayerShotMagic.h"
+#include"PlayerJump.h"
 
 
 /// <summary>
@@ -13,6 +14,7 @@
 /// </summary>
 PlayerIdle::PlayerIdle(int& modelHandle,const int beforeAnimationIndex)
     :StateBase(modelHandle,Player::Idle,beforeAnimationIndex)
+    , isGround(true)
 {
     //インプットマネージャーのアドレスを取得
     inputManager = InputManager::GetInstance();
@@ -33,7 +35,7 @@ PlayerIdle::~PlayerIdle()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void PlayerIdle::Update(VECTOR& modelDirection)
+void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();
@@ -51,8 +53,6 @@ void PlayerIdle::Update(VECTOR& modelDirection)
 /// </summary>
 void PlayerIdle::ChangeState()
 {
-    //キーの名前を判断するタグの用意
-    map<InputManager::KeyKinds, int>keyTag = inputManager->GetKeyTag();
 
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
     if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
@@ -80,6 +80,12 @@ void PlayerIdle::ChangeState()
     else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = new PlayerDefense(modelhandle, animationIndex);
+    }
+    //Aキーが押されて接地していれば
+    else if (inputManager->GetKeyPushState(InputManager::A) == InputManager::Push && isGround)
+    {
+        nextState = new PlayerJump(modelhandle, animationIndex, velocity);
+        isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)

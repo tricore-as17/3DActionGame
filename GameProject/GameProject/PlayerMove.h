@@ -21,7 +21,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="position">プレイヤーモデルの向き</param>
-    void Update(VECTOR& modelDirection)override;
+    void Update(VECTOR& modelDirection, VECTOR& position)override;
 
     /// <summary>
     /// ステートの切り替え処理をまとめたもの
@@ -35,4 +35,7 @@ private:
     VECTOR DecisionDirection();
     //メンバ変数
     InputManager* inputManager;              //インプットマネージャーにアクセスするためのポインタ
+
+    bool isGround;                           //接地しているか
+
 };

@@ -34,6 +34,7 @@ public:
     /// </summary>
     virtual void Draw()abstract;
 
+
 protected:
     SceneBase* nextScene;        //次のループでのシーンを入れる変数
     FadeInOut* fadeInOut;        //フェードアウトとフェードイン用のクラス
