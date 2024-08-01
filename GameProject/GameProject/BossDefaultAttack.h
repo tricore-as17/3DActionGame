@@ -26,7 +26,7 @@ public:
 
 private:
     //定数
-    static constexpr float InitializeAnimationSpeed = 1.0f;   //アニメーション速度
+    static constexpr float InitializeAnimationSpeed = 0.5f;   //アニメーション速度
 
     //ToDo
     //AIを作成したら入力は必要ないので削除

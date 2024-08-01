@@ -60,7 +60,7 @@ void BossStart::ChangeState()
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
     //本来はcurrentStartMoveStateがStandになったら状態を遷移ささせる
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::Push)
+    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
         //ボスの移動ステートに移行
         nextState = new BossIdle(modelhandle, animationIndex);

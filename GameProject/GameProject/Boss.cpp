@@ -8,6 +8,7 @@
 
 //初期座標の入力
 const VECTOR Boss::InitialPosition = VGet(0, 0, 6);
+const VECTOR Boss::OffsetModelPosition = VGet(0,10, 0);
 
 /// <summary>
 /// コンストラクタ
@@ -24,9 +25,6 @@ Boss::Boss()
     //モデルハンドルをもってくる
     modelHandle = MV1DuplicateModel(modelDataManager->GetModelHandle(ModelDataManager::Boss));
 
-    //最初に立ち上がるアニメーションをアタッチしておく
-    MV1AttachAnim(modelHandle, Standing, -1);
-
     //最初のステートを待機状態にする
     nowState = new BossStart(modelHandle, -1);
 
@@ -39,10 +37,10 @@ Boss::Boss()
     registerTag = CollisionManager::NotRegisterTag;
 
     //スケールの初期化
-    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
+    MV1SetScale(modelHandle, VGet(DefaultScale, 0.14, DefaultScale));
 
     //座標の設定
-    MV1SetPosition(modelHandle, InitialPosition);
+    MV1SetPosition(modelHandle, VAdd(InitialPosition,OffsetModelPosition));
 }
 
 /// <summary>
@@ -69,7 +67,7 @@ void Boss::Update()
 
 
     //モデルを描画する座標の調整
-    MV1SetPosition(modelHandle, position);
+    MV1SetPosition(modelHandle, VAdd(position,OffsetModelPosition));
 
     //更新処理の後次のループでのステートを代入する
     nextState = nowState->GetNextState();

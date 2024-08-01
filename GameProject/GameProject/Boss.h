@@ -26,12 +26,13 @@ public:
         Intimidation = 5,    //登場時の威嚇
         JumpAttack   = 6,    //ジャンプして攻撃
         LeftShot     = 7,    //左手で撃つショット
-        RightShot    = 8,    //右手で撃つショット
-        RightTurn    = 9,    //右向き切り替え
-        Run          = 10,   //走る
-        SitDown      = 11,   //座っている状態
-        Standing     = 12,   //立つ動作
-        Walk         = 13    //歩き
+        LeftTrun     = 8,
+        RightShot    = 9,    //右手で撃つショット
+        RightTurn    = 10,    //右向き切り替え
+        Run          = 11,   //走る
+        SitDown      = 12,   //座っている状態
+        Standing     = 13,   //立つ動作
+        Walk         = 14    //歩き
     };
     //コンストラクタ
     Boss();
@@ -52,11 +53,12 @@ private:
     ////定数////
 
     static const VECTOR InitialPosition;             //初期座標
+    static const VECTOR OffsetModelPosition;         //モデルの位置調整用の値
     static constexpr float CollisionCapsuleLineLength = 60.0f;   //当たり判定に必要なカプセルの線分の長さ
     static constexpr float CollisionRadius            = 23.0f;   //当たり判定に必要なカプセルの半径の大きさ
     static constexpr float HalfLength                 = 0.5f;    //中央座標を出す際の長さを半分にするための定数
     static constexpr int   NotRegisterTag             = -1;      //レジスタの識別番号が代入されていないことをしめす
-    static constexpr float DefaultScale               = 0.15f;   //基本的なスケール
+    static constexpr float DefaultScale               = 0.2f;   //基本的なスケール
     static constexpr float AngleSpeed                 = 0.15f;   //モデルの向きを変えるスピード
 
     ////メンバ変数////

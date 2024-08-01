@@ -27,7 +27,7 @@ public:
 private:
 
     //定数
-    static constexpr float InitializeAnimationSpeed = 1.0f;       //アニメーションの初期速度
+    static constexpr float InitializeAnimationSpeed = 0.3f;       //アニメーションの初期速度
 
     //メンバ変数
 

@@ -47,7 +47,7 @@ void BossAreaAttack::ChangeState()
 {
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::Push)
+    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
         //ボスの移動ステートに移行
         nextState = new BossShotAttack(modelhandle, animationIndex);
