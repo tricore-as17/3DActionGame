@@ -59,6 +59,6 @@ void PlayerDefense::ChangeState()
     }
     else
     {
-        nextState = new PlayerIdle(modelhandle, animationIndex);
+        nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }
 }

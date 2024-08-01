@@ -51,7 +51,7 @@ void BossShotAttack::ChangeState()
     if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
         //ボスの突進攻撃ステートに移行
-        nextState = new BossRunAttack(modelhandle, animationIndex);
+        nextState = new BossRunAttack(modelhandle, this->GetAnimationIndex());
     }
     else
     {

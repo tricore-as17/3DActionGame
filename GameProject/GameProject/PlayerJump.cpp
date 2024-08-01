@@ -61,7 +61,7 @@ void PlayerJump::Update(VECTOR& modelDirection,VECTOR& position)
     //アニメーションが一定ラインまで再生が終わったら
     if (currentPlayAnimationState == StateBase::FirstRoop)
     {
-        if (animationNowTime / animationLimitTime >= AnimationStopLine)
+        if (this->GetAnimationNowTime() / this->GetAnimationLimitTime() >= AnimationStopLine)
         {
             StopAnimation();
         }
@@ -105,7 +105,7 @@ void PlayerJump::ChangeState()
     //ジャンプが終了していたらステートを静止状態に切り替える
     if (jumpState == EndJump)
     {
-        nextState = new PlayerIdle(modelhandle, animationIndex);
+        nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {

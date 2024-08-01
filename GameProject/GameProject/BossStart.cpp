@@ -63,7 +63,7 @@ void BossStart::ChangeState()
     if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
         //ボスの移動ステートに移行
-        nextState = new BossIdle(modelhandle, animationIndex);
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {
@@ -95,7 +95,7 @@ void BossStart::ChangeStartMoveState()
             StartAnimation();
         }
         //立ち上がり終わっていたら状態を変更させる
-        else if (animationNowTime >= animationLimitTime)
+        else if (this->GetAnimationNowTime() >= this->GetAnimationLimitTime())
         {
             currentStartMoveState == Stand;
         }

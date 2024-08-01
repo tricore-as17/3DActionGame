@@ -53,7 +53,7 @@ void BossIdle::ChangeState()
     if (inputManager->GetKeyPushState(InputManager::LeftStick)== InputManager::JustRelease)
     {
         //ボスの移動ステートに移行
-        nextState = new BossMove(modelhandle, animationIndex);
+        nextState = new BossMove(modelhandle, this->GetAnimationIndex());
     }
     else
     {

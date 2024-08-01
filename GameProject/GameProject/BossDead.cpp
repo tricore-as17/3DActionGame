@@ -1,35 +1,32 @@
-﻿#include "BossDefaultAttack.h"
-#include"BossAreaAttack.h"
+﻿#include"BossDead.h"
+#include"BossIdle.h"
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="InitializeModelHandle">ボスのモデルハンドル</param>
-/// <param name="beforeAnimationIndex">前のステートでのアニメーション</param>
-BossDefaultAttack::BossDefaultAttack(int& InitializeModelHandle, const int beforeAnimationIndex)
-    :StateBase(InitializeModelHandle, Boss::Attack, beforeAnimationIndex)
+
+///<summary>
+///コンストラクタ
+///</summary>
+BossDead::BossDead(int& InitializeModelHandle, const int beforeAnimationIndex)
+    :StateBase(InitializeModelHandle, Boss::Dead, beforeAnimationIndex)
 {
     //アニメーション速度の初期化
     animationSpeed = InitializeAnimationSpeed;
-
-    //インプットマネージャーをもってくる
+    //インプットマネージャーのインスタンスをもってくる
     inputManager = InputManager::GetInstance();
 }
 
 /// <summary>
 /// デストラクタ
 /// </summary>
-BossDefaultAttack::~BossDefaultAttack()
+BossDead::~BossDead()
 {
     //処理なし
 }
-
 
 /// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& position)
+void BossDead::Update(VECTOR& modelDirection, VECTOR& position)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();
@@ -39,23 +36,24 @@ void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& position)
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation(this);
+
 }
+
 
 /// <summary>
 /// ステートの切り替え処理をまとめたもの
 /// </summary>
-void BossDefaultAttack::ChangeState()
+void BossDead::ChangeState()
 {
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
     if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
         //ボスの移動ステートに移行
-        nextState = new BossAreaAttack(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {
         nextState = this;
     }
 }
-

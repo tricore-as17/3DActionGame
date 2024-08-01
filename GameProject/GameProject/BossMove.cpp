@@ -52,7 +52,7 @@ void BossMove::ChangeState()
     //BossのAIを作るまではボタンでステートが遷移するようにしている
     if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
-        nextState = new BossDefaultAttack(modelhandle, animationIndex);
+        nextState = new BossDefaultAttack(modelhandle, this->GetAnimationIndex());
     }
     else
     {

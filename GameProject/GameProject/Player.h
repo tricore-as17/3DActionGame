@@ -52,13 +52,6 @@ public:
     /// </summary>
     void Draw();
 
-    /// <summary>
-    /// プレイヤーの回転制御
-    /// </summary>
-    /// <param name="direction">プレイヤーの移動方向</param>
-    void UpdateAngle();
-
-
 
 private:
     //定数
@@ -103,5 +96,10 @@ private:
     /// </summary>
     void SendRegister();
     
+    /// <summary>
+    /// プレイヤーの回転制御
+    /// </summary>
+    /// <param name="direction">プレイヤーの移動方向</param>
+    void UpdateAngle();
 
 };

@@ -1,10 +1,11 @@
 ﻿#include"BossRunAttack.h"
+#include"BossDead.h"
 
 ///<summary>
 ///コンストラクタ
 ///</summary>
 BossRunAttack::BossRunAttack(int& InitializeModelHandle, const int beforeAnimationIndex)
-    :StateBase(InitializeModelHandle, Boss::Idle, beforeAnimationIndex)
+    :StateBase(InitializeModelHandle, Boss::Run, beforeAnimationIndex)
 {
     //アニメーション速度の初期化
     animationSpeed = InitializeAnimationSpeed;
@@ -47,7 +48,7 @@ void BossRunAttack::ChangeState()
     //BossのAIを作るまではボタンでステートが遷移するようにしている
     if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
     {
-
+        nextState = new BossDead(modelhandle, this->GetAnimationIndex());
     }
     else
     {

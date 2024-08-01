@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossAreaAttack.cpp" />
+    <ClCompile Include="BossDead.cpp" />
     <ClCompile Include="BossDefaultAttack.cpp" />
     <ClCompile Include="BossIdle.cpp" />
     <ClCompile Include="BossMove.cpp" />
@@ -173,6 +174,7 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="BossAreaAttack.h" />
+    <ClInclude Include="BossDead.h" />
     <ClInclude Include="BossDefaultAttack.h" />
     <ClInclude Include="BossIdle.h" />
     <ClInclude Include="BossMove.h" />
