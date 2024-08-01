@@ -3,15 +3,15 @@
 #include"InputManager.h"
 
 /// <summary>
-/// ボスの静止ステート
+/// ボスの通常移動に関するステート
 /// </summary>
-class BossIdle:public StateBase
+class BossMove:public StateBase
 {
 public:
     //コンストラクタ
-    BossIdle(int& modelHandle, const int beforeAnimationIndex);
+    BossMove(int& InitializeModelHandle, const int beforeAnimationIndex);
     //デストラクタ
-    ~BossIdle();
+    ~BossMove();
 
     /// <summary>
     /// 更新処理
@@ -23,16 +23,15 @@ public:
     /// ステートの切り替え処理をまとめたもの
     /// </summary>
     void ChangeState()override;
+
 private:
-
     //定数
-    static constexpr float InitializeAnimationSpeed = 1.0f;    //アニメーションの初期速度
-
-    //メンバ変数
+    static constexpr float InitializeAnimationSpeed = 1.0f;   //アニメーション速度
 
     //ToDo
     //AIを作成したら入力は必要ないので削除
     InputManager* inputManager;      //入力管理クラス
 
 };
+
 

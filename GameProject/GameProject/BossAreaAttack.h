@@ -2,16 +2,17 @@
 #include"StateBase.h"
 #include"InputManager.h"
 
+
 /// <summary>
 /// ボスの静止ステート
 /// </summary>
-class BossIdle:public StateBase
+class BossAreaAttack :public StateBase
 {
 public:
     //コンストラクタ
-    BossIdle(int& modelHandle, const int beforeAnimationIndex);
+    BossAreaAttack(int& modelHandle, const int beforeAnimationIndex);
     //デストラクタ
-    ~BossIdle();
+    ~BossAreaAttack();
 
     /// <summary>
     /// 更新処理
@@ -26,7 +27,7 @@ public:
 private:
 
     //定数
-    static constexpr float InitializeAnimationSpeed = 1.0f;    //アニメーションの初期速度
+    static constexpr float InitializeAnimationSpeed = 1.0f;       //アニメーションの初期速度
 
     //メンバ変数
 
@@ -35,4 +36,3 @@ private:
     InputManager* inputManager;      //入力管理クラス
 
 };
-

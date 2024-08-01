@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"DxLib.h"
 #include<functional>
 #include<map>
 #include<list>
@@ -42,15 +43,6 @@ public:
     /// <param name="capsule">カプセルの当たり判定に必要な情報</param>
     /// <returns>当たっているか</returns>
     bool IsHitSphereAndCapsule(CollisionData sphere, CollisionData capsule);
-
-    /// <summary>
-    /// カプセル同士の最近接転換の最小距離を計算
-    /// </summary>
-    /// <param name="collider">カプセル１</param>
-    /// <param name="target">カプセル２</param>
-    /// <returns>最小距離</returns>
-    float CapsuleSegmentDistance(const CollisionData& collider, const CollisionData& target);
-
 
     /// <summary>
     /// カプセル同士の当たり判定

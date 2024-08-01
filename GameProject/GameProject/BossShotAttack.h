@@ -5,13 +5,13 @@
 /// <summary>
 /// ボスの静止ステート
 /// </summary>
-class BossIdle:public StateBase
+class BossShotAttack :public StateBase
 {
 public:
     //コンストラクタ
-    BossIdle(int& modelHandle, const int beforeAnimationIndex);
+    BossShotAttack(int& modelHandle, const int beforeAnimationIndex);
     //デストラクタ
-    ~BossIdle();
+    ~BossShotAttack();
 
     /// <summary>
     /// 更新処理
@@ -35,4 +35,3 @@ private:
     InputManager* inputManager;      //入力管理クラス
 
 };
-

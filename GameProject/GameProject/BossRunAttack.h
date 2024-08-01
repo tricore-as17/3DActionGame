@@ -1,17 +1,18 @@
 ﻿#pragma once
+
 #include"StateBase.h"
 #include"InputManager.h"
 
 /// <summary>
 /// ボスの静止ステート
 /// </summary>
-class BossIdle:public StateBase
+class BossRunAttack :public StateBase
 {
 public:
     //コンストラクタ
-    BossIdle(int& modelHandle, const int beforeAnimationIndex);
+    BossRunAttack(int& modelHandle, const int beforeAnimationIndex);
     //デストラクタ
-    ~BossIdle();
+    ~BossRunAttack();
 
     /// <summary>
     /// 更新処理
@@ -35,4 +36,3 @@ private:
     InputManager* inputManager;      //入力管理クラス
 
 };
-

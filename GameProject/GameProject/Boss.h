@@ -3,6 +3,7 @@
 
 class ModelDataManager;
 class CollisionManager;
+class StateBase;
 
 
 /// <summary>
@@ -48,21 +49,33 @@ public:
     void Draw();
 
 private:
-    //定数
+    ////定数////
+
     static const VECTOR InitialPosition;             //初期座標
     static constexpr float CollisionCapsuleLineLength = 60.0f;   //当たり判定に必要なカプセルの線分の長さ
     static constexpr float CollisionRadius            = 23.0f;   //当たり判定に必要なカプセルの半径の大きさ
     static constexpr float HalfLength                 = 0.5f;    //中央座標を出す際の長さを半分にするための定数
     static constexpr int   NotRegisterTag             = -1;      //レジスタの識別番号が代入されていないことをしめす
-    static constexpr float DefaultScale               = 0.15f;    //基本的なスケール
+    static constexpr float DefaultScale               = 0.15f;   //基本的なスケール
+    static constexpr float AngleSpeed                 = 0.15f;   //モデルの向きを変えるスピード
 
-    //メンバ変数
+    ////メンバ変数////
+
+    //モデル
     int modelHandle;                    //モデルハンドル
-    int registerTag;                    //レジスタの識別番号
+    VECTOR modelDirection;              //モデルの向くべき方向
+    float  angle;                       //モデルの向きを変更させる際の値
     VECTOR position;                    //座標
+
+    int registerTag;                    //レジスタの識別番号
     CollisionData collisionData;        //当たり判定に必要な情報
     CollisionManager* collisionManager; //当たり判定管理クラスにアクセスするポインタ
+    //ステート
+    StateBase* nowState;                //現在のステートを保存するポインタ
+    StateBase* nextState;               //次のループでのステートをホゾンスルポインタ
 
+
+    ////メンバ関数////
 
     /// <summary>
     /// ボスの情報から当たり判定に必要な情報を出して代入
@@ -79,5 +92,15 @@ private:
     /// 当たり判定データの更新したものを送る
     /// </summary>
     void SendRegister();
+
+    /// <summary>
+    /// ステートの移行処理
+    /// </summary>
+    void ChangeState();
+
+    /// <summary>
+    /// プレイヤーの回転制御
+    /// </summary>
+    void UpdateAngle();
 
 };

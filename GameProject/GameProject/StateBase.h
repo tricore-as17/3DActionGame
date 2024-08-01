@@ -16,6 +16,18 @@ public:
     //デストラクタ
     virtual ~StateBase();
 
+    /////ゲッター////
+
+    /// 移動処理などが終わった後のベロシティを渡す
+    const VECTOR GetVelocity() const { return velocity; }
+
+    //アニメーションのインデックスを返す
+    const int GetAnimationIndex() const { return animationIndex; }
+
+    //前のステートのアニメーションのインデックスを返す
+    const int GetBeforeAnimationIndex() const { return beforeAnimationIndex; }
+
+
     /// <summary>
     /// 次のステートを返す
     /// </summary>
@@ -26,12 +38,6 @@ public:
     /// 更新処理
     /// </summary>
     virtual void Update(VECTOR& modelDirection,VECTOR& position)abstract;
-
-    /// <summary>
-    /// 移動処理などが終わった後のベロシティを渡す
-    /// </summary>
-    /// <returns></returns>
-    const VECTOR GetVelocity() const { return velocity; }
 
 #ifdef _DEBUG
     /// <summary>
