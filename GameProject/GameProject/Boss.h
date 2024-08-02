@@ -54,6 +54,7 @@ private:
 
     static const VECTOR InitialPosition;             //初期座標
     static const VECTOR OffsetModelPosition;         //モデルの位置調整用の値
+
     static constexpr float CollisionCapsuleLineLength = 60.0f;   //当たり判定に必要なカプセルの線分の長さ
     static constexpr float CollisionRadius            = 23.0f;   //当たり判定に必要なカプセルの半径の大きさ
     static constexpr float HalfLength                 = 0.5f;    //中央座標を出す際の長さを半分にするための定数
@@ -68,8 +69,6 @@ private:
     VECTOR modelDirection;              //モデルの向くべき方向
     float  angle;                       //モデルの向きを変更させる際の値
     VECTOR position;                    //座標
-
-    int registerTag;                    //レジスタの識別番号
     CollisionData collisionData;        //当たり判定に必要な情報
     CollisionManager* collisionManager; //当たり判定管理クラスにアクセスするポインタ
     //ステート
@@ -82,18 +81,14 @@ private:
     /// <summary>
     /// ボスの情報から当たり判定に必要な情報を出して代入
     /// </summary>
-    void ConvertCollisionData();
+    void UpdateCollisionData();
 
     /// <summary>
     /// オブジェクトに当たった際の処理を書いたもの
     /// </summary>
     /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
-    void OnHit(CollisionData collisionData);
+    void OnHit(const CollisionData collisionData);
 
-    /// <summary>
-    /// 当たり判定データの更新したものを送る
-    /// </summary>
-    void SendRegister();
 
     /// <summary>
     /// ステートの移行処理
