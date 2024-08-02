@@ -32,6 +32,13 @@ public:
     /// <returns></returns>
     const VECTOR GetVelocity() const { return velocity; }
 
+#ifdef _DEBUG
+    /// <summary>
+    /// 当たり判定を描画する(デバッグ用)
+    /// </summary>
+    virtual void DrawCollision() {}
+#endif 
+
 protected:
     //アニメーションの再生状態
     enum AnimationPlayState
@@ -79,6 +86,9 @@ protected:
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
     void DetachAnimation(StateBase* nowState);
+
+
+
 
 
 

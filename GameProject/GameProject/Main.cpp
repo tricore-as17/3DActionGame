@@ -2,6 +2,7 @@
 #include"Game.h"
 #include"InputManager.h"
 #include"ModelDataManager.h"
+#include"CollisionManager.h"
 
 //----------------------------//
 // WinMain関数.
@@ -17,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     /////////////////////////////////
     // ウインドウモードに(コメントアウトしたらフルスクリーン).
-    //ChangeWindowMode(TRUE);
+     //ChangeWindowMode(TRUE);
     ////////////////////////////
 
 
@@ -32,6 +33,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     //シングルトンクラスのインスタンス確保
     InputManager::CreateInstance();
     ModelDataManager::CreateInstance();
+    CollisionManager::CreateInstance();
+
 
 
     Game* game = new Game();

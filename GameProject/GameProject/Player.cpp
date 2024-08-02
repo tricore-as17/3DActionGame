@@ -1,9 +1,13 @@
 ﻿#include"DxLib.h"
+#include"CollisionManager.h"
+#include"CollisionData.h"
+#include"StateBase.h"
 #include"Player.h"
 #include"ModelDataManager.h"
-#include"StateBase.h"
 #include"PlayerIdle.h"
 
+
+const VECTOR Player::ModelOffsetPosition = VGet(0, 0, -3);
 
 /// <summary>
 /// コンストラクタ
@@ -25,7 +29,17 @@ Player::Player()
      //最初のステートを待機状態にする
     nowState = new PlayerIdle(modelHandle,-1);
 
+    //コリジョンマネージャーのインスタンスを代入
+    collisionManager = CollisionManager::GetInstance();
 
+    //当たり判定が生きている状態にする
+    collisionData.isCollisionActive = true;
+
+    //当たり判定用の変数の初期化
+    UpdateCollisionData();
+
+    //当たり判定データを渡す
+    collisionManager->RegisterCollisionData(&collisionData);
 
     //座標の設定
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
@@ -52,10 +66,16 @@ void Player::Update()
 
     // 移動
     position = VAdd(position, nowState->GetVelocity());
+
+
     //モデルの向きを反映
     UpdateAngle();
 
-    MV1SetPosition(modelHandle, position);
+    //当たり判定に必要なデータを更新
+    UpdateCollisionData();
+
+
+    MV1SetPosition(modelHandle, VAdd(position,ModelOffsetPosition));
     
     //更新処理の後次のループでのステートを代入する
     nextState = nowState->GetNextState();
@@ -75,6 +95,17 @@ void Player::Draw()
 {
     //プレイヤーの描画
     MV1DrawModel(modelHandle);
+
+#ifdef _DEBUG
+    //当たり判定が正しいかの確認用の描画
+    DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+
+    //ステートの当たり判定を描画する
+    nowState->DrawCollision();
+    //プレイヤーの座標の表示
+    DrawFormatString(50, 150, GetColor(255, 255, 255), "x %f  y %f  z %f", position.x, position.y, position.z);
+#endif
+
 }
 
 /// <summary>
@@ -140,6 +171,44 @@ void Player::UpdateAngle()
     angle = targetAngle - difference;
     MV1SetRotationXYZ(modelHandle, VGet(0.0f, angle + DX_PI_F, 0.0f));
 }
+
+/// <summary>
+/// プレイヤーの情報から当たり判定に必要な情報を出して代入
+/// </summary>
+void Player::UpdateCollisionData()
+{
+    //中央座標の代入
+    collisionData.centerPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineLength * HalfLength, 0.0f));
+    //カプセルの下側の座標
+    collisionData.bottomPosition = position;
+    //カプセルの上側の座標
+    collisionData.upPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineLength, 0.0f));
+    //カプセルの球部分の半径
+    collisionData.radius = CollisionRadius;
+    //オブジェクトの種類
+    collisionData.hitObjectTag = CollisionManager::Player;
+    //当たった際の関数
+    collisionData.onHit = std::bind(&Player::OnHit, this, std::placeholders::_1);
+}
+
+/// <summary>
+/// オブジェクトに当たった際の処理を書いたもの
+/// </summary>
+/// <param name="">当たり判定に必要な情報をまとめたデータ</param>
+void Player::OnHit(CollisionData collisionData)
+{
+    switch (collisionData.hitObjectTag)
+    {
+    case CollisionManager::Boss:
+        printfDx("bossHit");
+            break;
+    default:
+        break;
+    }
+
+
+}
+
 
 
 

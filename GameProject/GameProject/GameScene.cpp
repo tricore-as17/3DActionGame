@@ -6,6 +6,7 @@
 #include"Stage.h"
 #include"Player.h"
 #include"Boss.h"
+#include"CollisionManager.h"
 
 
 
@@ -19,6 +20,7 @@ GameScene::GameScene()
     camera = new Camera();
     player = new Player();
     boss   = new Boss();
+    collisionManager = CollisionManager::GetInstance();
 }
 
 /// <summary>
@@ -39,8 +41,11 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
     //各クラスのアップデートを呼ぶ
+    boss->Update();
     player->Update();
     camera->Update(player->GetPosition());
+    //当たり判定全体の更新処理を行う
+    collisionManager->Update();
 
 
     //デバッグ時だけキー入力でシーン遷移するように

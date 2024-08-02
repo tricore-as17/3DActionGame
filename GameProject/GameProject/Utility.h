@@ -15,6 +15,6 @@ public:
     /// <returns>ビットの足し算の結果</returns>
     static int AddBit(int bitAddend, int bitAdder);
 
-private:
+    static constexpr float ErrorValue = 0.000001f;  //float型で許容する誤差の値
 
 };

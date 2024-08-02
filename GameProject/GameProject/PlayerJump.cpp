@@ -1,6 +1,6 @@
 ﻿#include"PlayerJump.h"
 #include"Player.h"
-#include"ColisionManager.h"
+#include"CollisionManager.h"
 #include"PlayerIdle.h"
 
 
@@ -44,7 +44,7 @@ void PlayerJump::Update(VECTOR& modelDirection,VECTOR& position)
     velocity.y = velocity.y + falllSpeed;
 
     //地面にめり込まないように調節
-    velocity = ColisionManager::AdjustGroundToWardVelocity(velocity, position);
+    velocity = CollisionManager::AdjustGroundToWardVelocity(velocity, position);
 
     if (jumpState == Jump)
     {

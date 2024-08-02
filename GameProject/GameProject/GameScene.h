@@ -5,6 +5,7 @@ class Stage;
 class Camera;
 class Player;
 class Boss;
+class CollisionManager;
 
 
 /// <summary>
@@ -34,5 +35,6 @@ private:
     Camera* camera; //カメラ
     Player* player; //プレイヤー
     Boss*   boss;   //ボス
+    CollisionManager* collisionManager; //コリジョンマネージャーのインスタンスにアクセスるポインタ
 };
 
