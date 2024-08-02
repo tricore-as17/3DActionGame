@@ -19,7 +19,8 @@ CollisionManager::CollisionManager()
 /// </summary>
 CollisionManager::~CollisionManager()
 {
-
+    //hitObjectListの削除
+    hitObjectList.clear();
 }
 
 /// <summary>
