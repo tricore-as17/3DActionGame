@@ -94,12 +94,7 @@ void Boss::UpdateCollisionData()
 /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
 void Boss::OnHit(const CollisionData collisionData)
 {
-    switch (collisionData.hitObjectTag)
-    {
-
-    default:
-        break;
-    }
+    //処理なし
 }
 
 
