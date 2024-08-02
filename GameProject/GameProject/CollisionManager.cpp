@@ -252,7 +252,19 @@ void CollisionManager::ResponseColisionIfDetected(pair<const int,CollisionData> 
                 collider.second.onHit(target.second);
             }
         }
+    case BossDefaultAttack:
+        //ボスの攻撃がプレイヤーにヒットした場合
+        if (target.second.hitObjectTag == Player)
+        {
+            //カプセルと球体の当たり判定を行う
+            if (IsHitSphereAndCapsule(collider.second, target.second))
+            {
+                //エネミーと当たった際の関数処理を呼ぶ
+                collider.second.onHit(target.second);
+            }
 
+        }
+        break;
     default:
         break;
     }

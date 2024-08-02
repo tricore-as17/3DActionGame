@@ -25,8 +25,9 @@ private:
     ///////  定数  ///////
 
     
-    static constexpr float InitializeAnimationSpeed = 0.5f;   //アニメーション速度
-    static constexpr 
+    static constexpr float InitializeAnimationSpeed       = 0.5f;  //アニメーション速度
+    static constexpr float CollisionCapsuleLineHalfLength = 10.0f; //当たり判定のカプセルの半分の大きさ
+    static constexpr float CollisionRadius                = 5.0f;  //当たり判定の半径
 
     ///////  メンバ変数  ////////
 

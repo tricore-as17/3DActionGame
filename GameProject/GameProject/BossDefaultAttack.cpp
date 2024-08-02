@@ -92,8 +92,8 @@ void BossDefaultAttack::UpdateCollisionData()
     //カプセルの球部分の半径
     collisionData.radius = CollisionRadius;
     //オブジェクトの種類
-    collisionData.hitObjectTag = CollisionManager::PlayerAttack;
+    collisionData.hitObjectTag = CollisionManager::BossDefaultAttack;
     //当たった際の関数
-    collisionData.onHit = std::bind(&PlayerAttack::OnHit, this, std::placeholders::_1);
+    collisionData.onHit = std::bind(&BossDefaultAttack::OnHit, this, std::placeholders::_1);
 
 }
