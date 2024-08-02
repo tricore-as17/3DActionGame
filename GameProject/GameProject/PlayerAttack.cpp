@@ -22,11 +22,17 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
     //コリジョンマネージャーのインスタンスをもってくる
     collisionManager = CollisionManager::GetInstance();
 
-    //当たり判定用の変数の初期化
-    ConvertCollisionData();
+<<<<<<< HEAD
+=======
+    //当たり判定が生きている状態にする
+    collisionData.isCollisionActive = true;
 
-    //識別番号はCollisionManagerが代入するので入っていないことを
-    registerTag = CollisionManager::NotRegisterTag;
+>>>>>>> AddBossState
+    //当たり判定用の変数の初期化
+    UpdateCollisionData();
+
+    //当たり判定データのポインタを渡す
+    collisionManager->RegisterCollisionData(&collisionData);
 
 }
 
@@ -35,8 +41,7 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
 /// </summary>
 PlayerAttack::~PlayerAttack()
 {
-    //当たり判定情報を削除する
-    collisionManager->DeleteResister(registerTag);
+    
 }
 
 /// <summary>
@@ -53,8 +58,8 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position)
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
-    //当たり判定情報を渡す
-    SendRegister();
+    //当たり判定に必要な情報の更新
+    UpdateCollisionData();
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation(this);
@@ -70,6 +75,9 @@ void PlayerAttack::ChangeState()
     if (currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
+
+        //ステートが切り替わる際に当たり判定を消す
+        collisionData.isCollisionActive = false;
     }
     else
     {
@@ -81,7 +89,7 @@ void PlayerAttack::ChangeState()
 /// <summary>
 /// プレイヤーの情報から当たり判定に必要な情報を出して代入
 /// </summary>
-void PlayerAttack::ConvertCollisionData()
+void PlayerAttack::UpdateCollisionData()
 {
     //中央座標の代入
     collisionData.centerPosition = position;
@@ -97,25 +105,23 @@ void PlayerAttack::ConvertCollisionData()
     collisionData.onHit = std::bind(&PlayerAttack::OnHit, this, std::placeholders::_1);
 }
 
-/// <summary>
-/// 当たり判定データの更新したものを送る
-/// </summary>
-void PlayerAttack::SendRegister()
-{
-    //現在のプレイヤー情報から当たり判定に必要な値に代入
-    ConvertCollisionData();
-
-    //コリジョンマネージャーに渡す
-    collisionManager->SetResister(collisionData, registerTag);
-}
 
 /// <summary>
 /// 当たった時の処理
 /// </summary>
 void PlayerAttack::OnHit(CollisionData collisionData)
 {
+    switch (collisionData.hitObjectTag)
+    {
+    case CollisionManager::Boss:
+        printfDx("playerAttackHit");
+        this->collisionData.isCollisionActive = false;
+        break;
+    default:
+        break;
+    }
     //当たったフラグをオンにする
-    isHited = true;
+    collisionData.isCollisionActive = false;
 }
 
 #ifdef _DEBUG
