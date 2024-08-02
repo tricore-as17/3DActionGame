@@ -32,10 +32,11 @@ Player::Player()
     //コリジョンマネージャーのインスタンスを代入
     collisionManager = CollisionManager::GetInstance();
 
+    //当たり判定が生きている状態にする
+    collisionData.isCollisionActive = true;
+
     //当たり判定用の変数の初期化
     UpdateCollisionData();
-    //識別番号はCollisionManagerが代入するので入っていないことを
-    collisionData.collidableObjectTag = CollisionManager::NotRegisterTag;
 
     //当たり判定データを渡す
     collisionManager->RegisterCollisionData(&collisionData);
@@ -51,8 +52,6 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
-    //自身の当たり判定情報を削除する
-    collisionManager->DeleteHitObject(collisionData.collidableObjectTag);
     //メモリの解放
     delete nowState;
 }

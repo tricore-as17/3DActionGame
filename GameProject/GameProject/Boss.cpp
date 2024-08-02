@@ -24,10 +24,11 @@ Boss::Boss()
     //コリジョンマネージャーのインスタンスのアドレスを取得
     collisionManager = collisionManager->GetInstance();
 
+    //当たり判定が生きている状態にする
+    collisionData.isCollisionActive = true;
+
     //当たり判定用の変数の初期化
     UpdateCollisionData();
-    //識別番号はCollisionManagerが代入するので入っていないことを
-    collisionData.collidableObjectTag = CollisionManager::NotRegisterTag;
 
     //当たり判定データのポインタを渡す
     collisionManager->RegisterCollisionData(&collisionData);

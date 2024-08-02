@@ -22,11 +22,11 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
     //コリジョンマネージャーのインスタンスをもってくる
     collisionManager = CollisionManager::GetInstance();
 
+    //当たり判定が生きている状態にする
+    collisionData.isCollisionActive = true;
+
     //当たり判定用の変数の初期化
     UpdateCollisionData();
-
-    //識別番号はCollisionManagerが代入するので入っていないことを
-    collisionData.collidableObjectTag = CollisionManager::NotRegisterTag;
 
     //当たり判定データのポインタを渡す
     collisionManager->RegisterCollisionData(&collisionData);
@@ -38,8 +38,7 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
 /// </summary>
 PlayerAttack::~PlayerAttack()
 {
-    //当たり判定情報を削除する
-    collisionManager->DeleteHitObject(collisionData.collidableObjectTag);
+    
 }
 
 /// <summary>
@@ -73,6 +72,8 @@ void PlayerAttack::ChangeState()
     if (currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, animationIndex);
+        //ステートが切り替わる際に当たり判定を消す
+        collisionData.isCollisionActive = false;
     }
     else
     {
@@ -106,8 +107,17 @@ void PlayerAttack::UpdateCollisionData()
 /// </summary>
 void PlayerAttack::OnHit(CollisionData collisionData)
 {
+    switch (collisionData.hitObjectTag)
+    {
+    case CollisionManager::Boss:
+        printfDx("playerAttackHit");
+        this->collisionData.isCollisionActive = false;
+        break;
+    default:
+        break;
+    }
     //当たったフラグをオンにする
-    isHited = true;
+    collisionData.isCollisionActive = false;
 }
 
 #ifdef _DEBUG
