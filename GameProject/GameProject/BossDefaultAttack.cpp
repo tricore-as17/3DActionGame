@@ -75,5 +75,25 @@ void BossDefaultAttack::ChangeState()
 /// </summary>
 void BossDefaultAttack::OnHit(CollisionData collisionData)
 {
-    collisionManager->DeleteResister(registerTag)
+    collisionManager->DeleteResister(registerTag);
+}
+
+/// <summary>
+/// 座標などを当たり判定に必要なデータに変換
+/// </summary>
+void BossDefaultAttack::UpdateCollisionData()
+{
+    //中央座標の代入
+    collisionData.centerPosition = position;
+    //カプセルの下側の座標
+    collisionData.bottomPosition = position;
+    //カプセルの上側の座標
+    collisionData.upPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineHalfLength, 0.0f));
+    //カプセルの球部分の半径
+    collisionData.radius = CollisionRadius;
+    //オブジェクトの種類
+    collisionData.hitObjectTag = CollisionManager::PlayerAttack;
+    //当たった際の関数
+    collisionData.onHit = std::bind(&PlayerAttack::OnHit, this, std::placeholders::_1);
+
 }

@@ -26,6 +26,7 @@ private:
 
     
     static constexpr float InitializeAnimationSpeed = 0.5f;   //アニメーション速度
+    static constexpr 
 
     ///////  メンバ変数  ////////
 
