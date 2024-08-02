@@ -12,6 +12,11 @@ BossAreaAttack::BossAreaAttack(int& InitializeModelHandle, const int beforeAnima
     animationSpeed = InitializeAnimationSpeed;
 
     inputManager = InputManager::GetInstance();
+
+    //コリジョンマネージャーのインスタンスをもってくる
+    collisionManager = CollisionManager::GetInstance();
+
+
 }
 
 /// <summary>

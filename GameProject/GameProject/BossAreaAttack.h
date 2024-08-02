@@ -34,10 +34,24 @@ private:
     //AIを作成したら入力は必要ないので削除
     InputManager* inputManager;      //入力管理クラス
 
+    //攻撃した時の当たり判定に必要な情報をまとめたもの
+    CollisionData collisionData;           //当たり判定に必要な情報をまとめたもの
+    CollisionManager* collisionManager;    //当たり判定の管理クラスのポインタ
+
     ///////  メンバ関数  //////
 
     /// <summary>
     /// ステートの切り替え処理をまとめたもの
     /// </summary>
     void ChangeState()override;
+
+    /// <summary>
+    /// 座標などを当たり判定に必要なデータに変換
+    /// </summary>
+    void UpdateCollisionData();
+
+    /// <summary>
+    /// 当たった時の処理
+    /// </summary>
+    void OnHit(CollisionData collisionData);
 };
