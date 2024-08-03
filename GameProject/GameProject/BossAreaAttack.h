@@ -45,13 +45,4 @@ private:
     /// </summary>
     void ChangeState()override;
 
-    /// <summary>
-    /// 座標などを当たり判定に必要なデータに変換
-    /// </summary>
-    void UpdateCollisionData();
-
-    /// <summary>
-    /// 当たった時の処理
-    /// </summary>
-    void OnHit(CollisionData collisionData);
 };

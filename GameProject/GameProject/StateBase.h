@@ -105,6 +105,7 @@ protected:
     /// </summary>
     void DetachAnimation(StateBase* nowState);
 
+
 private:
 
     ///////  メンバ変数  ////////

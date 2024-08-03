@@ -17,7 +17,8 @@ Boss::Boss()
     :position(InitialPosition)
     ,angle(0.0f)
     ,nowState(NULL)
-    ,modelDirection(VGet(0,0,0))
+    ,modelDirection(VGet(0,0,-1))
+    ,hp(10)
 {
     //モデルマネージャーにアクセスるポインタの代入
     ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
@@ -32,7 +33,7 @@ Boss::Boss()
     collisionManager = collisionManager->GetInstance();
 
     //当たり判定が生きている状態にする
-    collisionData.isCollisionActive = true;
+    collisionData.collisionState = CollisionData::CollisionActive;
 
     //当たり判定用の変数の初期化
     UpdateCollisionData();
@@ -90,8 +91,16 @@ void Boss::Draw()
     //モデルの描画
     MV1DrawModel(modelHandle);
 
+#ifdef _DEBUG
     //当たり判定が正しいかの確認用の描画
     DrawCapsule3D(collisionData.bottomPosition, collisionData.upPosition, collisionData.radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+
+    //ステートの当たり判定を描画する
+    nowState->DrawCollision();
+
+    DrawFormatString(50, 250, GetColor(255, 255, 255), "HP : %d", hp);
+#endif
+
 
 }
 
@@ -121,7 +130,17 @@ void Boss::UpdateCollisionData()
 /// <param name="">当たり判定に必要な情報をまとめたデータ</param>
 void Boss::OnHit(const CollisionData collisionData)
 {
-    //処理なし
+    switch (collisionData.hitObjectTag)
+    {
+    case CollisionManager::PlayerAttack:
+
+        //HPを減らす
+        hp -= collisionData.damageAmount;
+
+        break;
+    default:
+        break;
+    }
 }
 
 /// <summary>

@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include"StateBase.h"
+#include"CollisionStateBase.h"
 
 
 /// <summary>
 /// プレイヤーの攻撃に関するステート
 /// </summary>
-class PlayerAttack :public StateBase
+class PlayerAttack :public StateBase,public CollisionStateBase
 {
 public:
     //コンストラクタ
@@ -18,8 +19,9 @@ public:
     /// <summary>
     /// 更新処理
     /// </summary>
-    /// <param name="modelDirection">プレイヤーモデルの向き</param>
-    void Update(VECTOR& modelDirection, VECTOR& position)override;
+    /// <param name="modelDirection">モデルの向き</param>
+    /// <param name="characterPosition">キャラクターの座標</param>
+    void Update(VECTOR& modelDirection, VECTOR& characterPosition)override;
 
     /// <summary>
     /// ステートの切り替え処理をまとめたもの
@@ -31,27 +33,21 @@ public:
 private:
     ///////  定数  ///////
 
-    static constexpr float  CollisionCapsuleLineHalfLength = 10.0f;    //当たり判定のカプセルの半分の長さ
-    static constexpr float  CollisionRadius                = 7.0f;     //当たり判定のカプセルの半径
-    static const     VECTOR OffsetPositionY;                           //プレイヤーと攻撃の当たり判定座標がどれだけずれているか
-    static constexpr float  OffsetPositionScale            = 18.0f;    //プレイヤーとどれだけ離すかの大きさ 
+    static constexpr float  CollisionCapsuleLineHalfLength = 15.0f;        //当たり判定のカプセルの半分の長さ
+    static constexpr float  CollisionRadius                = 7.0f;         //当たり判定のカプセルの半径
+    static const     VECTOR OffsetPositionY;                               //プレイヤーと攻撃の当たり判定座標がどれだけずれているか
+    static constexpr float  OffsetPositionScale            = 18.0f;        //プレイヤーとどれだけ離すかの大きさ
+    static constexpr int    CollisionCapsuleAngle          = -30;          //当たり判定用カプセルの回転角度
+    static constexpr float  InitializeCollisionStartAnimationRatio = 0.3;  //当たり判定を始めるアニメーションの再生率
+    static constexpr int    DamageAmount                   = 1;            //与えるダメージ量
 
-
-    ///////  メンバ変数  ////////
-
-    VECTOR position;       //攻撃の当たり判定の座標
-    bool   isHited;        //攻撃が当たったか
-
-    //攻撃した時の当たり判定に必要な情報をまとめたもの
-    CollisionData     collisionData;         //当たり判定に必要な情報をまとめたもの
-    CollisionManager* collisionManager;      //当たり判定の管理クラスのポインタ
 
     //////  メンバ関数  //////
 
     /// <summary>
     /// 座標などを当たり判定に必要なデータに変換
     /// </summary>
-    void UpdateCollisionData();
+    void UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition) override;
 
     /// <summary>
     /// 当たった時の処理

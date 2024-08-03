@@ -24,3 +24,14 @@ int Utility::AddBit(int bitAddend, int bitAdder)
     return bitAddend;
 }
 
+/// <summary>
+/// 任意の角度をラジアンに変換
+/// </summary>
+/// <param name="angle">任意の角度</param>
+/// <returns>ラジアン</returns>
+float Utility::ConvertRadian(const int angle)
+{
+    //計算した値を返す
+    return DX_PI_F / 180 * angle;
+}
+

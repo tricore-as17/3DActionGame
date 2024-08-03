@@ -163,6 +163,15 @@ VECTOR CollisionManager::AdjustGroundToWardVelocity(VECTOR velocity, VECTOR befo
 /// </summary>
 void CollisionManager::Update()
 {
+    for (int i = 0; i < hitObjectList.size(); i++)
+    {
+        //当たり判定情報を消すとき
+        if (hitObjectList[i]->collisionState == CollisionData::CollisionEnded)
+        {
+            hitObjectList.erase(hitObjectList.begin() + i);
+        }
+    }
+
     //オブジェクトの数二つ分をまわす
     for (int i = 0; i < hitObjectList.size(); i++)
     {
@@ -171,11 +180,6 @@ void CollisionManager::Update()
         {
             //当たったかを判定した後関数を呼ぶ
             ResponseColisionIfDetected(hitObjectList[i], hitObjectList[j]);
-        }
-        //当たり判定情報を消すとき
-        if (!hitObjectList[i]->isCollisionActive)
-        {
-            hitObjectList.erase(hitObjectList.begin() + i);
         }
     }
 }
@@ -192,6 +196,15 @@ void CollisionManager::ResponseColisionIfDetected(CollisionData* const & collide
     case Player:
         //エネミーと衝突した場合
         if (target->hitObjectTag == Boss)
+        {
+            //カプセル同士の当たり判定をおこなう
+            if (IsHitCapsuleAndCapsule(*collider, *target))
+            {
+                //エネミーと当たった際の関数処理を呼ぶ
+                collider->onHit(*target);
+            }
+            }
+        else if (target->hitObjectTag == BossDefaultAttack)
         {
             //カプセル同士の当たり判定をおこなう
             if (IsHitCapsuleAndCapsule(*collider, *target))
@@ -233,15 +246,16 @@ void CollisionManager::ResponseColisionIfDetected(CollisionData* const & collide
                 collider->onHit(*target);
             }
         }
+        break;
     case BossDefaultAttack:
         //ボスの攻撃がプレイヤーにヒットした場合
-        if (target.second.hitObjectTag == Player)
+        if (target->hitObjectTag == Player)
         {
             //カプセルと球体の当たり判定を行う
-            if (IsHitSphereAndCapsule(collider.second, target.second))
+            if (IsHitSphereAndCapsule(*collider, *target))
             {
                 //エネミーと当たった際の関数処理を呼ぶ
-                collider.second.onHit(target.second);
+                collider->onHit(*target);
             }
 
         }

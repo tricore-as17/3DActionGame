@@ -17,6 +17,8 @@ Player::Player()
     , angle(0.0f)
     , nowState(NULL)
     , modelDirection(VGet(0, 0, 0))
+    , hp(10)
+    , isBossHited(false)
 {
     //インスタンスを持ってくる
     ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
@@ -33,7 +35,7 @@ Player::Player()
     collisionManager = CollisionManager::GetInstance();
 
     //当たり判定が生きている状態にする
-    collisionData.isCollisionActive = true;
+    collisionData.collisionState = CollisionData::CollisionActive;
 
     //当たり判定用の変数の初期化
     UpdateCollisionData();
@@ -88,7 +90,8 @@ void Player::Update()
         ChangeState();
     }
 
-
+    //当たり判定を行う前に当たっているかをfalseにしておく
+    isBossHited = false;
 }
 
 /// <summary>
@@ -105,8 +108,18 @@ void Player::Draw()
 
     //ステートの当たり判定を描画する
     nowState->DrawCollision();
+
     //プレイヤーの座標の表示
     DrawFormatString(50, 150, GetColor(255, 255, 255), "x %f  y %f  z %f", position.x, position.y, position.z);
+
+    //ボスに当たった際の表示
+    if (isBossHited)
+    {
+        DrawString(50, 200, "BossHit", GetColor(255, 255, 255));
+    }
+
+    DrawFormatString(50, 300, GetColor(255, 255, 255), "HP : %d", hp);
+
 #endif
 
 }
@@ -203,8 +216,17 @@ void Player::OnHit(CollisionData collisionData)
     switch (collisionData.hitObjectTag)
     {
     case CollisionManager::Boss:
-        printfDx("bossHit");
-            break;
+
+        //ボスと当たったフラグを立てる
+        isBossHited = true;
+
+        break;
+    case CollisionManager::BossDefaultAttack:
+
+        //敵の攻撃に当たったのでHPを減らす
+        hp -= collisionData.damageAmount;
+
+        break;
     default:
         break;
     }
