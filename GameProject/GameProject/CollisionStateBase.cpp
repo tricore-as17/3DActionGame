@@ -28,6 +28,8 @@ CollisionStateBase::~CollisionStateBase()
 /// <summary>
 /// アニメーションの再生時間に合わせて当たり判定情報を渡す
 /// </summary>
+/// <param name="animationNowTime">現在のアニメーションの再生時間</param>
+/// <param name="animationLimitTime">アニメーションの総再生時間</param>
 void CollisionStateBase::SendCollisionDataByAnimationTime(float animationNowTime, float animationLimitTime)
 {
 
