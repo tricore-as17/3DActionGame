@@ -59,7 +59,7 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateCollisionData();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
