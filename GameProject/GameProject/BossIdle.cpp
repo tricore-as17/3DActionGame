@@ -31,7 +31,7 @@ BossIdle::~BossIdle()
 /// <param name="position">プレイヤーモデルの向き</param>
 /// <param name="position">自身のキャラクターの座標</param>
 /// <param name="targetPosition">敵対している相手の座標</param>
-void BossIdle::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition)
+void BossIdle::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition,VECTOR cameraPosition)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();
