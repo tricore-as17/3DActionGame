@@ -9,6 +9,7 @@
 BossShotAttack::BossShotAttack(int& InitializeModelHandle, const int beforeAnimationIndex)
     :StateBase(InitializeModelHandle, Boss::LeftShot, beforeAnimationIndex)
     ,isAnimationSwitch(false)
+    ,shotState(WaitLeftShot)
 {
     //アニメーション速度の初期化
     animationSpeed = InitializeAnimationSpeed;
@@ -74,7 +75,7 @@ void BossShotAttack::ChangeState()
 void BossShotAttack::SwitchAnimation()
 {
     // アニメーションの1ループが終了したら
-    if (currentPlayAnimationState == StateBase::FirstRoopEnd && !isAnimationSwitch )
+    if (currentPlayAnimationState == StateBase::FirstRoopEnd && shotState == LeftShot)
     {
         // 前のステートのアニメーションをデタッチ
         MV1DetachAnim(modelhandle, beforeAnimationIndex);
@@ -93,18 +94,30 @@ void BossShotAttack::SwitchAnimation()
 
         currentPlayAnimationState = StateBase::BlendStart;
 
-        isAnimationSwitch = true;
+        shotState = WaitRightShot;
 
         
     }
 }
 
-void BossShotAttack::CreateShotByAnimationTime()
+void BossShotAttack::CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition)
 {
     // アニメーションの再生率が規定値を超えたら
-    if (animationNowTime / animationLimitTime >= ShotCreateAnimationRatio)
+    if (animationNowTime / animationLimitTime >= ShotCreateAnimationRatio ||
+        shotState == WaitLeftShot || shotState == WaitRightShot)
     {
-        shotManager->CreateShot();
+        // 必要な情報を代入して弾を作成
+        shotManager->CreateShot(AssignInitializeShotData(position,targetPosition));
+
+        // 弾を撃った状態を変更する
+        if (shotState == WaitLeftShot)
+        {
+            shotState = LeftShot;
+        }
+        else
+        {
+            shotState = RightSHot;
+        }
     }
 }
 
@@ -136,7 +149,10 @@ InitializeShotData BossShotAttack::AssignInitializeShotData(const VECTOR positio
     // 弾の種類
     initializeShotData.shooterTag = CollisionManager::BossShot;
 
+    // 弾のダメージ
+    initializeShotData.damageAmount = ShotDamageAmount;
 
-
+    // 初期化したデータを返す
+    return initializeShotData;
     
 }
