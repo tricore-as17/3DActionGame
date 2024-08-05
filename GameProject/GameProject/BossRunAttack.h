@@ -2,11 +2,12 @@
 
 #include"StateBase.h"
 #include"InputManager.h"
+#include"CollisionStateBase.h"
 
 /// <summary>
 /// ボスの静止ステート
 /// </summary>
-class BossRunAttack :public StateBase
+class BossRunAttack :public StateBase,public CollisionStateBase
 {
 public:
     ///////  メンバ関数  /////////
@@ -26,7 +27,12 @@ private:
 
     ///////  定数  ///////
 
-    static constexpr float InitializeAnimationSpeed = 0.6f;    //アニメーションの初期速度
+    static constexpr float InitializeAnimationSpeed     = 0.6f;    // アニメーションの初期速度
+    static constexpr float CollisionStratAnimationRatio = 0.1f;    // 当たり判定を作成するアニメーションの再生率
+    static constexpr float OffsetCollisionPositonScale  = -30.0;   // 当たり判定をプレイヤーの向いている方向にどれだけ動かすか
+    static const VECTOR    OffsetCollisionPosition;                // 当たり判定をプレイヤーの位置からどれだけずらすか
+    static constexpr float CollisionRadius              = 60.0f;   // 当たり判定の半径
+    static constexpr int   DamageAmount                 = 1;       // ダメージ量
 
     ///////  メンバ変数  ////////
 
@@ -40,4 +46,26 @@ private:
     /// ステートの切り替え処理をまとめたもの
     /// </summary>
     void ChangeState()override;
+
+
+    /// <summary>
+    /// 座標などを当たり判定に必要なデータに変換
+    /// </summary>
+    /// <param name="modelDirection">モデルの向いている方向</param>
+    /// <param name="characterPosition">キャラクターのポジション</param>
+    void UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition);
+
+    /// <summary>
+    /// 当たった時の処理
+    /// </summary>
+    /// <param name="targetCollisionData">当たった相手の当たり判定情報</param>
+    void OnHit(CollisionData targetCollisionData);
+
+#ifdef _DEBUG
+    /// <summary>
+    /// 当たり判定を描画する(デバッグ用)
+    /// </summary>
+    void DrawCollision() override;
+#endif 
+
 };

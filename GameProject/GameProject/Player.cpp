@@ -225,10 +225,10 @@ void Player::OnHit(CollisionData collisionData)
         break;
     case CollisionManager::BossDefaultAttack:
 
-        //敵の攻撃に当たったのでHPを減らす
-        hp -= collisionData.damageAmount;
+    case CollisionManager::BossRunAttack:
 
-        break;
+    case CollisionManager::BossShot:
+
     case CollisionManager::BossAreaAttack:
         //敵の攻撃に当たったのでHPを減らす
         hp -= collisionData.damageAmount;

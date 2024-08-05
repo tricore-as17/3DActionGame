@@ -14,6 +14,7 @@ CollisionStateBase::CollisionStateBase()
 
     //当たり判定がまだ生成されていない状態
     collisionData.collisionState = CollisionData::NoCollision;
+
 }
 
 /// <summary>

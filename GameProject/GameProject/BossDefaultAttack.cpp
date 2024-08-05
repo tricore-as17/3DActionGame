@@ -95,6 +95,8 @@ void BossDefaultAttack::OnHit(CollisionData collisionData)
 /// <summary>
 /// 座標などを当たり判定に必要なデータに変換
 /// </summary>
+/// <param name="modelDirection">モデルの向いている方向</param>
+/// <param name="characterPosition">キャラクターのポジション</param>
 void BossDefaultAttack::UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition)
 {
     //当たり判定の座標を移動させる
@@ -127,7 +129,6 @@ void BossDefaultAttack::UpdateCollisionData(const VECTOR& modelDirection, const 
     //当たった際のダメージ量
     collisionData.damageAmount = DamageAmount;
     
-
 }
 
 

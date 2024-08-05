@@ -24,6 +24,7 @@ public:
         BossDefaultAttack = 3,    // ボスの通常攻撃
         BossAreaAttack    = 4,    // ボスの範囲攻撃
         BossShot          = 5,    // ボスの弾を撃つ攻撃
+        BossRunAttack     = 6,    // ボスの突進攻撃
     };
 
     //定数
