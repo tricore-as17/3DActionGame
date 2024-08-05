@@ -23,6 +23,7 @@ public:
         PlayerAttack      = 2,    // プレイヤーの攻撃
         BossDefaultAttack = 3,    // ボスの通常攻撃
         BossAreaAttack    = 4,    // ボスの範囲攻撃
+        BossShot          = 5,    // ボスの弾を撃つ攻撃
     };
 
     //定数

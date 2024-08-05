@@ -35,8 +35,10 @@ PlayerMove::~PlayerMove()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="position">プレイヤーモデルの向き</param>
-void PlayerMove::Update(VECTOR& modelDirection, VECTOR& position)
+/// <param name="position">自身のモデルの向き</param>
+/// <param name="position">自身のキャラクターの座標</param>
+/// <param name="targetPosition">敵対しているキャラの座標</param>
+void PlayerMove::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition)
 {
     velocity = VGet(0, 0, 0);
 

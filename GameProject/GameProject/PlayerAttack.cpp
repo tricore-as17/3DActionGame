@@ -44,7 +44,7 @@ PlayerAttack::~PlayerAttack()
 /// </summary>
 /// <param name="modelDirection">モデルの向き</param>
 /// <param name="characterPosition">キャラクターの座標</param>
-void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition)
+void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition)
 {
  
     //ステートの切り替え処理を呼ぶ
@@ -58,7 +58,7 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition)
         collisionData.collisionState = CollisionData::CollisionEnded;
     }
     //当たり判定に必要な情報の更新
-    UpdateCollisionData(modelDirection,characterPosition);
+    UpdateCollisionData(modelDirection,position);
 
     //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
     SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime());

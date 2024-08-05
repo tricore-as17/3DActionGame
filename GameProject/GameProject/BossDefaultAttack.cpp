@@ -42,7 +42,7 @@ BossDefaultAttack::~BossDefaultAttack()
 /// 更新処理
 /// </summary>
 /// <param name="position">プレイヤーモデルの向き</param>
-void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition)
+void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition,const VECTOR targetPosition)
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();
@@ -129,6 +129,7 @@ void BossDefaultAttack::UpdateCollisionData(const VECTOR& modelDirection, const 
     
 
 }
+
 
 #ifdef _DEBUG
 
