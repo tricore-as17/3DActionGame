@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"DxLib.h"
 #include"Player.h"
+#include"Boss.h"
 
 
 
@@ -10,27 +11,27 @@
 class StateBase
 {
 public:
+
     //コンストラクタ
-    StateBase(int& modelHandle, Player::AnimationState animationState, const int beforeAnimationIndex);
+    StateBase(int& modelHandle,const int animationState, const int beforeAnimationIndex);
     //デストラクタ
     virtual ~StateBase();
+
+    /////ゲッター////
+
+    /// 移動処理などが終わった後のベロシティを渡す
+    const VECTOR GetVelocity() const { return velocity; }
+
+    //前のステートのアニメーションのインデックスを返す
+    const int GetBeforeAnimationIndex() const { return beforeAnimationIndex; }
+
+    ///////  メンバ関数  //////
 
     /// <summary>
     /// 次のステートを返す
     /// </summary>
     /// <returns>次のステート</returns>
     StateBase* GetNextState() { return nextState; }
-
-    /// <summary>
-    /// 更新処理
-    /// </summary>
-    virtual void Update(VECTOR& modelDirection,VECTOR& position)abstract;
-
-    /// <summary>
-    /// 移動処理などが終わった後のベロシティを渡す
-    /// </summary>
-    /// <returns></returns>
-    const VECTOR GetVelocity() const { return velocity; }
 
 #ifdef _DEBUG
     /// <summary>
@@ -39,7 +40,15 @@ public:
     virtual void DrawCollision() {}
 #endif 
 
+    /// <summary>
+    /// 更新処理
+    /// </summary>
+    virtual void Update(VECTOR& modelDirection,VECTOR& position)abstract;
+
 protected:
+
+    ///////  enum  //////
+
     //アニメーションの再生状態
     enum AnimationPlayState
     {
@@ -50,18 +59,27 @@ protected:
         Stop         = 4,    //停止中
     };
 
-    int modelhandle;              //ステートで使用するモデルハンドル
-    StateBase* nextState;         //次のループでのステートを代入する用の変数
-    float animationLimitTime;     //再生中のアニメーションの総再生時間
-    float animationNowTime;       //再生中のアニメーションの現在の経過時間
-    float animationSpeed;         //派生クラスで代入する
-    int   animationIndex;         //現在のアニメーションのインデックス
-    int   beforeAnimationIndex;   //前回のアニメーションのインデックス
-    float animationBlendRate;     //前回のアニメーションと現在のアニメーションでのブレンド率
-    VECTOR velocity;              //速度やベクトルを含んだ値
+    ///////  メンバ変数  ////////
 
-    AnimationPlayState currentPlayAnimationState;     //アニメーションの再生状態
+    int                modelhandle;               //ステートで使用するモデルハンドル
+    StateBase*         nextState;                 //次のループでのステートを代入する用の変数
+    VECTOR             velocity;                  //速度やベクトルを含んだ値
+    AnimationPlayState currentPlayAnimationState; //アニメーションの再生状態
+    float              animationSpeed;            //派生クラスで代入する
 
+    ///////  ゲッター  ///////
+
+    //アニメーションインデックスを返す
+    const int GetAnimationIndex() const { return animationIndex; }
+
+    //アニメーションタイムのリミットを返す
+    const float GetAnimationLimitTime()const{ return animationLimitTime; }
+
+    //現在のアニメーションタイムを返す
+    const float GetAnimationNowTime() const { return animationNowTime; }
+
+
+    ///////  メンバ関数  //////
 
     /// <summary>
     /// ステートの切り替え処理をまとめたもの
@@ -85,9 +103,17 @@ protected:
 
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
-    void DetachAnimation(StateBase* nowState);
+    void DetachAnimation();
 
+private:
 
+    ///////  メンバ変数  ////////
+
+    float animationLimitTime;     //再生中のアニメーションの総再生時間
+    float animationNowTime;       //再生中のアニメーションの現在の経過時間
+    int   animationIndex;         //現在のアニメーションのインデックス
+    int   beforeAnimationIndex;   //前回のアニメーションのインデックス
+    float animationBlendRate;     //前回のアニメーションと現在のアニメーションでのブレンド率
 
 
 

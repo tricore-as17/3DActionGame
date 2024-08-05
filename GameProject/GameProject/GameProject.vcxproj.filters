@@ -18,9 +18,6 @@
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{3b1fa27c-54d4-4cbb-be7e-88ff9d7bb99c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Effect">
-      <UniqueIdentifier>{f03ecf81-6190-40ea-8b9a-b6bc0ac59b1c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\FrameRateController">
       <UniqueIdentifier>{411ae894-9be5-4089-b6e3-41df7f60ee09}</UniqueIdentifier>
     </Filter>
@@ -37,14 +34,35 @@
     <Filter Include="ソース ファイル\InputManager">
       <UniqueIdentifier>{19eb6d46-e2a0-4f78-b676-808f055bfe23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Player">
-      <UniqueIdentifier>{f7124487-c666-49b8-8099-ac382505e8cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Stage">
       <UniqueIdentifier>{a49c8c2c-4b81-4037-9bcf-de4e6d09e2b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{e6fe1894-8f8a-41f6-9e86-e1d60d3c3b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State">
+      <UniqueIdentifier>{25d1ce01-a30d-4fb9-b680-baa99ca7ff6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\PlayerState">
+      <UniqueIdentifier>{add53d82-7c52-4eb2-bd7a-d8b04df88c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\BossState">
+      <UniqueIdentifier>{4207d64e-3ae2-4407-a1b7-f4f8337e4be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Boss">
+      <UniqueIdentifier>{c455fc7c-5cc9-4ae3-8af0-e897ae115773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Player">
+      <UniqueIdentifier>{f7124487-c666-49b8-8099-ac382505e8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{f03ecf81-6190-40ea-8b9a-b6bc0ac59b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{694a4d31-fbf1-4ca4-a5ee-01c74b4967c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Utility">
+      <UniqueIdentifier>{cf301039-2512-4a11-a3b7-e157bb396d8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,59 +93,80 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="FadeInOut.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>ソース ファイル\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\Player</Filter>
+      <Filter>ソース ファイル\State\Player</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageDataManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelDataManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerIdle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerMove.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="StateBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttack.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDefense.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJump.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMove.cpp">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRolling.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerShotMagic.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>ソース ファイル\State\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdle.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMove.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDefaultAttack.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStart.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAreaAttack.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossShotAttack.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>ソース ファイル\Colision</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDataManager.cpp">
+      <Filter>ソース ファイル\Collection</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelDataManager.cpp">
+      <Filter>ソース ファイル\Collection</Filter>
+    </ClCompile>
+    <ClCompile Include="StateBase.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInOut.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>ソース ファイル\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="BossRunAttack.cpp">
+      <Filter>ソース ファイル\State\BossState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,62 +197,83 @@
     <ClInclude Include="GameScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="FadeInOut.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>ソース ファイル\InputManager</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\Player</Filter>
+      <Filter>ソース ファイル\State\Player</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerIdle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="StateBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMove.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerDefense.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerJump.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRolling.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJump.h">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMove.h">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDefense.h">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerShotMagic.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttack.h">
+      <Filter>ソース ファイル\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>ソース ファイル\State\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossIdle.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMove.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDefaultAttack.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStart.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAreaAttack.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossShotAttack.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="StateBase.h">
+      <Filter>ソース ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>ソース ファイル\Colision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionData.h">
+      <Filter>ソース ファイル\Colision</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDataManager.h">
+      <Filter>ソース ファイル\Collection</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelDataManager.h">
+      <Filter>ソース ファイル\Collection</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInOut.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>ソース ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="BossRunAttack.h">
+      <Filter>ソース ファイル\State\BossState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

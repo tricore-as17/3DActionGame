@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"DxLib.h"
 #include<functional>
 #include<vector>
 #include<list>
@@ -36,9 +37,9 @@ public:
     void DeleteInstance();
 
     /// <summary>
-    /// 当たり判定データの読み込み
+    ///　コリジョンデータのポインタをもらってコリジョンリストに追加
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="data">追加するコリジョンデータ</param>
     void RegisterCollisionData(CollisionData* data);
 
     /// <summary>

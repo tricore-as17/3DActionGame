@@ -46,7 +46,7 @@ void PlayerDefense::Update(VECTOR& modelDirection, VECTOR& position)
     }
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 }
 
 void PlayerDefense::ChangeState()
@@ -59,6 +59,6 @@ void PlayerDefense::ChangeState()
     }
     else
     {
-        nextState = new PlayerIdle(modelhandle, animationIndex);
+        nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }
 }

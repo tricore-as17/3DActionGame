@@ -44,7 +44,7 @@ void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
@@ -57,7 +57,7 @@ void PlayerIdle::ChangeState()
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
     if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
     {
-        nextState = new PlayerMove(modelhandle,animationIndex);
+        nextState = new PlayerMove(modelhandle,this->GetAnimationIndex());
     }
     //RBのキーかRTキーが押されていれば攻撃ステートに変更
     else if (inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push ||
@@ -74,28 +74,28 @@ void PlayerIdle::ChangeState()
         {
             animationState = Player::Clash;
         }
-        nextState = new PlayerAttack(modelhandle, animationIndex,animationState);
+        nextState = new PlayerAttack(modelhandle, this->GetAnimationIndex(), animationState);
     }
     //LTのキーが押されていればデフェンスステートに移行する
     else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
-        nextState = new PlayerDefense(modelhandle, animationIndex);
+        nextState = new PlayerDefense(modelhandle, this->GetAnimationIndex());
     }
     //Aキーが押されて接地していれば
     else if (inputManager->GetKeyPushState(InputManager::A) == InputManager::Push && isGround)
     {
-        nextState = new PlayerJump(modelhandle, animationIndex, velocity);
+        nextState = new PlayerJump(modelhandle, this->GetAnimationIndex(), velocity);
         isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)
     {
-        nextState = new PlayerRolling(modelhandle, animationIndex);
+        nextState = new PlayerRolling(modelhandle, this->GetAnimationIndex());
     }
     //LBキーで射撃ステートに移行
     else if (inputManager->GetKeyPushState(InputManager::LB) == InputManager::Push)
     {
-        nextState = new PlayerShotMagic(modelhandle, animationIndex);
+        nextState = new PlayerShotMagic(modelhandle, this->GetAnimationIndex());
     }
     //ステート移行が無ければ自身のポインタを渡す
     else

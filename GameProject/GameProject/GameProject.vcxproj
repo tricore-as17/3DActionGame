@@ -136,6 +136,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossAreaAttack.cpp" />
+    <ClCompile Include="BossDead.cpp" />
+    <ClCompile Include="BossDefaultAttack.cpp" />
+    <ClCompile Include="BossIdle.cpp" />
+    <ClCompile Include="BossMove.cpp" />
+    <ClCompile Include="BossRunAttack.cpp" />
+    <ClCompile Include="BossShotAttack.cpp" />
+    <ClCompile Include="BossStart.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -165,6 +173,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossAreaAttack.h" />
+    <ClInclude Include="BossDead.h" />
+    <ClInclude Include="BossDefaultAttack.h" />
+    <ClInclude Include="BossIdle.h" />
+    <ClInclude Include="BossMove.h" />
+    <ClInclude Include="BossRunAttack.h" />
+    <ClInclude Include="BossShotAttack.h" />
+    <ClInclude Include="BossStart.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionData.h" />
     <ClInclude Include="CollisionManager.h" />

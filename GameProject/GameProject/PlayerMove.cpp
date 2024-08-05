@@ -69,7 +69,7 @@ void PlayerMove::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
@@ -94,27 +94,27 @@ void PlayerMove::ChangeState()
         {
             animationState = Player::Clash;
         }
-        nextState = new PlayerAttack(modelhandle, animationIndex, animationState);
+        nextState = new PlayerAttack(modelhandle, this->GetAnimationIndex(), animationState);
     }
     //LTのキーが押されていればデフェンスステートに移行する
     else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
-        nextState = new PlayerDefense(modelhandle, animationIndex);
+        nextState = new PlayerDefense(modelhandle, this->GetAnimationIndex());
     }
     else if (inputManager->GetKeyPushState(InputManager::A) && isGround)
     {
-        nextState = new PlayerJump(modelhandle,animationIndex,velocity);
+        nextState = new PlayerJump(modelhandle,this->GetAnimationIndex(), velocity);
         isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)
     {
-        nextState = new PlayerRolling(modelhandle, animationIndex);
+        nextState = new PlayerRolling(modelhandle, this->GetAnimationIndex());
     }
     //LBキーで射撃ステートに移行
     else if (inputManager->GetKeyPushState(InputManager::LB) == InputManager::Push)
     {
-        nextState = new PlayerShotMagic(modelhandle, animationIndex);
+        nextState = new PlayerShotMagic(modelhandle, this->GetAnimationIndex());
     }
     //ステート移行が無ければ自身のポインタを渡す
     else if(inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
@@ -124,7 +124,7 @@ void PlayerMove::ChangeState()
     //上記の状態にならなかったら静止状態に戻す
     else
     {
-        nextState = new PlayerIdle(modelhandle, animationIndex);
+        nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }
 }
 

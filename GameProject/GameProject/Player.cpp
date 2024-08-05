@@ -21,10 +21,10 @@ Player::Player()
     //インスタンスを持ってくる
     ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
     //モデルハンドルをもらう
-    modelHandle = modelDataManager->GetModelHandle(ModelDataManager::Player);
+    modelHandle = MV1DuplicateModel(modelDataManager->GetModelHandle(ModelDataManager::Player));
 
     //最初にIdle状態のアニメーションをアタッチしておく
-    MV1AttachAnim(modelHandle, Idle, -1);
+    MV1AttachAnim,(modelHandle, Idle, -1);
 
      //最初のステートを待機状態にする
     nowState = new PlayerIdle(modelHandle,-1);
@@ -52,6 +52,9 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
+    //コピーしたモデルの削除
+    MV1DeleteModel(modelHandle);
+
     //メモリの解放
     delete nowState;
 }

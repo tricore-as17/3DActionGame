@@ -59,7 +59,7 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateCollisionData();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
@@ -71,7 +71,8 @@ void PlayerAttack::ChangeState()
     //アニメーションの再生が終了したらステートを切り替える
     if (currentPlayAnimationState == FirstRoopEnd)
     {
-        nextState = new PlayerIdle(modelhandle, animationIndex);
+        nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
+
         //ステートが切り替わる際に当たり判定を消す
         collisionData.isCollisionActive = false;
     }
