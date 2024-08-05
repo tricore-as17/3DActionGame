@@ -103,7 +103,7 @@ protected:
 
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
-    void DetachAnimation(StateBase* nowState);
+    void DetachAnimation();
 
 
 private:

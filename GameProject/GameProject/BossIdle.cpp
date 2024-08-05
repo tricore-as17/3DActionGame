@@ -38,7 +38,7 @@ void BossIdle::Update(VECTOR& modelDirection, VECTOR& position)
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
     
 }
 

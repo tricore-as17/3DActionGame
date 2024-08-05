@@ -64,7 +64,7 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition)
     SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime());
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
