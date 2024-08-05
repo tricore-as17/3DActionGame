@@ -94,9 +94,9 @@ void StateBase::StartAnimation()
 /// <summary>
 /// シーンが切り替わってた際にアニメーションをデタッチする
 /// </summary>
-void StateBase::DetachAnimation(StateBase* nowState)
+void StateBase::DetachAnimation()
 {
-    if (nextState != nowState && beforeAnimationIndex != -1)
+    if (nextState != this && beforeAnimationIndex != -1)
     {
         MV1DetachAnim(modelhandle, beforeAnimationIndex);
     }
