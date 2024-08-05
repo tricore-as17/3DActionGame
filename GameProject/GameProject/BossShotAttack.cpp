@@ -41,6 +41,9 @@ void BossShotAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTO
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
+    // アニメーションの再生率を見て弾を作成する
+    CreateShotByAnimationTime(position, targetPosition);
+
     // アニメーションの切り替え
     SwitchAnimation();
 
@@ -96,14 +99,17 @@ void BossShotAttack::SwitchAnimation()
 
         shotState = WaitRightShot;
 
-        
     }
 }
 
+/// <summary>
+/// アニメーションの再生率によってショットを作成
+/// </summary>
+/// <param name="position">自身の座標</param>
 void BossShotAttack::CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition)
 {
     // アニメーションの再生率が規定値を超えたら
-    if (animationNowTime / animationLimitTime >= ShotCreateAnimationRatio ||
+    if (animationNowTime / animationLimitTime >= ShotCreateAnimationRatio &&
         shotState == WaitLeftShot || shotState == WaitRightShot)
     {
         // 必要な情報を代入して弾を作成

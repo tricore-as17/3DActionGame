@@ -110,5 +110,7 @@ private:
     /// <returns>当たったか</returns>
     bool IsHitCapsuleAndCapsule(const CollisionData  collider,const CollisionData target);
 
+  
+
 };
 
