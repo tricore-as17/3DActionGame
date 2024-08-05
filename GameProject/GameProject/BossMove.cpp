@@ -38,7 +38,7 @@ void BossMove::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targ
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 

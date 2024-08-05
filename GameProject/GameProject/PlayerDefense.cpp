@@ -46,7 +46,7 @@ void PlayerDefense::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
     }
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 }
 
 void PlayerDefense::ChangeState()

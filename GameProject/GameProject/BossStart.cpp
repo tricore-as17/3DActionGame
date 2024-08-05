@@ -49,7 +49,7 @@ void BossStart::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR tar
 
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 

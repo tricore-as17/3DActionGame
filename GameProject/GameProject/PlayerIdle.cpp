@@ -46,7 +46,7 @@ void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR ta
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 

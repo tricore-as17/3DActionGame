@@ -36,7 +36,7 @@ void PlayerShotMagic::Update(VECTOR& modelDirection, VECTOR& position,const VECT
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 }
 
 /// <summary>

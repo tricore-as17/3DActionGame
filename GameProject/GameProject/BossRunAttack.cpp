@@ -34,7 +34,7 @@ void BossRunAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
     UpdateAnimation();
 
     //シーンが切り替わっていればアニメーションをデタッチ
-    DetachAnimation(this);
+    DetachAnimation();
 
 }
 
