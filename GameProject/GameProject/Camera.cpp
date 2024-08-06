@@ -45,24 +45,24 @@ void Camera::Update(VECTOR playerPosition)
     // 「←」ボタンが押されていたら水平角度をマイナスする
     if (inputManager->IsInputAnalogKey(InputManager::AnalogLeft))
     {
-        angleHorizontal -= AngleSpeed;
+        angleHorizontal += AngleSpeed;
 
         // －１８０度以下になったら角度値が大きくなりすぎないように３６０度を足す
-        if (angleHorizontal < -DX_PI_F)
+        if (angleHorizontal > DX_PI_F)
         {
-            angleHorizontal += DX_TWO_PI_F;
+            angleHorizontal -= DX_TWO_PI_F;
         }
     }
 
     // 「→」ボタンが押されていたら水平角度をプラスする
     if (inputManager->IsInputAnalogKey(InputManager::AnalogRight))
     {
-        angleHorizontal += AngleSpeed;
+        angleHorizontal -= AngleSpeed;
 
         // １８０度以上になったら角度値が大きくなりすぎないように３６０度を引く
-        if (angleHorizontal > DX_PI_F)
+        if (angleHorizontal < -DX_PI_F)
         {
-            angleHorizontal -= DX_TWO_PI_F;
+            angleHorizontal += DX_TWO_PI_F;
         }
     }
 

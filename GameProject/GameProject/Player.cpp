@@ -17,7 +17,7 @@ Player::Player()
     , angle(0.0f)
     , nowState(NULL)
     , modelDirection(VGet(0, 0, 0))
-    , hp(2)
+    , hp(100)
     , isBossHited(false)
 {
     //インスタンスを持ってくる
@@ -92,6 +92,9 @@ void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
 
     }
 
+    // 無敵時間の作成
+    SwitchInvincibility();
+
     //次のループのシーンと現在のシーンが違う場合は移行処理を行う
     if (nowState != nextState)
     {
@@ -112,7 +115,11 @@ void Player::Draw()
 
 #ifdef _DEBUG
     //当たり判定が正しいかの確認用の描画
-    DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+
+    if (collisionData.collisionState == CollisionData::CollisionActive)
+    {
+        DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+    }
 
     //ステートの当たり判定を描画する
     nowState->DrawCollision();
@@ -238,8 +245,16 @@ void Player::OnHit(CollisionData collisionData)
     case CollisionManager::BossShot:
 
     case CollisionManager::BossAreaAttack:
-        //敵の攻撃に当たったのでHPを減らす
-        hp -= collisionData.damageAmount;
+        if (nowState->GetNowStateTag() == DefenseState)
+        {
+            //敵の攻撃に当たったのでHPを減らす
+            hp -= collisionData.damageAmount * 0.5f;
+        }
+        else
+        {
+            hp -= collisionData.damageAmount;
+        }
+
         // ステートにダメージを受けた事を伝える
         nowState->OnDamage();
         break;
@@ -248,6 +263,34 @@ void Player::OnHit(CollisionData collisionData)
     }
 
 
+}
+
+/// <summary>
+/// 無敵状態の切り替えを行う
+/// </summary>
+void Player::SwitchInvincibility()
+{
+    // 回避状態なら
+    if (nextState->GetNowStateTag() == RollingState)
+    {
+        // 無敵時間の範囲になったら当たり判定を消す
+        if (nextState->GetAnimationNowTime() / nextState->GetAnimationLimitTime() >= InvincibilityStartRatio &&
+            nextState->GetAnimationNowTime() / nextState->GetAnimationLimitTime() < InvincibilityEndRatio)
+        {
+            // 当たり判定の削除
+            collisionData.collisionState = CollisionData::CollisionEnded;
+        }
+        // 無敵時間の範囲を超えたら当たり判定を戻す
+        else if (nextState->GetAnimationNowTime() / nextState->GetAnimationLimitTime() > InvincibilityEndRatio &&
+                 collisionData.collisionState == CollisionData::CollisionEnded)
+        {
+            // 当たり判定を有効化
+            collisionData.collisionState = CollisionData::CollisionActive;
+
+            // 当たり判定データを渡す
+            collisionManager->RegisterCollisionData(&collisionData);
+        }
+    }
 }
 
 

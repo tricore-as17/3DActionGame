@@ -36,6 +36,10 @@ void PlayerRolling::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
 {
     //ステートの切り替え処理を呼ぶ
     ChangeState();
+
+    // 移動量を加算する
+    velocity = SetMovement(modelDirection);
+
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
@@ -62,4 +66,13 @@ void PlayerRolling::ChangeState()
     {
         nextState = this;
     }
+}
+
+
+/// <summary>
+/// 回避時の移動量を決める
+/// </summary>
+VECTOR PlayerRolling::SetMovement(const VECTOR modelDirection)
+{
+    return VScale(modelDirection, MoveSpeed);
 }

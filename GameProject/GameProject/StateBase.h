@@ -17,13 +17,19 @@ public:
     //デストラクタ
     virtual ~StateBase();
 
-    /////ゲッター////
+    /////          ゲッター           ////
 
     /// 移動処理などが終わった後のベロシティを渡す
     const VECTOR GetVelocity() const { return velocity; }
 
     //前のステートのアニメーションのインデックスを返す
     const int GetBeforeAnimationIndex() const { return beforeAnimationIndex; }
+
+    // アニメーションの現在の再生率を返す
+    const float GetAnimationNowTime() const { return animationNowTime; }
+
+    // アニメーションの総再生時間を返す
+    const float GetAnimationLimitTime() const { return animationLimitTime; }
 
     ///////  メンバ関数  //////
 
@@ -96,12 +102,6 @@ protected:
 
     //アニメーションインデックスを返す
     const int GetAnimationIndex() const { return animationIndex; }
-
-    //アニメーションタイムのリミットを返す
-    const float GetAnimationLimitTime()const{ return animationLimitTime; }
-
-    //現在のアニメーションタイムを返す
-    const float GetAnimationNowTime() const { return animationNowTime; }
 
 
     ///////  メンバ関数  //////

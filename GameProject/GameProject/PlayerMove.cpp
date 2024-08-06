@@ -69,8 +69,6 @@ void PlayerMove::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR ta
     ChangeState();
 
 
-
-
     //アニメーションの再生時間のセット
     UpdateAnimation();
 

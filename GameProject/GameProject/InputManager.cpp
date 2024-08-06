@@ -36,7 +36,6 @@ InputManager::InputManager()
         reverseKeyTag.insert(make_pair(keyTag.at((KeyKinds)(i)), (KeyKinds)(i)));
     }
 
-
     //それぞれのキーの状態をfalseに
     for (int i = 0; i < keyTag.size(); i++)
     {
