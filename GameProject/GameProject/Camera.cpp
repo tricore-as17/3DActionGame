@@ -71,7 +71,7 @@ void Camera::Update(VECTOR playerPosition)
     {
         angleVertical -= AngleSpeed;
 
-        // ある一定角度以下にはならないようにする
+        //// ある一定角度以下にはならないようにする
         if (angleVertical < -DX_PI_F * 0.5f + 0.6f)
         {
             angleVertical = -DX_PI_F * 0.5f + 0.6f;
@@ -83,7 +83,7 @@ void Camera::Update(VECTOR playerPosition)
     {
         angleVertical += AngleSpeed;
 
-        // ある一定角度以上にはならないようにする
+        //// ある一定角度以上にはならないようにする
         if (angleVertical > DX_PI_F * 0.5f - 0.6f)
         {
             angleVertical = DX_PI_F * 0.5f - 0.6f;
@@ -111,9 +111,9 @@ void Camera::FixCameraPosition()
     auto rotationY = MGetRotY(angleHorizontal);
 
     // 垂直方向の回転はＺ軸回転 )
-    auto rotationX = MGetRotZ(angleVertical);
+    auto rotationX = MGetRotX(angleVertical);
 
-    position = VAdd(VTransform(VTransform(VGet(0.0f, 0.0f, ToPlayerLength), rotationX), rotationY), targetPosition);
+    position = VAdd(VTransform(VTransform(VGet(0.0f, 0.0f,ToPlayerLength), rotationX), rotationY), targetPosition);
 
 
 }

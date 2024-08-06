@@ -34,6 +34,33 @@ public:
         Spell          = 18    //魔法攻撃
     };
 
+    /// <summary>
+    /// プレイヤーのステートの種類
+    /// </summary>
+    enum PlayerState
+    {
+        IdleState    = 0,   // 静止
+        MoveState    = 1,   // 移動
+        JumpState    = 2,   // ジャンプ
+        AttackState  = 3,   // 攻撃
+        DefenseState = 4,   // 防御
+        HitState     = 5,   // 被弾
+        RollingState = 6,   // 回避
+        ShotState    = 7,   // 弾を撃つ
+        DeadState    = 8,   // 死亡
+    };
+
+    /// <summary>
+    /// 体力の状態
+    /// </summary>
+    enum LifeState
+    {
+        NoDamage = 0,   // ダメージを受けていない
+        Damaged = 1,   // ダメージを受けた
+        NoLife = 2,   // 体力が0
+
+    };
+
     //getter,setter
     const VECTOR GetPosition()const { return position; }
 

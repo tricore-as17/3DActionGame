@@ -1,6 +1,7 @@
 ﻿#include"PlayerAttack.h"
 #include"StateBase.h"
 #include"Player.h"
+#include"PlayerHit.h"
 #include"PlayerIdle.h"
 #include"InputManager.h"
 #include"Utility.h"
@@ -16,6 +17,9 @@ const VECTOR PlayerAttack::OffsetPositionY = VGet(0.0f,10.0f, 0.0f);
 PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Player::AnimationState animationState)
     :StateBase(InitalModelHandle,animationState,beforeAnimationIndex)
 {
+    // 現在のステートを入れる
+    nowStateTag = Player::AttackState;
+
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
 
@@ -73,8 +77,13 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR 
 /// </summary>
 void PlayerAttack::ChangeState()
 {
+    // ダメージを受けていたらヒットステートに移行
+    if (lifeState == Player::Damaged)
+    {
+        nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
+    }
     //アニメーションの再生が終了したらステートを切り替える
-    if (currentPlayAnimationState == FirstRoopEnd)
+    else if (currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
 

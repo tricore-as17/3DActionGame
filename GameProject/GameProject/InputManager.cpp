@@ -140,25 +140,25 @@ bool InputManager::IsInputAnalogKey(const AnalogKeyState analogKeyState)
     switch (analogKeyState)
     {
     case Right:
-        if (inputX > 0)
+        if (inputX > AnalogKeyDeadZone)
         {
             isInput = true;
         }
         break;
     case Left:
-        if (inputX < 0)
+        if (inputX < -AnalogKeyDeadZone)
         {
             isInput = true;
         }
         break;
     case Up:
-        if (inputY < 0)
+        if (inputY < -AnalogKeyDeadZone)
         {
             isInput = true;
         }
         break;
     case Down:
-        if (inputY > 0)
+        if (inputY > AnalogKeyDeadZone)
         {
             isInput = true;
         }

@@ -1,4 +1,5 @@
 ﻿#include"PlayerRolling.h"
+#include"PlayerHit.h"
 #include"PlayerIdle.h"
 #include"Player.h"
 
@@ -9,6 +10,9 @@
 PlayerRolling::PlayerRolling(int initalModelHandle, int beforeAnimationIndex)
     :StateBase(initalModelHandle, Player::Rolling,beforeAnimationIndex)
 {
+    // 現在のステートを入れる
+    nowStateTag = Player::RollingState;
+
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
 }
@@ -44,6 +48,11 @@ void PlayerRolling::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
 /// </summary>
 void PlayerRolling::ChangeState()
 {
+    // ダメージを受けていたらヒットステートに移行
+    if (lifeState == Player::Damaged)
+    {
+        nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
+    }
     //アニメーションの再生が終了したらステートを切り替える
     if (currentPlayAnimationState == FirstRoopEnd)
     {

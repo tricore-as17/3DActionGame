@@ -15,6 +15,7 @@ StateBase::StateBase(int& modelHandle,const int animationState,const int beforeA
     ,animationBlendRate(0.0f)
     ,beforeAnimationIndex(-1)
     ,currentPlayAnimationState(BlendStart)
+    ,lifeState(Player::NoDamage)
 {
     //もってきたモデルハンドルを代入
     this->modelhandle = modelHandle;
@@ -45,7 +46,7 @@ void StateBase::UpdateAnimation()
     if (beforeAnimationIndex != -1 && currentPlayAnimationState == BlendStart)
     {
         //前回とのアニメーションをブレンドして表示
-        animationBlendRate += 0.1f;
+        animationBlendRate += 0.2f;
         //ブレンドが終わったら
         if (animationBlendRate >= 1.0f)
         {
@@ -100,6 +101,24 @@ void StateBase::DetachAnimation()
     {
         MV1DetachAnim(modelhandle, beforeAnimationIndex);
     }
+}
+
+/// <summary>
+/// ダメージを受けた際の関数
+/// </summary>
+void StateBase::OnDamage()
+{
+    // ダメージを受けた状態に設定
+    lifeState = Player::Damaged;
+}
+
+/// <summary>
+/// ライフが0になった状態に設定する
+/// </summary>
+void StateBase::SetNoLifeState()
+{
+    // ライフが0の状態に設定
+    lifeState = Player::NoLife;
 }
 
 

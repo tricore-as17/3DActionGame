@@ -17,7 +17,7 @@ Player::Player()
     , angle(0.0f)
     , nowState(NULL)
     , modelDirection(VGet(0, 0, 0))
-    , hp(10)
+    , hp(2)
     , isBossHited(false)
 {
     //インスタンスを持ってくる
@@ -72,7 +72,6 @@ void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
     // 移動
     position = VAdd(position, nowState->GetVelocity());
 
-
     //モデルの向きを反映
     UpdateAngle();
 
@@ -84,6 +83,15 @@ void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
     
     //更新処理の後次のループでのステートを代入する
     nextState = nowState->GetNextState();
+
+    // 体力が0かつ
+    if (hp <= 0 && nextState->GetNowStateTag() == HitState)
+    {
+        // ライフが0になったことをステートに伝える
+        nextState->SetNoLifeState();
+
+    }
+
     //次のループのシーンと現在のシーンが違う場合は移行処理を行う
     if (nowState != nextState)
     {
@@ -232,6 +240,8 @@ void Player::OnHit(CollisionData collisionData)
     case CollisionManager::BossAreaAttack:
         //敵の攻撃に当たったのでHPを減らす
         hp -= collisionData.damageAmount;
+        // ステートにダメージを受けた事を伝える
+        nowState->OnDamage();
         break;
     default:
         break;
@@ -239,6 +249,8 @@ void Player::OnHit(CollisionData collisionData)
 
 
 }
+
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿#include"InputManager.h"
 #include"Player.h"
+#include"PlayerHit.h"
 #include"PlayerIdle.h"
 #include"PlayerMove.h"
 #include"PlayerAttack.h"
@@ -16,6 +17,9 @@ PlayerIdle::PlayerIdle(int& modelHandle,const int beforeAnimationIndex)
     :StateBase(modelHandle,Player::Idle,beforeAnimationIndex)
     , isGround(true)
 {
+    // 現在のステートを入れる
+    nowStateTag = Player::IdleState;
+
     //インプットマネージャーのアドレスを取得
     inputManager = InputManager::GetInstance();
 
@@ -56,8 +60,13 @@ void PlayerIdle::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR ta
 void PlayerIdle::ChangeState()
 {
 
+    // ダメージを受けていたらヒットステートに移行
+    if (lifeState == Player::Damaged)
+    {
+        nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
+    }
     //何かしらの移動キーが押されていた場合移動ステートに切り返る
-    if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::Move) == InputManager::Push)
     {
         nextState = new PlayerMove(modelhandle,this->GetAnimationIndex());
     }
@@ -82,12 +91,6 @@ void PlayerIdle::ChangeState()
     else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = new PlayerDefense(modelhandle, this->GetAnimationIndex());
-    }
-    //Aキーが押されて接地していれば
-    else if (inputManager->GetKeyPushState(InputManager::A) == InputManager::Push && isGround)
-    {
-        nextState = new PlayerJump(modelhandle, this->GetAnimationIndex(), velocity);
-        isGround = false;
     }
     //Bキーが押されていれば回避状態のステート
     else if (inputManager->GetKeyPushState(InputManager::B) == InputManager::Push)

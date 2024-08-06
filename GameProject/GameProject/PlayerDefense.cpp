@@ -1,4 +1,5 @@
 ﻿#include"PlayerDefense.h"
+#include"PlayerHit.h"
 #include"PlayerIdle.h"
 
 
@@ -8,6 +9,9 @@
 PlayerDefense::PlayerDefense(int modelHandle, int beforeAnimationIndex)
     :StateBase(modelHandle, Player::StartBlocking, beforeAnimationIndex)
 {
+    // 現在のステートを入れる
+    nowStateTag = Player::DefenseState;
+
     //インプットマネージャーのアドレスを取得
     inputManager = InputManager::GetInstance();
 
@@ -52,8 +56,13 @@ void PlayerDefense::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
 void PlayerDefense::ChangeState()
 {
 
+    // ダメージを受けていたらヒットステートに移行
+    if (lifeState == Player::Damaged)
+    {
+        nextState = new PlayerHit(modelhandle, animationIndex, Player::BlockingImpact);
+    }
     //LTのキーが押されていればデフェンスステートに移行する
-    if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
+    else if (inputManager->GetKeyPushState(InputManager::LT) == InputManager::Push)
     {
         nextState = this;
     }

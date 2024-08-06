@@ -1,4 +1,5 @@
 ﻿#include"PlayerShotMagic.h"
+#include"PlayerHit.h"
 #include"PlayerIdle.h"
 
 
@@ -9,6 +10,9 @@
 PlayerShotMagic::PlayerShotMagic(int InitalModelHandle, int beforeAnimationIndex)
     :StateBase(InitalModelHandle, Player::Spell, beforeAnimationIndex)
 {
+    // 現在のステートを入れる
+    nowStateTag = Player::ShotState;
+
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
 }
@@ -44,8 +48,13 @@ void PlayerShotMagic::Update(VECTOR& modelDirection, VECTOR& position,const VECT
 /// </summary>
 void PlayerShotMagic::ChangeState()
 {
+    // ダメージを受けていたらヒットステートに移行
+    if (lifeState == Player::Damaged)
+    {
+        nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
+    }
     //アニメーションの再生が終了したらステートを切り替える
-    if (currentPlayAnimationState == FirstRoopEnd)
+    else if (currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }
