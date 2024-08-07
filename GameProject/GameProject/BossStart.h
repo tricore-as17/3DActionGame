@@ -33,15 +33,18 @@ private:
     /// </summary>
     enum StartMoveState
     {
-        SitDown  = 0,  //座っている
-        Standing = 1,  //立ち上がっている途中
-        Stand    = 2,  //立ち上がった
+        SitDown      = 0,  //座っている
+        Standing     = 1,  //立ち上がっている途中
+        Stand        = 2,  //立ち上がった
+        Intimidation = 3,  // 威嚇状態
     };
 
     ///////  定数  ///////
 
-    static constexpr float InitializeAnimationSpeed = 1.0f;    //最初のアニメーションのスピード
-    static constexpr int   StartCountLimit               = 40; //ボスが行動を開始するまでのカウントの上限               
+    static constexpr int   StartCountLimit            = 40;      // ボスが行動を開始するまでのカウントの上限
+    static constexpr float SwitchAnimationRatio       = 0.4f;    // アニメーションを切り替える再生率
+    static constexpr float StandingAnimationSpeed     = 0.7f;    // 立ち上がる時のアニメーションのスピード
+    static constexpr float IntimidationAnimationSpeed = 0.5f;    // 威嚇時のアニメーションのスピード
 
     ///////  メンバ変数  ////////
 
@@ -63,5 +66,11 @@ private:
     /// 行動開始前のアニメーションの状態変更させるための関数
     /// </summary>
     void ChangeStartMoveState();
+
+    /// <summary>
+    /// アニメーションの切り替え
+    /// </summary>
+    void SwitchAnimation();
+
 };
 

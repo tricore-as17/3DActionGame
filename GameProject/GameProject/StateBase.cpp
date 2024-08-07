@@ -40,13 +40,13 @@ StateBase::~StateBase()
 /// <summary>
 /// アニメーションの更新処理
 /// </summary>
-void StateBase::UpdateAnimation()
+void StateBase::UpdateAnimation(const float blendSpeed)
 {
     //前回のアニメーションがある場合
     if (beforeAnimationIndex != -1 && currentPlayAnimationState == BlendStart)
     {
         //前回とのアニメーションをブレンドして表示
-        animationBlendRate += 0.2f;
+        animationBlendRate += blendSpeed;
         //ブレンドが終わったら
         if (animationBlendRate >= 1.0f)
         {
@@ -120,5 +120,4 @@ void StateBase::SetNoLifeState()
     // ライフが0の状態に設定
     lifeState = Player::NoLife;
 }
-
 

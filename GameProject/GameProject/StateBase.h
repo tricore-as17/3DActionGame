@@ -114,7 +114,7 @@ protected:
     /// <summary>
     /// アニメーションの更新処理
     /// </summary>
-    void UpdateAnimation();
+    void UpdateAnimation(const float blendSpeed = 0.2f);
 
     /// <summary>
     /// アニメーションを止める処理
@@ -129,7 +129,6 @@ protected:
     /// シーンが切り替わってた際にアニメーションをデタッチする
     /// </summary>
     void DetachAnimation();
-
 
 private:
 

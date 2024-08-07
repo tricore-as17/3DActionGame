@@ -38,14 +38,16 @@ void BossShotAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTO
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
-    //アニメーションの再生時間のセット
-    UpdateAnimation();
-
     // アニメーションの再生率を見て弾を作成する
     CreateShotByAnimationTime(position, targetPosition);
 
     // アニメーションの切り替え
     SwitchAnimation();
+
+    //アニメーションの再生時間のセット
+    UpdateAnimation();
+
+
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -98,7 +100,6 @@ void BossShotAttack::SwitchAnimation()
         currentPlayAnimationState = StateBase::BlendStart;
 
         shotState = WaitRightShot;
-
     }
 }
 
