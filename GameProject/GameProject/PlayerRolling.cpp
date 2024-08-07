@@ -58,7 +58,7 @@ void PlayerRolling::ChangeState()
         nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
     }
     //アニメーションの再生が終了したらステートを切り替える
-    if (currentPlayAnimationState == FirstRoopEnd)
+    else if (currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
     }

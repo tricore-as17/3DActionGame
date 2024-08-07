@@ -130,6 +130,14 @@ protected:
     /// </summary>
     void DetachAnimation();
 
+    /// <summary>
+    /// 移動方向の設定
+    /// </summary>
+    /// <param name="targetPosition">移動したい目標の座標</param>
+    /// <param name="position">自身の座標</param>
+    /// <returns>設定した方向</returns>
+    VECTOR CalculateTargetDirection(const VECTOR targetPosition, const VECTOR position);
+
 private:
 
     ///////  メンバ変数  ////////

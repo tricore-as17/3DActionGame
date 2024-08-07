@@ -1,5 +1,6 @@
-﻿#include "BossDefaultAttack.h"
+﻿#include"BossIdle.h"
 #include"BossAreaAttack.h"
+#include "BossDefaultAttack.h"
 #include"Utility.h"
 
 const VECTOR BossDefaultAttack::OffsetPosition = VGet(30.0f, 40.0f, 0.0f);
@@ -50,8 +51,14 @@ void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& position, const V
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
-    //アニメーションが終了していたら当たり判定を消す
-    if (currentPlayAnimationState == FirstRoopEnd)
+    // 向く方向を計算
+    VECTOR direction = CalculateTargetDirection(targetPosition, position);
+
+    // 向きの変更
+    modelDirection = direction;
+
+    // アニメーションの再生率が一定のラインを超えたら当たり判定をなくす
+    if (animationNowTime / animationLimitTime >= CollisionEndAnimationRatio)
     {
         collisionData.collisionState = CollisionData::CollisionEnded;
     }
@@ -72,10 +79,10 @@ void BossDefaultAttack::ChangeState()
 {
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
+    if (currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの移動ステートに移行
-        nextState = new BossAreaAttack(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {

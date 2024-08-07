@@ -22,11 +22,32 @@ public:
     void Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition,VECTOR cameraPosition)override;
 
 private:
+
+    enum  NextStateList
+    {
+        DefaultAttack = 0,  // 通常攻撃
+        Move          = 1,  // 移動
+        AreaAttack    = 2,  // 範囲攻撃
+        ShotAttack    = 3,  // 弾を撃つ攻撃
+        RunAttack     = 4,  // 突進攻撃
+    };
+
     /////////  定数  //////
 
-    static constexpr float InitializeAnimationSpeed = 1.0f;    //アニメーションの初期速度
+    static constexpr float InitializeAnimationSpeed                = 1.0f;      //アニメーションの初期速度
+    static constexpr float ShortRange                              = 100.0f;    // 近距離の範囲
+    static constexpr float MiddleRange                             = 200.0f;   // 中距離の範囲
+    static constexpr int   RandRange                               = 99;       // ランダムの範囲
+    static constexpr int   ShortRangeDefaultAttackProbability = 60;       // 近距離での通常攻撃が出る確率
+    static constexpr int   ShortRangeAreaAttackProbability    = 20;       // 近距離での通常攻撃が出る確率
+    static constexpr int   MiddleRangeAreaAttackProbability   = 40;       // 中距離での範囲攻撃が出る確率
+    static constexpr int   MiddleRangeShotAttackProbability   = 40;       // 中距離での弾を撃つ攻撃が出る確率
+    static constexpr int   LongRangeRunAttackProbability      = 60;       // 長距離での突進攻撃が出る確率
+    static constexpr int   LongRangeShotAttackProbability     = 20;       // 長距離での突進攻撃が出る確率
 
     ///////  メンバ変数  ///////
+
+    NextStateList nextStateName;        // 次のステート
 
     //ToDo
     //AIを作成したら入力は必要ないので削除
@@ -38,5 +59,10 @@ private:
     /// ステートの切り替え処理をまとめたもの
     /// </summary>
     void ChangeState()override;
+
+    /// <summary>
+    /// 行動パターンを選択する
+    /// </summary>
+    void SelectActionPattern(const float targetDistance);
 };
 

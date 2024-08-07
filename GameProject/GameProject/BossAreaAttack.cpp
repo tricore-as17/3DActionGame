@@ -1,8 +1,8 @@
 ﻿#include"ShotManager.h"
 #include"InitializeShotData.h"
 #include"Boss.h"
+#include"BossIdle.h"
 #include"BossAreaAttack.h"
-#include"BossShotAttack.h"
 #include"CollisionManager.h"
 
 ///<summary>
@@ -64,10 +64,10 @@ void BossAreaAttack::ChangeState()
 {
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
+    if (currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの移動ステートに移行
-        nextState = new BossShotAttack(modelhandle,this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle,this->GetAnimationIndex());
     }
     else
     {

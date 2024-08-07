@@ -121,3 +121,18 @@ void StateBase::SetNoLifeState()
     lifeState = Player::NoLife;
 }
 
+/// <summary>
+/// 移動方向の設定
+/// </summary>
+/// <param name="targetPosition">移動したい目標の座標</param>
+/// <param name="position">自身の座標</param>
+/// <returns>設定した方向</returns>
+VECTOR StateBase::CalculateTargetDirection(const VECTOR targetPosition, const VECTOR position)
+{
+    // 移動させる方向を出す
+    VECTOR direction = VSub(targetPosition, position);
+
+    // 正規化
+    return  direction = VNorm(direction);
+}
+

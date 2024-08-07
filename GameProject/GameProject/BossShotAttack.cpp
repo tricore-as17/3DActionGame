@@ -1,6 +1,6 @@
 ﻿#include"InitializeShotData.h"
+#include"BossIdle.h"
 #include"BossShotAttack.h"
-#include"BossRunAttack.h"
 
 
 ///<summary>
@@ -62,10 +62,10 @@ void BossShotAttack::ChangeState()
 {
     //ToDo
     //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
+    if (shotState == RightSHot && currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの突進攻撃ステートに移行
-        nextState = new BossRunAttack(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {

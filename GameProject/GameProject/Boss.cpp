@@ -66,11 +66,14 @@ void Boss::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
     //ステート毎のアップデートを行う
     nowState->Update(modelDirection, position,targetPosition,cameraPosition);
 
+    // 移動処理
+    position = VAdd(position, nowState->GetVelocity());
+
+    // モデルの向きの反映
+    UpdateAngle();
+
     //当たり判定に必要なデータの更新
     UpdateCollisionData();
-
-
-
 
     //モデルを描画する座標の調整
     MV1SetPosition(modelHandle, VAdd(position,OffsetModelPosition));

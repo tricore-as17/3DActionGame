@@ -1,5 +1,6 @@
 ﻿#include"StateBase.h"
 #include"Boss.h"
+#include"BossIdle.h"
 #include"BossMove.h"
 #include"BossDefaultAttack.h"
 
@@ -31,11 +32,23 @@ BossMove::~BossMove()
 /// <param name="position">プレイヤーモデルの向き</param>
 void BossMove::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition,VECTOR cameraPosition)
 {
+    // フレームカウントを増やす
+    moveFrameCount++;
+
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
+    // 移動量を出す
+    VECTOR direction = CalculateTargetDirection(targetPosition, position);
+
+    // モデルの向きを反映させる
+    modelDirection = direction;
+
+    // 移動量を出す
+    velocity = VScale(direction, MoveSpeed);
+
     //アニメーションの再生時間のセット
-    UpdateAnimation();
+    UpdateAnimation(BlendSpeed);
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -48,14 +61,14 @@ void BossMove::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targ
 /// </summary>
 void BossMove::ChangeState()
 {
-    //ToDo
-    //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
+    // 設定したフレーム数を超えた場合はステートをIdleにする
+    if (moveFrameCount >= MoveFrameLimit)
     {
-        nextState = new BossDefaultAttack(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
     }
     else
     {
         nextState = this;
     }
 }
+
