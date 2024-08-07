@@ -7,7 +7,9 @@
 #include"Utility.h"
 
 
-const VECTOR PlayerAttack::OffsetPositionY = VGet(0.0f,10.0f, 0.0f);
+const VECTOR PlayerAttack::NormalAttackOffsetPositionY = VGet(-10.0f,10.0f, 0.0f);
+const VECTOR PlayerAttack::StrongAttackOffsetPositionY = VGet(0.0f, 10.0f, 0.0f);
+
 
 /// <summary>
 /// コンストラクタ
@@ -20,18 +22,57 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
     // 現在のステートを入れる
     nowStateTag = Player::AttackState;
 
+    // 通常攻撃と強攻撃それぞれの当たり判定のサイズを代入
+    if (animationState == Player::Slash)
+    {
+        // カプセルの長さ
+        collisionCapsuleLineLength   = NormalAttackCollisionCapsuleLineLength;
+
+        // 当たり判定の幅
+        collisionRadius              = NormalAttackCollisionRadius;
+
+        // 当たり判定を開始させるアニメーションの再生率
+        collisionStratAnimationRatio = NormalAttackCollisionStartAnimationRatio;
+
+        // 当たり判定カプセルの回転角度
+        collisionCapsuleAngle        = NormalAttackCollisionCapsuleAngle;
+
+        // 当たり判定座標のずらす量
+        offsetPosition               = NormalAttackOffsetPositionY;
+
+        // 当たり判定をモデルの向いている方向にどれだけすすめるか
+        offsetPositionScale          = NormalAttackOffsetPositionScale;
+
+        // ダメージ量の代入
+        damageAmount = NormalAttackDamageAmount;
+
+    }
+    else
+    {
+        // カプセルの長さ
+        collisionCapsuleLineLength   = StrongAttackCollisionCapsuleLineLength;
+
+        // 当たり判定の幅
+        collisionRadius              = StrongAttackCollisionRadius;
+
+        // 当たり判定を開始させるアニメーションの再生率
+        collisionStratAnimationRatio = StrongAttackCollisionStartAnimationRatio;
+
+        // 当たり判定カプセルの回転角度
+        collisionCapsuleAngle        = StrongAttackCollisionCapsuleAngle;
+
+        // 当たり判定座標のずらす量
+        offsetPosition               = StrongAttackOffsetPositionY;
+
+        // 当たり判定をモデルの向いている方向にどれだけすすめるか
+        offsetPositionScale          = StrongAttackOffsetPositionScale;
+
+        // ダメージ量の代入
+        damageAmount                 = StrongAttackDamageAmount;
+    }
+
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
-
-    //当たり判定を開始させる再生率の設定
-    collisionStratAnimationRatio = InitializeCollisionStartAnimationRatio;
-
-    //当たり判定をどれだけずらすかを設定
-    offsetPosition = VGet(-10, 10, 0);
-
-    //当たり判定を向いている方向にどれだけ進めるかの値を設定
-    offsetPositionScale = 20.0f;
-
 }
 
 /// <summary>
@@ -104,10 +145,10 @@ void PlayerAttack::UpdateCollisionData(const VECTOR& modelDirection,const VECTOR
     TransrateCollisionCapsulePosition(characterPosition, modelDirection);
 
     //角度からラジアンに変換する
-    float radianAngle = Utility::ConvertRadian(CollisionCapsuleAngle);
+    float radianAngle = Utility::ConvertRadian(collisionCapsuleAngle);
 
     //カプセル回転用のベクトルを用意する
-    VECTOR capsuleLineVector = RotationCollisionCapsule(radianAngle, modelDirection, position, CollisionCapsuleLineHalfLength);
+    VECTOR capsuleLineVector = RotationCollisionCapsule(radianAngle, modelDirection, position, collisionCapsuleLineLength);
 
     //中央座標の代入
     collisionData.centerPosition = position;
@@ -116,13 +157,13 @@ void PlayerAttack::UpdateCollisionData(const VECTOR& modelDirection,const VECTOR
     //カプセルの上側の座標
     collisionData.upPosition = VAdd(position, capsuleLineVector);
     //カプセルの球部分の半径
-    collisionData.radius = CollisionRadius;
+    collisionData.radius = collisionRadius;
     //オブジェクトの種類
     collisionData.hitObjectTag = CollisionManager::PlayerAttack;
     //当たった際の関数
     collisionData.onHit = std::bind(&PlayerAttack::OnHit, this, std::placeholders::_1);
     //当たった際のダメージ量
-    collisionData.damageAmount = DamageAmount;
+    collisionData.damageAmount = damageAmount;
 }
 
 

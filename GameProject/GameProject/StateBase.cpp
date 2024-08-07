@@ -60,7 +60,7 @@ void StateBase::UpdateAnimation()
     }
     else if(currentPlayAnimationState != Stop)
     {
-        //再生時間を進める
+        // 再生時間を進める
         animationNowTime += animationSpeed;
         // 再生時間をセットする
         MV1SetAttachAnimTime(modelhandle, animationIndex, animationNowTime);
