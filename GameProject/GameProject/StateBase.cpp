@@ -1,5 +1,6 @@
 ﻿#include"DxLib.h"
 #include"StateBase.h"
+#include"Utility.h"
 
 
 
@@ -100,4 +101,5 @@ void StateBase::DetachAnimation()
         MV1DetachAnim(modelhandle, beforeAnimationIndex);
     }
 }
+
 

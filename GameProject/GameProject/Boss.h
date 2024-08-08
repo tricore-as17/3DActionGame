@@ -65,12 +65,14 @@ private:
     ////メンバ変数////
 
     //モデル
-    int modelHandle;                    //モデルハンドル
-    VECTOR modelDirection;              //モデルの向くべき方向
-    float  angle;                       //モデルの向きを変更させる際の値
-    VECTOR position;                    //座標
-    CollisionData collisionData;        //当たり判定に必要な情報
+    int               modelHandle;      //モデルハンドル
+    VECTOR            modelDirection;   //モデルの向くべき方向
+    float             angle;            //モデルの向きを変更させる際の値
+    VECTOR            position;         //座標
+    CollisionData     collisionData;    //当たり判定に必要な情報
     CollisionManager* collisionManager; //当たり判定管理クラスにアクセスするポインタ
+    int               hp;
+
     //ステート
     StateBase* nowState;                //現在のステートを保存するポインタ
     StateBase* nextState;               //次のループでのステートをホゾンスルポインタ

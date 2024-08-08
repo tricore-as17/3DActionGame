@@ -3,9 +3,11 @@
 #include"Player.h"
 #include"PlayerIdle.h"
 #include"InputManager.h"
+#include"CollisionUtility.h"
+#include"Utility.h"
 
 
-const VECTOR PlayerAttack::OffsetPositionY = VGet(0.0f,10.0f, 0.0f);
+const VECTOR PlayerAttack::OffsetPosition = VGet(-10.0f,10.0f, 0.0f);
 
 /// <summary>
 /// コンストラクタ
@@ -14,22 +16,15 @@ const VECTOR PlayerAttack::OffsetPositionY = VGet(0.0f,10.0f, 0.0f);
 /// <param name="beforeAnimationIndex">前のステートでのアニメーション情報</param>
 PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Player::AnimationState animationState)
     :StateBase(InitalModelHandle,animationState,beforeAnimationIndex)
-    ,position(VGet(0.0f,0.0f,0.0f))
 {
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
 
-    //コリジョンマネージャーのインスタンスをもってくる
+    // コリジョンマネージャーのインスタンスをもってくる
     collisionManager = CollisionManager::GetInstance();
 
-    //当たり判定が生きている状態にする
-    collisionData.isCollisionActive = true;
-
-    //当たり判定用の変数の初期化
-    UpdateCollisionData();
-
-    //当たり判定データのポインタを渡す
-    collisionManager->RegisterCollisionData(&collisionData);
+    //当たり判定がまだ生成されていない状態
+    collisionData.collisionState = CollisionData::NoCollision;
 
 }
 
@@ -38,25 +33,44 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
 /// </summary>
 PlayerAttack::~PlayerAttack()
 {
-    
+    //当たり判定情報を削除
+    this->collisionData.collisionState = CollisionData::CollisionEnded;
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="position">プレイヤーモデルの向き</param>
-void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position)
+/// <param name="modelDirection">モデルの向き</param>
+/// <param name="characterPosition">キャラクターの座標</param>
+void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& characterPosition)
 {
-    //当たり判定の座標を設定
-    this->position = VAdd(VAdd(position,OffsetPositionY), VScale(modelDirection, OffsetPositionScale));
-
+ 
     //ステートの切り替え処理を呼ぶ
     ChangeState();
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
+    //アニメーションが終了していたら当たり判定を消す
+    if (currentPlayAnimationState == FirstRoopEnd)
+    {
+        collisionData.collisionState = CollisionData::CollisionEnded;
+    }
+
     //当たり判定に必要な情報の更新
-    UpdateCollisionData();
+    UpdateCollisionData(modelDirection,characterPosition);
+
+    // 当たり判定が有効になった入ればCollisionManagerに送信
+    if (collisionData.collisionState == CollisionData::NoCollision)
+    {
+        //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
+        collisionData.collisionState = CollisionUtility::SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime(),
+            collisionData.collisionState,InitializeCollisionStartAnimationRatio);
+
+        if (collisionData.collisionState == CollisionData::CollisionActive)
+        {
+            collisionManager->RegisterCollisionData(&collisionData);
+        }
+    }
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -73,8 +87,6 @@ void PlayerAttack::ChangeState()
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
 
-        //ステートが切り替わる際に当たり判定を消す
-        collisionData.isCollisionActive = false;
     }
     else
     {
@@ -86,20 +98,31 @@ void PlayerAttack::ChangeState()
 /// <summary>
 /// プレイヤーの情報から当たり判定に必要な情報を出して代入
 /// </summary>
-void PlayerAttack::UpdateCollisionData()
+void PlayerAttack::UpdateCollisionData(const VECTOR& modelDirection,const VECTOR characterPosition)
 {
+    //当たり判定の座標を移動させる
+    position = CollisionUtility::TransrateCollisionCapsulePosition(characterPosition, modelDirection,OffsetPosition,OffsetPositionScale);
+
+    //角度からラジアンに変換する
+    float radianAngle = Utility::ConvertRadian(CollisionCapsuleAngle);
+
+    //カプセル回転用のベクトルを用意する
+    VECTOR capsuleLineVector = CollisionUtility::RotationCollisionCapsule(radianAngle, modelDirection, position, CollisionCapsuleLineHalfLength);
+
     //中央座標の代入
     collisionData.centerPosition = position;
     //カプセルの下側の座標
     collisionData.bottomPosition = position;
     //カプセルの上側の座標
-    collisionData.upPosition = VAdd(position, VGet(0.0f, CollisionCapsuleLineHalfLength, 0.0f));
+    collisionData.upPosition = VAdd(position, capsuleLineVector);
     //カプセルの球部分の半径
     collisionData.radius = CollisionRadius;
     //オブジェクトの種類
     collisionData.hitObjectTag = CollisionManager::PlayerAttack;
     //当たった際の関数
     collisionData.onHit = std::bind(&PlayerAttack::OnHit, this, std::placeholders::_1);
+    //当たった際のダメージ量
+    collisionData.damageAmount = DamageAmount;
 }
 
 
@@ -111,22 +134,23 @@ void PlayerAttack::OnHit(CollisionData collisionData)
     switch (collisionData.hitObjectTag)
     {
     case CollisionManager::Boss:
-        printfDx("playerAttackHit");
-        this->collisionData.isCollisionActive = false;
         break;
     default:
         break;
     }
     //当たったフラグをオンにする
-    collisionData.isCollisionActive = false;
+    this->collisionData.collisionState = CollisionData::CollisionEnded;
 }
 
 #ifdef _DEBUG
 
 void PlayerAttack::DrawCollision()
 {
-    //当たり判定が正しいかの確認用の描画
-    DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), FALSE);
+    if (collisionData.collisionState == CollisionData::CollisionActive)
+    {
+        //当たり判定が正しいかの確認用の描画
+        DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), FALSE);
+    }
 }
 #endif // _DEBUG
 

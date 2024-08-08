@@ -18,9 +18,10 @@ public:
     /// </summary>
     enum HitObjectTag
     {
-        Player       = 0,    //プレイヤー
-        Boss         = 1,    //ボス
-        PlayerAttack = 2,    //プレイヤーの攻撃
+        Player            = 0,    //プレイヤー
+        Boss              = 1,    //ボス
+        PlayerAttack      = 2,    //プレイヤーの攻撃
+        BossDefaultAttack = 3,    //ボスの通常攻撃
     };
 
     //定数

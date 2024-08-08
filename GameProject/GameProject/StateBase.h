@@ -105,6 +105,7 @@ protected:
     /// </summary>
     void DetachAnimation();
 
+
 private:
 
     ///////  メンバ変数  ////////
