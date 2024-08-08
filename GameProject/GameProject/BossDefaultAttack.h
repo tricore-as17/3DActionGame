@@ -1,12 +1,11 @@
 ﻿#pragma once
 #include"StateBase.h"
-#include"CollisionStateBase.h"
 #include"InputManager.h"
 
 /// <summary>
 /// ボスの通常攻撃のステート
 /// </summary>
-class BossDefaultAttack :public StateBase, public CollisionStateBase
+class BossDefaultAttack :public StateBase
 {
 public:
     //コンストラクタ
@@ -40,6 +39,10 @@ private:
     //AIを作成したら入力は必要ないので削除
     InputManager* inputManager;      //入力管理クラス
 
+    VECTOR            position;                      // 攻撃の当たり判定の座標
+    CollisionData     collisionData;                 // 当たり判定に必要な情報をまとめたもの
+    CollisionManager* collisionManager;              // 当たり判定の管理クラスのポインタ
+
 
     ///////  メンバ関数  //////
 
@@ -51,7 +54,7 @@ private:
     /// <summary>
     /// 座標などを当たり判定に必要なデータに変換
     /// </summary>
-    void UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition) override;
+    void UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition);
 
     /// <summary>
     /// 当たった時の処理

@@ -1,6 +1,7 @@
 ﻿#include "BossDefaultAttack.h"
 #include"BossAreaAttack.h"
 #include"Utility.h"
+#include"CollisionUtility.h"
 
 const VECTOR BossDefaultAttack::OffsetPosition = VGet(30.0f, 40.0f, 0.0f);
 
@@ -15,18 +16,14 @@ BossDefaultAttack::BossDefaultAttack(int& InitializeModelHandle, const int befor
     //アニメーション速度の初期化
     animationSpeed = InitializeAnimationSpeed;
 
-    //当たり判定を開始させる再生率の設定
-    collisionStratAnimationRatio = InitializeCollisionStartAnimationRatio;
-
-    //当たり判定をどれだけずらすかを設定
-    offsetPosition = OffsetPosition;
-
-    //当たり判定を向いている方向にどれだけ進めるかの値を設定
-    offsetPositionScale = OffsetPositionScale;
-
     //インプットマネージャーをもってくる
     inputManager = InputManager::GetInstance();
 
+    // コリジョンマネージャーのインスタンスをもってくる
+    collisionManager = CollisionManager::GetInstance();
+
+    //当たり判定がまだ生成されていない状態
+    collisionData.collisionState = CollisionData::NoCollision;
 }
 
 /// <summary>
@@ -58,8 +55,18 @@ void BossDefaultAttack::Update(VECTOR& modelDirection, VECTOR& position, const V
     //当たり判定に必要な情報の更新
     UpdateCollisionData(modelDirection,position);
 
-    //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
-    SendCollisionDataByAnimationTime(GetAnimationNowTime(),GetAnimationLimitTime());
+    // 当たり判定が有効になった入ればCollisionManagerに送信
+    if (collisionData.collisionState == CollisionData::NoCollision)
+    {
+        //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
+        collisionData.collisionState = CollisionUtility::SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime(),
+            collisionData.collisionState, InitializeCollisionStartAnimationRatio);
+
+        if (collisionData.collisionState == CollisionData::CollisionActive)
+        {
+            collisionManager->RegisterCollisionData(&collisionData);
+        }
+    }
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -100,13 +107,13 @@ void BossDefaultAttack::OnHit(CollisionData collisionData)
 void BossDefaultAttack::UpdateCollisionData(const VECTOR& modelDirection, const VECTOR characterPosition)
 {
     //当たり判定の座標を移動させる
-    TransrateCollisionCapsulePosition(characterPosition, modelDirection);
+    position = CollisionUtility::TransrateCollisionCapsulePosition(characterPosition, modelDirection,OffsetPosition,OffsetPositionScale);
 
     //角度からラジアンに変換する
     float radianAngle = Utility::ConvertRadian(CollisionCapsuleAngle);
 
     //カプセル回転用のベクトルを用意する
-    VECTOR capsuleLineVector = RotationCollisionCapsule(radianAngle, modelDirection, position, CollisionCapsuleLineHalfLength);
+    VECTOR capsuleLineVector = CollisionUtility::RotationCollisionCapsule(radianAngle, modelDirection, position, CollisionCapsuleLineHalfLength);
 
     //中央座標の代入
     collisionData.centerPosition = position;
