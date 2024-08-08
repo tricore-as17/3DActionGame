@@ -146,7 +146,7 @@
     <ClCompile Include="BossStart.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="CollisionStateBase.cpp" />
+    <ClCompile Include="CollisionUtility.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
@@ -190,7 +190,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionData.h" />
     <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="CollisionStateBase.h" />
+    <ClInclude Include="CollisionUtility.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FrameRateController.h" />
