@@ -1,28 +1,4 @@
-﻿#include"CollisionData.h"
-#include"CollisionManager.h"
-#include"CollisionStateBase.h"
-
-
-/// <summary>
-/// コンストラクタ
-/// </summary>
-CollisionStateBase::CollisionStateBase()
-    :position(VGet(0,0,0))
-{
-    //コリジョンマネージャーのインスタンスをもってくる
-    collisionManager = CollisionManager::GetInstance();
-
-    //当たり判定がまだ生成されていない状態
-    collisionData.collisionState = CollisionData::NoCollision;
-}
-
-/// <summary>
-/// デストラクタ
-/// </summary>
-CollisionStateBase::~CollisionStateBase()
-{
-    //処理なし
-}
+﻿#include"CollisionUtility.h"
 
 
 /// <summary>
@@ -30,18 +6,25 @@ CollisionStateBase::~CollisionStateBase()
 /// </summary>
 /// <param name="animationNowTime">現在のアニメーションの再生時間</param>
 /// <param name="animationLimitTime">アニメーションの総再生時間</param>
-void CollisionStateBase::SendCollisionDataByAnimationTime(float animationNowTime, float animationLimitTime)
+CollisionData::CollisionState CollisionUtility::SendCollisionDataByAnimationTime(float animationNowTime, float animationLimitTime,
+    CollisionData::CollisionState currentCollisionState,float collisionStartAnimationRatio)
 {
+    // 返り値用の変数を用意
+    CollisionData::CollisionState nextCollisionState;
 
     //アニメーションの再生時間が指定の割合を超えていたらCollisionManagerに情報を渡す
-    if (animationNowTime / animationLimitTime >= collisionStratAnimationRatio &&
-        collisionData.collisionState == CollisionData::NoCollision)
+    if (animationNowTime / animationLimitTime >= collisionStartAnimationRatio &&
+        currentCollisionState == CollisionData::NoCollision)
     {
         //当たり判定の状態を変更する
-        collisionData.collisionState = CollisionData::CollisionActive;
-        collisionManager->RegisterCollisionData(&collisionData);
-
+        nextCollisionState = CollisionData::CollisionActive;
     }
+    else
+    {
+        nextCollisionState = currentCollisionState;
+    }
+
+    return nextCollisionState;
 }
 
 /// <summary>
@@ -49,7 +32,7 @@ void CollisionStateBase::SendCollisionDataByAnimationTime(float animationNowTime
 /// </summary>
 /// <param name="characterPosition">キャラの座標</param>
 /// <param name="direction">生成する方向</param>
-void CollisionStateBase::TransrateCollisionCapsulePosition(VECTOR characterPosition,VECTOR direction)
+VECTOR CollisionUtility::TransrateCollisionCapsulePosition(VECTOR characterPosition, VECTOR direction, VECTOR offsetPosition, float offsetPositionScale)
 {
 
     // 任意のベクトル (0, 1, 0) を使用して新しいX軸を定義
@@ -71,20 +54,19 @@ void CollisionStateBase::TransrateCollisionCapsulePosition(VECTOR characterPosit
     VECTOR axisChangeOffsetPosition = VTransform(offsetPosition, changeAxisMatrix);
 
 
-    // 平行移動させた位置を設定
-    position =  axisChangeOffsetPosition;
-
+    // 平行移動させた位置を返す
+    return  axisChangeOffsetPosition;
 
 }
+
 
 /// <summary>
 /// カプセルの回転させるベクトルの計算
 /// </summary>
 /// <param name="radian">ラジアン</param>
 /// <returns>計算したベクトル</returns>
-VECTOR CollisionStateBase::RotationCollisionCapsule(float radian, VECTOR modelDirection, VECTOR position, float capsuleLineLength)
+VECTOR CollisionUtility::RotationCollisionCapsule(float radian, VECTOR modelDirection, VECTOR position, float capsuleLineLength)
 {
-
     //回転用の行列を作成
     MATRIX capsuleAngle = MGetRotAxis(modelDirection, radian);
 
