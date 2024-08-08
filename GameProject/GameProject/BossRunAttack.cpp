@@ -149,7 +149,7 @@ void BossRunAttack::InitializeRunPrameters(const VECTOR targetPosition, const VE
         targetLength = VSize(VSub(targetPosition, position));
 
         // 移動量の設定
-        velocity = VScale(VNorm(direction), MoveSpeed);
+        velocity = VScale(direction, MoveSpeed);
 
         // 走っている状態を切り替える
         currentRunState = Run;
