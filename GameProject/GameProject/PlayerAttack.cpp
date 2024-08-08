@@ -4,7 +4,9 @@
 #include"PlayerHit.h"
 #include"PlayerIdle.h"
 #include"InputManager.h"
+#include"CollisionUtility.h"
 #include"Utility.h"
+
 
 
 const VECTOR PlayerAttack::NormalAttackOffsetPositionY = VGet(-10.0f,10.0f, 0.0f);
@@ -73,6 +75,12 @@ PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Play
 
     //アニメーション速度の初期化
     animationSpeed = 1.0f;
+
+    // コリジョンマネージャーのインスタンスをもってくる
+    collisionManager = CollisionManager::GetInstance();
+
+    //当たり判定がまだ生成されていない状態
+    collisionData.collisionState = CollisionData::NoCollision;
 }
 
 /// <summary>
@@ -102,11 +110,22 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR 
     {
         collisionData.collisionState = CollisionData::CollisionEnded;
     }
+
     //当たり判定に必要な情報の更新
     UpdateCollisionData(modelDirection,position);
 
-    //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
-    SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime());
+    // 当たり判定が有効になった入ればCollisionManagerに送信
+    if (collisionData.collisionState == CollisionData::NoCollision)
+    {
+        //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
+        collisionData.collisionState = CollisionUtility::SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime(),
+            collisionData.collisionState,collisionStratAnimationRatio);
+
+        if (collisionData.collisionState == CollisionData::CollisionActive)
+        {
+            collisionManager->RegisterCollisionData(&collisionData);
+        }
+    }
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -142,13 +161,13 @@ void PlayerAttack::ChangeState()
 void PlayerAttack::UpdateCollisionData(const VECTOR& modelDirection,const VECTOR characterPosition)
 {
     //当たり判定の座標を移動させる
-    TransrateCollisionCapsulePosition(characterPosition, modelDirection);
+    position = CollisionUtility::TransrateCollisionCapsulePosition(characterPosition, modelDirection,offsetPosition,offsetPositionScale);
 
     //角度からラジアンに変換する
     float radianAngle = Utility::ConvertRadian(collisionCapsuleAngle);
 
     //カプセル回転用のベクトルを用意する
-    VECTOR capsuleLineVector = RotationCollisionCapsule(radianAngle, modelDirection, position, collisionCapsuleLineLength);
+    VECTOR capsuleLineVector = CollisionUtility::RotationCollisionCapsule(radianAngle, modelDirection, position, collisionCapsuleLineLength);
 
     //中央座標の代入
     collisionData.centerPosition = position;
