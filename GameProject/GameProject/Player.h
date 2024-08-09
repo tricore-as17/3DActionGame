@@ -56,8 +56,8 @@ public:
     enum LifeState
     {
         NoDamage = 0,   // ダメージを受けていない
-        Damaged = 1,   // ダメージを受けた
-        NoLife = 2,   // 体力が0
+        Damaged = 1,    // ダメージを受けた
+        NoLife = 2,     // 体力が0
 
     };
 
@@ -100,6 +100,7 @@ private:
     VECTOR        modelDirection;   //モデルの向くべき方向
     int           hp;               //プレイヤーの体力
     bool          isBossHited;      //ボスと当たったかのフラグ
+    bool          isDamage;         // ダメージを受けたかのフラグ
 
     ///////  メンバクラス  ///////
 

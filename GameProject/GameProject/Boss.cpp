@@ -15,7 +15,7 @@ const VECTOR Boss::OffsetModelPosition = VGet(0,10, 0);
 /// </summary>
 Boss::Boss()
     :position(InitialPosition)
-    ,angle(0.0f)
+    ,angle(DX_PI_F)
     ,nowState(NULL)
     ,modelDirection(VGet(0,0,-1))
     ,hp(10)

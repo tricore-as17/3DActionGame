@@ -89,7 +89,7 @@ void BossDefaultAttack::ChangeState()
     if (currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの移動ステートに移行
-        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex(),BossIdle::DefaultAttack);
     }
     else
     {

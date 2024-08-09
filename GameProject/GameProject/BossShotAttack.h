@@ -46,7 +46,9 @@ private:
     static constexpr float ShotCreateAnimationRatio = 0.35f;   // ショットを作成するアニメーションの再生率
     static constexpr float ShotSpeed                = 6.0f;    // 弾のスピード
     static constexpr float ShotRadius               = 20.0f;   // 弾の半径
-    static constexpr int   ShotDamageAmount         = 15;       // ショットが与えるダメージ
+    static constexpr int   ShotDamageAmount         = 15;      // ショットが与えるダメージ
+    static constexpr float AnimationBlendSpeed      = 0.01f;   // アニメーションのブレンドスピード
+
     
 
     ///////  メンバ変数  ////////
@@ -75,7 +77,7 @@ private:
     /// アニメーションの再生率によってショットを作成
     /// </summary>
     /// <param name="position">自身の座標</param>
-    void CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition);
+    void CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition, VECTOR& modelDirection);
 
     /// <summary>
     /// 弾の作成に必要な情報を

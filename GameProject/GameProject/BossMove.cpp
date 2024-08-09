@@ -64,7 +64,7 @@ void BossMove::ChangeState()
     // 設定したフレーム数を超えた場合はステートをIdleにする
     if (moveFrameCount >= MoveFrameLimit)
     {
-        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex(),BossIdle::Move);
     }
     else
     {

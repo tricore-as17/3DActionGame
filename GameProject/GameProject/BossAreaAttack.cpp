@@ -49,7 +49,7 @@ void BossAreaAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTO
     CreateShotByAnimationTime(position);
 
     //アニメーションの再生時間のセット
-    UpdateAnimation();
+    UpdateAnimation(AnimationBlendSpeed);
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -67,7 +67,7 @@ void BossAreaAttack::ChangeState()
     if (currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの移動ステートに移行
-        nextState = new BossIdle(modelhandle,this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle,this->GetAnimationIndex(),BossIdle::AreaAttack);
     }
     else
     {

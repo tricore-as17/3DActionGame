@@ -31,6 +31,9 @@ public:
     // アニメーションの総再生時間を返す
     const float GetAnimationLimitTime() const { return animationLimitTime; }
 
+    // 体力の状態を返す
+    const Player::LifeState GetLifeState() const { return lifeState; }
+
     ///////  メンバ関数  //////
 
     /// <summary>

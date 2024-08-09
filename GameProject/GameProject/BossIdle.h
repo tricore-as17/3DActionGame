@@ -8,10 +8,21 @@
 class BossIdle :public StateBase
 {
 public:
+
+    enum  NextStateList
+    {
+        DefaultAttack = 0,  // 通常攻撃
+        Move          = 1,  // 移動
+        AreaAttack    = 2,  // 範囲攻撃
+        ShotAttack    = 3,  // 弾を撃つ攻撃
+        RunAttack     = 4,  // 突進攻撃
+        None          = 5,  // ステートが存在しない場合
+    };
+
     ///////  メンバ関数  ///////
 
     //コンストラクタ
-    BossIdle(int& modelHandle, const int beforeAnimationIndex);
+    BossIdle(int& modelHandle, const int beforeAnimationIndex, const NextStateList initializeBeforeStateName);
     //デストラクタ
     ~BossIdle();
 
@@ -23,31 +34,26 @@ public:
 
 private:
 
-    enum  NextStateList
-    {
-        DefaultAttack = 0,  // 通常攻撃
-        Move          = 1,  // 移動
-        AreaAttack    = 2,  // 範囲攻撃
-        ShotAttack    = 3,  // 弾を撃つ攻撃
-        RunAttack     = 4,  // 突進攻撃
-    };
+
 
     /////////  定数  //////
 
-    static constexpr float InitializeAnimationSpeed                = 1.0f;      //アニメーションの初期速度
-    static constexpr float ShortRange                              = 100.0f;    // 近距離の範囲
+    static constexpr float InitializeAnimationSpeed                = 1.0f;     // アニメーションの初期速度
+    static constexpr float ShortRange                              = 100.0f;   // 近距離の範囲
     static constexpr float MiddleRange                             = 200.0f;   // 中距離の範囲
     static constexpr int   RandRange                               = 99;       // ランダムの範囲
-    static constexpr int   ShortRangeDefaultAttackProbability = 60;       // 近距離での通常攻撃が出る確率
-    static constexpr int   ShortRangeAreaAttackProbability    = 20;       // 近距離での通常攻撃が出る確率
-    static constexpr int   MiddleRangeAreaAttackProbability   = 40;       // 中距離での範囲攻撃が出る確率
-    static constexpr int   MiddleRangeShotAttackProbability   = 40;       // 中距離での弾を撃つ攻撃が出る確率
-    static constexpr int   LongRangeRunAttackProbability      = 60;       // 長距離での突進攻撃が出る確率
-    static constexpr int   LongRangeShotAttackProbability     = 20;       // 長距離での突進攻撃が出る確率
+    static constexpr float AnimationBlendSpeed                     = 0.03f;    // アニメーションのブレンドスピード
+    static constexpr int   ShortRangeDefaultAttackProbability      = 60;       // 近距離での通常攻撃が出る確率
+    static constexpr int   ShortRangeAreaAttackProbability         = 20;       // 近距離での通常攻撃が出る確率
+    static constexpr int   MiddleRangeAreaAttackProbability        = 40;       // 中距離での範囲攻撃が出る確率
+    static constexpr int   MiddleRangeShotAttackProbability        = 40;       // 中距離での弾を撃つ攻撃が出る確率
+    static constexpr int   LongRangeRunAttackProbability           = 60;       // 長距離での突進攻撃が出る確率
+    static constexpr int   LongRangeShotAttackProbability          = 20;       // 長距離での突進攻撃が出る確率
 
     ///////  メンバ変数  ///////
 
     NextStateList nextStateName;        // 次のステート
+    NextStateList previousStateName;      // 前のステート
 
     //ToDo
     //AIを作成したら入力は必要ないので削除

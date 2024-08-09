@@ -39,13 +39,13 @@ void BossShotAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTO
     ChangeState();
 
     // アニメーションの再生率を見て弾を作成する
-    CreateShotByAnimationTime(position, targetPosition);
+    CreateShotByAnimationTime(position, targetPosition,modelDirection);
 
     // アニメーションの切り替え
     SwitchAnimation();
 
     //アニメーションの再生時間のセット
-    UpdateAnimation();
+    UpdateAnimation(AnimationBlendSpeed);
 
 
 
@@ -65,7 +65,7 @@ void BossShotAttack::ChangeState()
     if (shotState == RightSHot && currentPlayAnimationState == FirstRoopEnd)
     {
         //ボスの突進攻撃ステートに移行
-        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex(),BossIdle::ShotAttack);
     }
     else
     {
@@ -107,14 +107,20 @@ void BossShotAttack::SwitchAnimation()
 /// アニメーションの再生率によってショットを作成
 /// </summary>
 /// <param name="position">自身の座標</param>
-void BossShotAttack::CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition)
+void BossShotAttack::CreateShotByAnimationTime(const VECTOR position, const VECTOR targetPosition,VECTOR& modelDirection)
 {
     // アニメーションの再生率が規定値を超えたら
     if (animationNowTime / animationLimitTime >= ShotCreateAnimationRatio &&
         shotState == WaitLeftShot || shotState == WaitRightShot)
     {
+        // 初期化用のデータを作成
+        InitializeShotData initializeShotData = AssignInitializeShotData(position, targetPosition);
+
+        // 弾を撃った方向にモデルを回転させる
+        modelDirection = initializeShotData.direction;
+
         // 必要な情報を代入して弾を作成
-        shotManager->CreateShot(AssignInitializeShotData(position,targetPosition));
+        shotManager->CreateShot(initializeShotData);
 
         // 弾を撃った状態を変更する
         if (shotState == WaitLeftShot)

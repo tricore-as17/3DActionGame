@@ -47,15 +47,6 @@ void BossDead::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targ
 /// </summary>
 void BossDead::ChangeState()
 {
-    //ToDo
-    //BossのAIを作るまではボタンでステートが遷移するようにしている
-    if (inputManager->GetKeyPushState(InputManager::LeftStick) == InputManager::JustRelease)
-    {
-        //ボスの移動ステートに移行
-        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
-    }
-    else
-    {
-        nextState = this;
-    }
+
+    nextState = this;
 }

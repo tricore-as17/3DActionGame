@@ -19,6 +19,7 @@ Player::Player()
     , modelDirection(VGet(0, 0, 0))
     , hp(100)
     , isBossHited(false)
+    , isDamage(false)
 {
     //インスタンスを持ってくる
     ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
@@ -66,6 +67,7 @@ Player::~Player()
 /// </summary>
 void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
 {
+
     //ステート毎のアップデートを行う
     nowState->Update(modelDirection,position,targetPosition,cameraPosition);
 
@@ -103,6 +105,9 @@ void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
 
     //当たり判定を行う前に当たっているかをfalseにしておく
     isBossHited = false;
+
+    // 毎ループでダメージを受けていない状態にする
+    isDamage = false;
 }
 
 /// <summary>
@@ -245,18 +250,25 @@ void Player::OnHit(CollisionData collisionData)
     case CollisionManager::BossShot:
 
     case CollisionManager::BossAreaAttack:
-        if (nowState->GetNowStateTag() == DefenseState)
+
+        // 1フレームで複数のダメージを受けないようにする
+        if (nowState->GetLifeState() == NoDamage)
         {
-            //敵の攻撃に当たったのでHPを減らす
-            hp -= collisionData.damageAmount * 0.5f;
-        }
-        else
-        {
-            hp -= collisionData.damageAmount;
+            if (nowState->GetNowStateTag() == DefenseState)
+            {
+                //敵の攻撃に当たったのでHPを減らす
+                hp -= collisionData.damageAmount * 0.5f;
+            }
+            else
+            {
+                hp -= collisionData.damageAmount;
+            }
+
+            // ステートにダメージを受けた事を伝える
+            nowState->OnDamage();
         }
 
-        // ステートにダメージを受けた事を伝える
-        nowState->OnDamage();
+
         break;
     default:
         break;

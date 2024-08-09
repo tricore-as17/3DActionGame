@@ -12,13 +12,18 @@
 ///<summary>
 ///コンストラクタ
 ///</summary>
-BossIdle::BossIdle(int& InitializeModelHandle,const int beforeAnimationIndex)
+BossIdle::BossIdle(int& InitializeModelHandle,const int beforeAnimationIndex,const NextStateList initializePreviousStateName)
     :StateBase(InitializeModelHandle,Boss::Idle,beforeAnimationIndex)
 {
     //アニメーション速度の初期化
     animationSpeed = InitializeAnimationSpeed;
     //インプットマネージャーのインスタンスをもってくる
     inputManager = InputManager::GetInstance();
+
+    // 前回のステートを保存
+    previousStateName = initializePreviousStateName;
+
+
 }
 
 /// <summary>
@@ -47,7 +52,7 @@ void BossIdle::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targ
     ChangeState();
 
     //アニメーションの再生時間のセット
-    UpdateAnimation();
+    UpdateAnimation(AnimationBlendSpeed);
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
@@ -105,58 +110,72 @@ void BossIdle::ChangeState()
 /// </summary>
 void BossIdle::SelectActionPattern(const float targetDistance)
 {
-    // 行動選択のためのランダムな値を入れる
-    int randPattern = GetRand(RandRange);
 
-    // ターゲットとの距離が近かったら
-    if (targetDistance <= ShortRange)
+
+    bool isMatchPreviousState = true;
+
+    while (isMatchPreviousState)
     {
-        // それぞれの確率で処理が分岐する
-        if (randPattern < ShortRangeDefaultAttackProbability)
+        // 行動選択のためのランダムな値を入れる
+        int randPattern = GetRand(RandRange);
+
+        // ターゲットとの距離が近かったら
+        if (targetDistance <= ShortRange)
         {
-            nextStateName = DefaultAttack;
+            // それぞれの確率で処理が分岐する
+            if (randPattern < ShortRangeDefaultAttackProbability)
+            {
+                nextStateName = DefaultAttack;
+            }
+            else if (randPattern >= ShortRangeDefaultAttackProbability && randPattern < ShortRangeDefaultAttackProbability + ShortRangeAreaAttackProbability)
+            {
+                nextStateName = AreaAttack;
+            }
+            else
+            {
+                nextStateName = Move;
+            }
         }
-        else if (randPattern >= ShortRangeDefaultAttackProbability && randPattern < ShortRangeDefaultAttackProbability + ShortRangeAreaAttackProbability)
+        // 中距離だった場合
+        else if (targetDistance > ShortRange && targetDistance <= MiddleRange)
         {
-            nextStateName = AreaAttack;
+            if (randPattern < MiddleRangeAreaAttackProbability)
+            {
+                nextStateName = AreaAttack;
+            }
+            else if (randPattern >= MiddleRangeAreaAttackProbability && randPattern < MiddleRangeShotAttackProbability + MiddleRangeShotAttackProbability)
+            {
+                nextStateName = ShotAttack;
+            }
+            else
+            {
+                nextStateName = Move;
+            }
         }
+        // 遠距離だった場合
         else
         {
-            nextStateName = Move;
+            if (randPattern < LongRangeRunAttackProbability)
+            {
+                nextStateName = RunAttack;
+            }
+            else if (randPattern >= LongRangeRunAttackProbability && randPattern < LongRangeShotAttackProbability + LongRangeRunAttackProbability)
+            {
+                nextStateName = ShotAttack;
+            }
+            else
+            {
+                nextStateName = Move;
+            }
+        }
+
+        if (nextStateName != previousStateName)
+        {
+            isMatchPreviousState = false;
         }
     }
-    // 中距離だった場合
-    else if (targetDistance > ShortRange && targetDistance <= MiddleRange)
-    {
-        if (randPattern < MiddleRangeAreaAttackProbability)
-        {
-            nextStateName = AreaAttack;
-        }
-        else if (randPattern >= MiddleRangeAreaAttackProbability && randPattern < MiddleRangeShotAttackProbability + MiddleRangeShotAttackProbability)
-        {
-            nextStateName = ShotAttack;
-        }
-        else
-        {
-            nextStateName = Move;
-        }
-    }
-    // 遠距離だった場合
-    else
-    {
-        if (randPattern < LongRangeRunAttackProbability)
-        {
-            nextStateName = RunAttack;
-        }
-        else if (randPattern >= LongRangeRunAttackProbability && randPattern < LongRangeShotAttackProbability + LongRangeRunAttackProbability)
-        {
-            nextStateName = ShotAttack;
-        }
-        else
-        {
-            nextStateName = Move;
-        }
-    }
+
+
 
     printfDx("%f\n", targetDistance);
 }

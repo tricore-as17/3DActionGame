@@ -43,7 +43,9 @@ private:
     static constexpr float CollisionRadius              = 60.0f;    // 当たり判定の半径
     static constexpr int   DamageAmount                 = 30;       // ダメージ量
     static constexpr float MoveSpeed                    = 8.0f;     // 移動速度
-    static constexpr float TargetOffsetDistance         = 100.0f;   // ターゲットとの距離からどれだけずらすか    
+    static constexpr float TargetOffsetDistance         = 100.0f;   // ターゲットとの距離からどれだけずらすか
+    static constexpr float AnimationBlendSpeed          = 0.01f;    // アニメーションのブレンドスピード
+
 
     ///////  メンバ変数  ////////
 

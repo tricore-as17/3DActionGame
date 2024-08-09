@@ -48,13 +48,12 @@ void BossRunAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
         InitializeRunPrameters(targetPosition, position);
     }
 
-    modelDirection = direction;
 
     //ステートの切り替え処理を呼ぶ
     ChangeState();
 
     //アニメーションの再生時間のセット
-    UpdateAnimation(0.03);
+    UpdateAnimation(AnimationBlendSpeed);
 
     //当たり判定に必要な情報の更新
     UpdateCollisionData(modelDirection, position);
@@ -89,7 +88,7 @@ void BossRunAttack::ChangeState()
     // 最初のターゲットの座標から少し進んだ位置まで到達したらステートを切り替える
     if (currentDistance >= targetLength + TargetOffsetDistance)
     {
-        nextState = new BossIdle(modelhandle, this->GetAnimationIndex());
+        nextState = new BossIdle(modelhandle, this->GetAnimationIndex(),BossIdle::RunAttack);
     }
     else
     {

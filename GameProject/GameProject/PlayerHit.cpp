@@ -14,6 +14,9 @@ PlayerHit::PlayerHit(int InitalModelHandle, int beforeAnimationIndex, Player::An
     // 現在のステートを入れる
     nowStateTag = Player::HitState;
 
+    // ヒットステート中はダメージを受けている状態にする
+    lifeState = Player::Damaged;
+
     // アニメーションの速度を代入
     animationSpeed = AnimationSpeed;
 }
