@@ -18,8 +18,9 @@ BossShotAttack::BossShotAttack(int& InitializeModelHandle, const int beforeAnima
     //インプットマネージャーのインスタンスをもってくる
     inputManager = InputManager::GetInstance();
 
-    // ショットマネージャーのインスタンスをもってくる「
+    // ショットマネージャーのインスタンスをもってくる
     shotManager = ShotManager::GetInstance();
+
 }
 
 /// <summary>
