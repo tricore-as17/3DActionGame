@@ -46,11 +46,22 @@ void BossRunAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
     {
         // 移動する時に必要な情報を初期化
         InitializeRunPrameters(targetPosition, position);
-    }
 
+
+    }
+    // 現在どれだけ進んだかを計算
+    float currentDistance = VSize(VSub(position, startPosition));
+
+    // 最初のターゲットの座標から少し進んだ位置まで到達したらステートを切り替える
+    if (currentDistance >= targetLength + TargetOffsetDistance && currentRunState == Run)
+    {
+        currentRunState = RunEnd;
+    }
 
     //ステートの切り替え処理を呼ぶ
     ChangeState();
+
+
 
     //アニメーションの再生時間のセット
     UpdateAnimation(AnimationBlendSpeed);
@@ -82,11 +93,8 @@ void BossRunAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR
 /// </summary>
 void BossRunAttack::ChangeState()
 {
-    // 現在どれだけ進んだかを計算
-    float currentDistance = VSize(VSub(position, startPosition));
 
-    // 最初のターゲットの座標から少し進んだ位置まで到達したらステートを切り替える
-    if (currentDistance >= targetLength + TargetOffsetDistance)
+    if (currentRunState == RunEnd)
     {
         nextState = new BossIdle(modelhandle, this->GetAnimationIndex(),BossIdle::RunAttack);
     }

@@ -131,10 +131,6 @@ void BossIdle::SelectActionPattern(const float targetDistance)
             {
                 nextStateName = AreaAttack;
             }
-            else
-            {
-                nextStateName = Move;
-            }
         }
         // 中距離だった場合
         else if (targetDistance > ShortRange && targetDistance <= MiddleRange)

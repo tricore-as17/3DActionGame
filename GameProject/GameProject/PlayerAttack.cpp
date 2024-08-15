@@ -5,6 +5,7 @@
 #include"PlayerIdle.h"
 #include"InputManager.h"
 #include"CollisionUtility.h"
+#include"InputManager.h"
 #include"Utility.h"
 
 
@@ -20,12 +21,20 @@ const VECTOR PlayerAttack::StrongAttackOffsetPositionY = VGet(0.0f, 10.0f, 0.0f)
 /// <param name="beforeAnimationIndex">前のステートでのアニメーション情報</param>
 PlayerAttack::PlayerAttack(int InitalModelHandle, int beforeAnimationIndex, Player::AnimationState animationState)
     :StateBase(InitalModelHandle,animationState,beforeAnimationIndex)
+    ,currentComboState(First)
+    ,currentComboCollisionState(FirstStart)
 {
+    // インプットマネージャーのインスタンスをもってくる
+    inputManager = InputManager::GetInstance();
+
     // 現在のステートを入れる
     nowStateTag = Player::AttackState;
 
+    // 攻撃の種類を代入
+    currentAttackState = animationState;
+
     // 通常攻撃と強攻撃それぞれの当たり判定のサイズを代入
-    if (animationState == Player::Slash)
+    if (animationState == Player::ComboAttack)
     {
         // カプセルの長さ
         collisionCapsuleLineLength   = NormalAttackCollisionCapsuleLineLength;
@@ -105,30 +114,82 @@ void PlayerAttack::Update(VECTOR& modelDirection, VECTOR& position,const VECTOR 
     //アニメーションの再生時間のセット
     UpdateAnimation();
 
+    // コンボ攻撃を続けるか入力を見てチェック
+    IsComboAttackActive();
+
+
+
     //アニメーションが終了していたら当たり判定を消す
-    if (currentPlayAnimationState == FirstRoopEnd)
+    if (currentPlayAnimationState == FirstRoopEnd || currentComboState == End)
     {
         collisionData.collisionState = CollisionData::CollisionEnded;
     }
 
+    // 移動量の計算
+    CalculateVelocity(modelDirection);
+
     //当たり判定に必要な情報の更新
     UpdateCollisionData(modelDirection,position);
 
-    // 当たり判定が有効になった入ればCollisionManagerに送信
-    if (collisionData.collisionState == CollisionData::NoCollision)
-    {
-        //アニメーションの再生割合を調べて当たり判定情報をCollisionManagerに送信する
-        collisionData.collisionState = CollisionUtility::SendCollisionDataByAnimationTime(GetAnimationNowTime(), GetAnimationLimitTime(),
-            collisionData.collisionState,collisionStratAnimationRatio);
-
-        if (collisionData.collisionState == CollisionData::CollisionActive)
-        {
-            collisionManager->RegisterCollisionData(&collisionData);
-        }
-    }
+    // アニメーションの再生率に合わせて攻撃の当たり判定の調整
+    UpdateCollisionStateByAnimationRatio();
 
     //シーンが切り替わっていればアニメーションをデタッチ
     DetachAnimation();
+
+}
+
+/// <summary>
+/// アニメーションの再生率に合わせて当たり判定の状態を更新する
+/// </summary>
+void PlayerAttack::UpdateCollisionStateByAnimationRatio()
+{
+    // 現在のアニメーションの再生率を出す
+    float currentAnimationRatio = animationNowTime / animationLimitTime;
+
+    // アニメーションの再生率が１撃目の開始ラインを超えていたら当たり判定を作成
+    if (currentAnimationRatio > FirstAttackCollisionStartTime && collisionData.collisionState == CollisionData::NoCollision)
+    {
+        collisionData.collisionState = CollisionData::CollisionActive;
+        collisionManager->RegisterCollisionData(&collisionData);
+    }
+
+    // アニメーションの再生率が１撃目の終了ラインを超えていたら当たり判定を削除
+    else if (currentAnimationRatio > FirstAttackCollisionEndTime && currentComboCollisionState == FirstStart)
+    {
+        collisionData.collisionState = CollisionData::CollisionEnded;
+        currentComboCollisionState = FirstEnd;
+    }
+
+    // アニメーションの再生率が２撃目の開始ラインを超えていたら当たり判定を作成
+    else if (currentAnimationRatio > SecondAttackCollisionStartTime && currentComboCollisionState == FirstEnd)
+    {
+        collisionData.collisionState = CollisionData::CollisionActive;
+        collisionManager->RegisterCollisionData(&collisionData);
+        currentComboCollisionState = SecondStart;
+    }
+
+    // アニメーションの再生率が２撃目の終了ラインを超えていたら当たり判定を削除
+    else if (currentAnimationRatio > SecondAttackCollisionEndTime && currentComboCollisionState == SecondStart)
+    {
+        collisionData.collisionState = CollisionData::CollisionEnded;
+        currentComboCollisionState = SecondEnd;
+    }
+
+    // アニメーションの再生率が３撃目の開始ラインを超えていたら当たり判定を作成
+    else if (currentAnimationRatio > ThirdAttackCollisionStartTime && currentComboCollisionState == SecondEnd)
+    {
+        collisionData.collisionState = CollisionData::CollisionActive;
+        collisionManager->RegisterCollisionData(&collisionData);
+        currentComboCollisionState = ThirdStart;
+    }
+
+    // アニメーションの再生率が３撃目の終了ラインを超えていたら当たり判定を削除
+    else if (currentAnimationRatio > ThirdAttackCollisionEndTime && currentComboCollisionState == ThirdStart)
+    {
+        collisionData.collisionState = CollisionData::CollisionEnded;
+        currentComboCollisionState = ThirdEnd;
+    }
 
 }
 
@@ -143,7 +204,7 @@ void PlayerAttack::ChangeState()
         nextState = new PlayerHit(modelhandle, animationIndex, Player::Impact);
     }
     //アニメーションの再生が終了したらステートを切り替える
-    else if (currentPlayAnimationState == FirstRoopEnd)
+    else if (currentComboState == End || currentPlayAnimationState == FirstRoopEnd)
     {
         nextState = new PlayerIdle(modelhandle, this->GetAnimationIndex());
 
@@ -191,16 +252,106 @@ void PlayerAttack::UpdateCollisionData(const VECTOR& modelDirection,const VECTOR
 /// </summary>
 void PlayerAttack::OnHit(CollisionData collisionData)
 {
-    switch (collisionData.hitObjectTag)
+    //当たったフラグをオンにする
+    this->collisionData.collisionState = CollisionData::CollisionEnded;
+
+    // 連続攻撃の状態に合わせてステートを切り替える
+    switch (currentComboCollisionState)
     {
-    case CollisionManager::Boss:
+    // １撃目
+    case FirstStart:
+        currentComboCollisionState = FirstEnd;
+        break;
+
+    // ２撃目
+    case SecondStart :
+        currentComboCollisionState = SecondEnd;
+        break;
+
+    // ３撃目
+    case ThirdEnd:
+        currentComboCollisionState = ThirdEnd;
+        break;
+
+    default:
+        break;
+    }
+}
+
+/// <summary>
+/// コンボ攻撃を続けるか調べて実行する
+/// </summary>
+void PlayerAttack::IsComboAttackActive()
+{
+    // 現在のアニメーションの再生率を出す
+    float currentAnimationRatio = animationNowTime / animationLimitTime;
+
+    switch (currentComboState)
+    {
+    case PlayerAttack::First:
+
+        // 移動速度を代入
+        moveSpeed = FirstComboMoveSpeed;
+
+        // 規定時間の間で追加入力があればコンボを続行する
+        if (currentAnimationRatio >= SecondAttackInputStartTime  && currentAnimationRatio < currentAnimationRatio < SecondAttackInputStartTime + InputTimeLimit &&
+            inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push)
+        {
+            currentComboState = Second;
+
+        }
+        else if (currentAnimationRatio > SecondAttackInputStartTime + InputTimeLimit)
+        {
+            currentComboState = End;
+        }
+        break;
+    case PlayerAttack::Second:
+
+        // 移動速度を代入
+        moveSpeed = SecondComboMoveSpeed;
+
+        // 規定時間の間で追加入力があればコンボを続行する
+        if (currentAnimationRatio >= ThirdAttackInputStartTime && currentAnimationRatio < currentAnimationRatio < ThirdAttackInputStartTime + InputTimeLimit &&
+            inputManager->GetKeyPushState(InputManager::RB) == InputManager::Push)
+        {
+            currentComboState = Third;
+        }
+        else if (currentAnimationRatio > ThirdAttackInputStartTime + InputTimeLimit)
+        {
+            currentComboState = End;
+        }
+
+        break;
+    case PlayerAttack::Third:
+
+        // 移動速度を代入
+        moveSpeed = ThirdComboMoveSpeed;
+
+        // 攻撃アニメーションが終了したらコンボステートを切り替える
+        if (currentPlayAnimationState == StateBase::FirstRoopEnd)
+        {
+            currentComboState = End;
+        }
+
+        break;
+    case PlayerAttack::End:
         break;
     default:
         break;
     }
-    //当たったフラグをオンにする
-    this->collisionData.collisionState = CollisionData::CollisionEnded;
 }
+
+
+/// <summary>
+/// 移動する量の計算
+/// </summary>
+/// <param name="modelDirection">モデルの向いている方向</param>
+void PlayerAttack::CalculateVelocity(const VECTOR modelDirection)
+{
+    // 移動量を計算する
+    velocity = VScale(VNorm(modelDirection), moveSpeed);
+}
+
 
 #ifdef _DEBUG
 

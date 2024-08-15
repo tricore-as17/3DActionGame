@@ -13,7 +13,7 @@ const VECTOR Player::ModelOffsetPosition = VGet(0, 0, -3);
 /// コンストラクタ
 /// </summary>
 Player::Player()
-    : position(VGet(0, 0, 0))
+    : position(VGet(0, 0, -20.0f))
     , angle(0.0f)
     , nowState(NULL)
     , modelDirection(VGet(0, 0, 0))
@@ -43,6 +43,9 @@ Player::Player()
 
     //当たり判定データを渡す
     collisionManager->RegisterCollisionData(&collisionData);
+
+    // 大きさを変更
+    MV1SetScale(modelHandle, VGet(DefaultScale, DefaultScale, DefaultScale));
 
     //座標の設定
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
@@ -81,10 +84,11 @@ void Player::Update(const VECTOR targetPosition,const VECTOR cameraPosition)
     UpdateCollisionData();
 
 
-    MV1SetPosition(modelHandle, VAdd(position,ModelOffsetPosition));
     
     //更新処理の後次のループでのステートを代入する
     nextState = nowState->GetNextState();
+
+    MV1SetPosition(modelHandle, VAdd(position,ModelOffsetPosition));
 
     // 体力が0かつ
     if (hp <= 0 && nextState->GetNowStateTag() == HitState)
@@ -123,7 +127,7 @@ void Player::Draw()
 
     if (collisionData.collisionState == CollisionData::CollisionActive)
     {
-        DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
+        DrawCapsule3D(collisionData.upPosition, collisionData.bottomPosition, collisionData.radius, 64, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);
     }
 
     //ステートの当たり判定を描画する
@@ -239,8 +243,8 @@ void Player::OnHit(CollisionData collisionData)
     {
     case CollisionManager::Boss:
 
-        //ボスと当たったフラグを立てる
-        isBossHited = true;
+        // ボスと当たった際に押し戻し処理を行う
+        PushBack(collisionData.bottomPosition,collisionData.radius);
 
         break;
     case CollisionManager::BossDefaultAttack:
@@ -303,6 +307,43 @@ void Player::SwitchInvincibility()
             collisionManager->RegisterCollisionData(&collisionData);
         }
     }
+}
+
+
+/// <summary>
+/// ボスに当たった際の押し戻し処理
+/// </summary>
+/// <param name="targetPosition">相手の座標</param>
+void Player::PushBack(const VECTOR targetPosition, const float targetRadius)
+{
+    float radiusSum = targetRadius + collisionData.radius;
+
+    // y座標は変更しなくていいので０に修正する
+    VECTOR correctedTargetPosition = VGet(targetPosition.x, 0.0f, targetPosition.z);
+
+    // プレイヤーも同じように修正
+    VECTOR correctedPlayerPosition = VGet(position.x, 0.0f, position.z);
+
+    // 修正した座標からボスからプレイヤーの向きのベクトルを計算
+    VECTOR vectorToPlayer = VSub(correctedPlayerPosition, correctedTargetPosition);
+
+    // ベクトルのサイズを計算
+    float distance = VSize(vectorToPlayer);
+
+    // 押し戻す距離の計算
+    distance = radiusSum - distance;
+
+
+    // ベクトルを正規化する
+    vectorToPlayer = VNorm(vectorToPlayer);
+
+    VECTOR pushBackVector = VScale(vectorToPlayer, distance);
+
+    // 計算したベクトルからプレイヤーの位置を変更
+    position = VAdd(position, pushBackVector);
+
+    // モデルの位置も合わせて修正
+    MV1SetPosition(modelHandle, position);
 }
 
 
