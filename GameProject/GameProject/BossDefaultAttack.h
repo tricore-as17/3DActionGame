@@ -35,7 +35,8 @@ private:
     static constexpr float  CollisionEndAnimationRatio             = 0.5f;     // 当たり判定を終わらせるアニメーションの再生率
     static constexpr int    DamageAmount                           = 20;       // 与えるダメージ量
     static constexpr float  EffectPlaySpeed                        = 1.0f;     // エフェクトの再生速度
-    static constexpr float  EffectDefaultScale                     = 20.0f;    // エフェクトの基本サイズ 
+    static constexpr float  EffectDefaultScale                     = 20.0f;    // エフェクトの基本サイズ
+    static constexpr float  EffectOffsetPositionY                  = 50.0f;    // エフェクトのY座標の調整位置
 
     ///////  メンバ変数  ////////
 

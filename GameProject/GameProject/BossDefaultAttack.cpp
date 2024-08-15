@@ -37,7 +37,8 @@ BossDefaultAttack::BossDefaultAttack(int& InitializeModelHandle, const int befor
 /// </summary>
 BossDefaultAttack::~BossDefaultAttack()
 {
-    //処理なし
+    // エフェクトの停止
+    effectManager->StopEffect(effectData);
 }
 
 
@@ -161,7 +162,7 @@ void BossDefaultAttack::UpdateCollisionData(const VECTOR& modelDirection, const 
 void BossDefaultAttack::UpdateEffectData(const VECTOR modelDirection,const VECTOR characterPosition)
 {
     // エフェクトの座標を代入
-    effectData.position = VAdd(characterPosition, VGet(0.0f, 50.0f, 0.0f));
+    effectData.position = VAdd(characterPosition, VGet(0.0f, EffectOffsetPositionY, 0.0f));
 
     // モデルの向きからY軸の回転率を出す
     float angle = atan2(modelDirection.x, modelDirection.z);
