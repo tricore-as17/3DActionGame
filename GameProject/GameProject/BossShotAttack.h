@@ -2,8 +2,10 @@
 #include"StateBase.h"
 #include"InputManager.h"
 #include"ShotManager.h"
+#include"EffectData.h"
 
 struct InitializeShotData;
+class  EffectManager;
 
 /// <summary>
 /// ボスの静止ステート
@@ -59,9 +61,9 @@ private:
     //AIを作成したら入力は必要ないので削除
     InputManager* inputManager;      //入力管理クラス
 
-    ShotManager* shotManager;        // ショット管理クラスのポインタ
-    bool         isAnimationSwitch;  // アニメーションを切り替えたかのフラグ
-    ShotState    shotState;          // 弾の撃っている状態
+    ShotManager*   shotManager;        // ショット管理クラスのポインタ
+    bool           isAnimationSwitch;  // アニメーションを切り替えたかのフラグ
+    ShotState      shotState;          // 弾の撃っている状態
 
     ///////  メンバ関数  //////
 

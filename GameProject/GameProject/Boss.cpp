@@ -5,6 +5,7 @@
 #include"CollisionData.h"
 #include"StateBase.h"
 #include"BossStart.h"
+#include"EffectManager.h"
 
 //初期座標の入力
 const VECTOR Boss::InitialPosition = VGet(0, 0, 6);
@@ -22,6 +23,9 @@ Boss::Boss()
 {
     //モデルマネージャーにアクセスるポインタの代入
     ModelDataManager* modelDataManager = ModelDataManager::GetInstance();
+
+    // エフェクトマネージャーのインスタンスのポインタをもってくる
+    effectManager = EffectManager::GetInstance();
 
     //モデルハンドルをもってくる
     modelHandle = MV1DuplicateModel(modelDataManager->GetModelHandle(ModelDataManager::Boss));
@@ -136,7 +140,23 @@ void Boss::OnHit(const CollisionData collisionData)
     switch (collisionData.hitObjectTag)
     {
     case CollisionManager::PlayerAttack:
+        //HPを減らす
+        hp -= collisionData.damageAmount;
+
+        // プレイヤーの攻撃に当たった際のエフェクトの初期化
+        InitializePlayerAttackHitEffectData(collisionData.centerPosition);
+
+        // エフェクトの再生
+        effectManager->PlayEffect(&playerAttackHitEffectData);
+
+        break;
     case CollisionManager::PlayerShot:
+
+        // 弾にあった際のエフェクトの初期化
+        InitializeShotHitEffectData(collisionData.centerPosition);
+
+        // エフェクトの再生
+        effectManager->PlayEffect(&shotHitEffectData);
 
         //HPを減らす
         hp -= collisionData.damageAmount;
@@ -145,6 +165,64 @@ void Boss::OnHit(const CollisionData collisionData)
     default:
         break;
     }
+}
+
+/// <summary>
+/// 弾と当たった際のエフェクトの初期化
+/// </summary>
+/// <param name="shotPosition">当たった弾の座標</param>
+void Boss::InitializeShotHitEffectData(const VECTOR shotPosition)
+{
+    // ボスと弾のベクトルを出す
+    VECTOR direction = VSub(position, shotPosition);
+
+    // ボスと弾のベクトルからエフェクトの回転率を出す
+    float angle = atan2(direction.x, direction.z);
+
+    // エフェクトの回転率
+    shotHitEffectData.rotationRate = VGet(0.0f, angle, 0.0f);
+
+    // エフェクトの座標の初期化
+    shotHitEffectData.position = shotPosition;
+
+    // エフェクトの種類
+    shotHitEffectData.effectTag = EffectManager::PlayerShotHit;
+
+    // エフェクトの再生速度
+    shotHitEffectData.playSpeed = 1.0f;
+
+    // エフェクトのサイズ
+    shotHitEffectData.scalingRate = VGet(ShotHitEffectScale, ShotHitEffectScale, ShotHitEffectScale);
+
+
+}
+
+/// <summary>
+/// プレイヤーの攻撃に当たった際のエフェクトの初期化
+/// </summary>
+/// <param name="attackPosition">攻撃の座標</param>
+void Boss::InitializePlayerAttackHitEffectData(const VECTOR attackPosition)
+{
+    // ボスと弾のベクトルを出す
+    VECTOR direction = VSub(position, attackPosition);
+
+    // ボスと弾のベクトルからエフェクトの回転率を出す
+    float angle = atan2(direction.x, direction.z);
+
+    // エフェクトの回転率
+    playerAttackHitEffectData.rotationRate = VGet(0.0f, angle, 0.0f);
+
+    // エフェクトの座標の初期化
+    playerAttackHitEffectData.position = attackPosition;
+
+    // エフェクトの種類
+    playerAttackHitEffectData.effectTag = EffectManager::PlayerAttackHit;
+
+    // エフェクトの再生速度
+    playerAttackHitEffectData.playSpeed = 1.0f;
+
+    // エフェクトのサイズ
+    playerAttackHitEffectData.scalingRate = VGet(PlayerAttackHitEffectScale, PlayerAttackHitEffectScale, PlayerAttackHitEffectScale);
 }
 
 /// <summary>
