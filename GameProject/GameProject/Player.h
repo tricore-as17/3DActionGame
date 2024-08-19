@@ -70,6 +70,11 @@ public:
     /// </summary>
     void Update(const VECTOR targetPosition,const VECTOR cameraPosition);
 
+    /// <summary>
+    /// 登場シーンでの更新処理
+    /// </summary>
+    void UpdateStartScene(const float distanceToBoss);
+
 
 
     /// <summary>
@@ -79,6 +84,7 @@ public:
 
 
 private:
+
     ///////  定数  //////
 
     static const VECTOR ModelOffsetPosition;                    // モデルの位置を調整するための値
@@ -91,6 +97,12 @@ private:
     static constexpr float InvincibilityEndRatio      = 0.7f;   // 無敵時間の終了割合
     static constexpr float ShotHitEffectScale         = 10.0f;  // 弾が当たった時のエフェクトのサイズ
 
+    // 登場シーンで使用する定数
+    static constexpr float MoveSpeed           = 0.7f;   // 登場シーンでの移動スピード
+    static constexpr float MoveDistance        = 150.0f; // 移動する距離
+    static constexpr float AnimationSpeed      = 0.8f;   // アニメーションの再生速度
+    static constexpr float AnimationBlendSpeed = 0.1f;   // アニメーションのブレンドスピード
+
     ///////  メンバ変数  ///////
 
     int           modelHandle;      //モデルハンドル
@@ -101,6 +113,17 @@ private:
     int           hp;               //プレイヤーの体力
     bool          isBossHited;      //ボスと当たったかのフラグ
     bool          isDamage;         // ダメージを受けたかのフラグ
+
+    // 登場シーンで使用する変数
+    float animationLimitTime;        // 再生中のアニメーションの総再生時間
+    float animationNowTime;          // 再生中のアニメーションの現在の経過時間
+    int   animationIndex;            // 現在のアニメーションのインデックス
+    int   beforeAnimationIndex;      // 前のアニメーションのインデックス
+    float animationBlendRate;        // アニメーションのブレンド率
+    bool  isEndMove;                 // 移動が終了したかのフラグ
+    bool  isBlendingAnimation;       // 今ブレンドを行っているかのフラグ
+
+
 
     ///////  メンバクラス  ///////
 
@@ -153,6 +176,13 @@ private:
     /// </summary>
     /// <param name="targetPosition">相手の座標</param>
     void PushBack(const VECTOR targetPosition, const float targetRadius);
+
+    /// <summary>
+    /// アニメーションの更新処理
+    /// </summary>
+    void UpdateAnimation();
+
+
  
 
 };
