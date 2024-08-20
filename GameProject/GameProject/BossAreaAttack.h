@@ -24,7 +24,7 @@ public:
     /// <param name="position">自身のモデルの向き</param>
     /// <param name="position">自身のキャラクターの座標</param>
     /// <param name="targetPosition">敵対しているキャラの座標</param>
-    void Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition)override;
+    void Update(VECTOR& modelDirection, VECTOR& position,const VECTOR targetPosition,VECTOR cameraPosition)override;
 
     /// <summary>
     /// 攻撃用のショットを作成する
